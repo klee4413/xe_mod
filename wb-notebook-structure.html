@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotebookLM: Comprehensive Feature Explorer wb-what-notebook.html</title>
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-hover: #1557b0;
+            --bg-color: #f8f9fa;
+            --sidebar-bg: #ffffff;
+            --text-dark: #202124;
+            --text-muted: #5f6368;
+            --border-color: #e0e0e0;
+        }
+
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex; 
+            height: 100vh; 
+            margin: 0; 
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            overflow: hidden;
+        }
+        
+        /* Layout */
+        #sidebar { 
+            width: 350px; 
+            min-width: 300px;
+            background-color: var(--sidebar-bg); 
+            padding: 24px; 
+            border-right: 1px solid var(--border-color); 
+            overflow-y: auto; 
+            box-shadow: 2px 0 8px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        #content { 
+            flex-grow: 1; 
+            padding: 48px; 
+            overflow-y: auto; 
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        /* Typography & Header */
+        h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+        }
+
+        /* Tree Styles */
+        ul.tree { 
+            list-style-type: none; 
+            padding-left: 0; 
+            margin: 0;
+        }
+        
+        ul.tree ul {
+            list-style-type: none;
+            padding-left: 24px;
+            margin-top: 4px;
+            border-left: 1px dashed var(--border-color);
+            margin-left: 12px;
+        }
+        
+        ul.tree li { 
+            margin: 8px 0; 
+            cursor: pointer; 
+            position: relative; 
+            font-weight: 500;
+            user-select: none;
+            line-height: 1.5;
+        }
+
+        /* Parent Nodes */
+        .tree-folder {
+            display: flex;
+            align-items: center;
+            padding: 6px 8px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .tree-folder:hover {
+            background-color: #f1f3f4;
+        }
+        
+        .tree-folder::before { 
+            content: "📁"; 
+            display: inline-block; 
+            margin-right: 8px; 
+            font-size: 14px; 
+            transition: transform 0.2s ease; 
+        }
+        
+        li.expanded > .tree-folder::before { 
+            content: "📂"; 
+        }
+
+        /* Leaf Nodes */
+        ul.tree li.leaf { 
+            font-weight: 400; 
+            color: var(--text-muted); 
+            padding: 6px 8px 6px 28px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        ul.tree li.leaf:hover, ul.tree li.leaf.active { 
+            color: var(--primary); 
+            background-color: #e8f0fe;
+        }
+
+        ul.tree li.leaf::before { 
+            content: "📄"; 
+            position: absolute;
+            left: 8px;
+            font-size: 14px; 
+        }
+        
+        .hidden { display: none !important; }
+        
+        /* Interactive Detail Card */
+        .detail-card { 
+            background: #fff; 
+            border: 1px solid var(--border-color); 
+            padding: 40px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            max-width: 800px;
+            width: 100%;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .detail-icon {
+            font-size: 2.5rem;
+            background: #e8f0fe;
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+
+        .detail-card h2 { 
+            color: var(--text-dark); 
+            margin: 0; 
+            font-size: 1.8rem;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #f1f3f4;
+            color: var(--text-muted);
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .detail-card p { 
+            line-height: 1.7; 
+            color: #444; 
+            font-size: 1.15rem; 
+            margin-bottom: 20px;
+        }
+
+        .use-cases {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .use-cases h4 {
+            margin-top: 0;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .use-cases ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #444;
+        }
+
+        .use-cases li {
+            margin-bottom: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            #sidebar { width: 100%; height: 40vh; border-right: none; border-bottom: 1px solid var(--border-color); }
+            #content { height: 60vh; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar with Use Tree -->
+    <div id="sidebar">
+        <div>
+            <h1>🧠 NotebookLM</h1>
+            <div class="subtitle">Architecture & Capabilities Tree</div>
+        </div>
+        
+        <ul class="tree" id="useTree">
+            
+            <!-- Category 1: Study & Learning -->
+            <li class="expanded">
+                <div class="tree-folder">📚 Study & Learning</div>
+                <ul>
+                    <li class="leaf" data-id="study_guides">Study Guides & Notes</li>
+                    <li class="leaf" data-id="quizzes">Interactive Quizzes</li>
+                    <li class="leaf" data-id="socratic">Socratic Thinking Partner</li>
+                </ul>
+            </li>
+
+            <!-- Category 2: Research & Search -->
+            <li class="expanded">
+                <div class="tree-folder">🔍 Search & Deep Research</div>
+                <ul>
+                    <li class="leaf" data-id="grounded_search">Document-Grounded Search</li>
+                    <li class="leaf" data-id="web_discover">Web Source Discovery</li>
+                    <li class="leaf" data-id="deep_research">Deep Research Agent</li>
+                </ul>
+            </li>
+
+            <!-- Category 3: Dialog & Synthesis -->
+            <li class="expanded">
+                <div class="tree-folder">💬 Dialog & Synthesis</div>
+                <ul>
+                    <li class="leaf" data-id="chat_sources">Chat with Sources (Gemini-like)</li>
+                    <li class="leaf" data-id="multi_notebook">Multi-Notebook Context</li>
+                    <li class="leaf" data-id="summary_briefs">Executive Summaries & Briefs</li>
+                </ul>
+            </li>
+
+            <!-- Category 4: Audio & Podcast -->
+            <li class="expanded">
+                <div class="tree-folder">🎧 Audio & Podcast Tools</div>
+                <ul>
+                    <li class="leaf" data-id="audio_overview">Podcast Audio Overviews</li>
+                    <li class="leaf" data-id="audio_custom">Customizing Podcast Tone</li>
+                    <li class="leaf" data-id="transcription">Audio/YouTube Transcription</li>
+                </ul>
+            </li>
+
+            <!-- Category 5: Visuals & Exports -->
+            <li class="expanded">
+                <div class="tree-folder">📊 Visuals & Presentations</div>
+                <ul>
+                    <li class="leaf" data-id="slides">Presentation Slides</li>
+                    <li class="leaf" data-id="mindmaps">Mind Maps & Infographics</li>
+                    <li class="leaf" data-id="videos">Video Overviews</li>
+                </ul>
+            </li>
+
+        </ul>
+		 
+           
+            </div>
+        </div>
+
+    </div>
+
+   <div class="fixed bottom-3 right-3 text-[19px] font-bold text-emerald-200 uppercase tracking-widest opacity-40">
+          <center><a href="campus.php" >
+                   <b> to Campus</b>
+                </a></center>
+    </div>
+    </div>
+
+    <!-- Main Detail Display -->
+    <div id="content">
+        <div id="default-view" class="detail-card">
+            <div class="detail-header">
+                <div class="detail-icon">✨</div>
+                <div>
+                    <h2>Welcome to the NoteBookLM</h2>
+                    <div class="tag">Interactive Guide</div>
+                </div>
+            </div>
+            <p>Select a node from the interactive tree on the left to explore the detailed functions, use cases, and workflows of Google NotebookLM.</p>
+            <div class="use-cases">
+                <h4>Getting Started</h4>
+                <ul>
+                    <li>Expand the folders on the left to reveal specific capabilities.</li>
+                    <li>Click on a specific document icon (📄) to load its technical details.</li>
+                    <li>Discover how NotebookLM bridges the gap between raw data and cognitive insight.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="detail-view" class="detail-card hidden">
+            <div class="tag" id="detail-category">Category</div>
+            <div class="detail-header">
+                <div class="detail-icon" id="detail-emoji">📝</div>
+                <h2 id="detail-title">Title</h2>
+            </div>
+            <p id="detail-desc">Description goes here...</p>
+            
+            <div class="use-cases">
+                <h4>Practical Use Cases</h4>
+                <ul id="detail-uses">
+                    <!-- Populated by JS -->
+                </ul>
+            </div>
+			
+        </div>
+		
+    </div>
+
+    <!-- Interactive Logic -->
+    <script>
+        // Comprehensive Data object holding the detail functions
+        const detailsData = {
+            // Study
+            'study_guides': { 
+                category: 'Study & Learning', emoji: '📓', title: 'Study Guides & Notes', 
+                desc: 'Automatically synthesizes lengthy textbooks, lecture transcripts, and syllabi into structured study guides. It extracts key themes, definitions, timelines, and generates comprehensive glossaries.',
+                uses: ['Converting 100-page textbook PDFs into 2-page cheat sheets.', 'Auto-generating character and event timelines from historical texts.', 'Compiling a master glossary of terms from a semester of notes.']
+            },
+            'quizzes': { 
+                category: 'Study & Learning', emoji: '❓', title: 'Interactive Quizzes', 
+                desc: 'Uses "active recall" cognitive techniques by generating tailored flashcards, multiple-choice questions, and essay prompts based strictly on the faulty-logic-free environment of your uploaded documents.',
+                uses: ['Generating pre-exam mock tests.', 'Self-assessing knowledge gaps in complex medical or legal texts.', 'Creating study groups where the AI quizzes the team.']
+            },
+            'socratic': { 
+                category: 'Study & Learning', emoji: '🤔', title: 'Socratic Thinking Partner', 
+                desc: 'Instead of just handing you the answer, NotebookLM acts as an augmented reasoning partner. You can ask it to critique your arguments, spot logical fallacies, and guide you to conclusions via Socratic questioning.',
+                uses: ['Brainstorming essay outlines and having the AI poke holes in your thesis.', 'Verifying the logical structure of a research paper.', 'Debating interpretations of a philosophical text.']
+            },
+
+            // Search
+            'grounded_search': { 
+                category: 'Search & Deep Research', emoji: '🔎', title: 'Document-Grounded Search', 
+                desc: 'Searches through up to 50 sources (or more in Plus/Pro) containing millions of words. Unlike standard web AI, it restricts its answers entirely to your data and provides exact, clickable inline citations so you can trace every fact to its source.',
+                uses: ['Finding specific clauses across dozens of legal contracts.', 'Locating exact quotes in 50 hours of interview transcripts.', 'Checking compliance against internal corporate SOPs.']
+            },
+            'web_discover': { 
+                category: 'Search & Deep Research', emoji: '🌐', title: 'Web Source Discovery', 
+                desc: 'A feature that allows you to type a topic, after which NotebookLM gathers hundreds of potential web sources in seconds. It curates the top 10 most relevant links with annotated summaries, allowing you to add them to your notebook with one click.',
+                uses: ['Quickly building a foundational knowledge base on a new subject.', 'Supplementing internal documents with current web news.', 'Using the "I\'m Feeling Curious" button for randomized learning.']
+            },
+            'deep_research': { 
+                category: 'Search & Deep Research', emoji: '🕵️', title: 'Deep Research Agent', 
+                desc: 'Acts as an autonomous research agent. Given a prompt, it builds a multi-step research plan, scours the internet, reads multiple pages, and compiles highly detailed (up to 50-page) reports complete with verified citations.',
+                uses: ['Conducting deep competitor analysis.', 'Drafting comprehensive market research reports.', 'Exploring complex academic topics that span multiple disciplines.']
+            },
+
+            // Dialog
+            'chat_sources': { 
+                category: 'Dialog & Synthesis', emoji: '💬', title: 'Chat with Sources', 
+                desc: 'Offers a conversational interface akin to Gemini or ChatGPT, but anchored to your "brain trust". You can query complex logic, cross-reference data, and ask open-ended questions knowing the AI will not hallucinate outside your provided boundaries.',
+                uses: ['"Explain the overarching theme across these 5 different case studies."', '"What does document A say that contradicts document B?"', 'Drafting an email based on a specific project guideline.']
+            },
+            'multi_notebook': { 
+                category: 'Dialog & Synthesis', emoji: '🗂️', title: 'Multi-Notebook Context', 
+                desc: 'Through the integration with Google Gemini, users can link multiple isolated NotebookLM workspaces together. This allows Gemini to pull insights across segregated data silos simultaneously.',
+                uses: ['Cross-referencing a "Finance" notebook with a "Marketing Strategy" notebook.', 'Querying your entire company\'s distinct departmental notebooks at once.']
+            },
+            'summary_briefs': { 
+                category: 'Dialog & Synthesis', emoji: '📑', title: 'Executive Summaries', 
+                desc: 'One-click generation of executive briefing documents. It distills massive amounts of text into actionable insights, key quotes, and main themes tailored for leadership and management consumption.',
+                uses: ['Summarizing weekly meeting transcripts into a 1-page brief.', 'Distilling 100-page earnings reports into 5 bullet points.', 'Creating onboarding packs from scattered SOPs.']
+            },
+
+            // Audio
+            'audio_overview': { 
+                category: 'Audio & Podcast Tools', emoji: '🎙️', title: 'Podcast Audio Overviews', 
+                desc: 'Transforms uploaded documents into engaging, multi-perspective "Deep Dive" audio discussions. Two AI hosts will summarize, debate, and banter about your source material, helping auditory learners digest complex data.',
+                uses: ['Listening to a 30-minute breakdown of a research paper during a commute.', 'Turning meeting notes into a quick morning audio briefing.', 'Learning a new language syntax through audio explanation.']
+            },
+            'audio_custom': { 
+                category: 'Audio & Podcast Tools', emoji: '🎛️', title: 'Customizing Podcast Tone', 
+                desc: 'Allows users to steer the focus, length, and tone of the Audio Overview. By using specific prompts, you can make the hosts focus on a specific chapter, extend the duration (e.g., 30-40 mins), or change the tone from "enthusiastic" to "academic and grounded".',
+                uses: ['Making the AI focus specifically on the methodology section of a medical trial.', 'Toning down the "hype" for serious psychoanalytic papers.', 'Creating a podcast aimed at a 5-year-old\'s comprehension level.']
+            },
+            'transcription': { 
+                category: 'Audio & Podcast Tools', emoji: '🗣️', title: 'Audio & YouTube Transcription', 
+                desc: 'Ingests multimedia formats natively. You can upload audio files, podcasts, or simply paste a YouTube URL. NotebookLM reads the captions/transcripts and treats the spoken word exactly like a written text document.',
+                uses: ['Analyzing a 2-hour YouTube lecture without watching it.', 'Generating a study guide from recorded university lectures.', 'Extracting action items from recorded Zoom/Meet calls.']
+            },
+
+            // Visuals
+            'slides': { 
+                category: 'Visuals & Presentations', emoji: '📽️', title: 'Presentation Slides', 
+                desc: 'Synthesizes messy notes and long documents into structured presentation outlines. With Gemini integrations, it can auto-generate slide decks and speaker notes, eliminating the \"blank page\" phase of presentation building.',
+                uses: ['Converting a research paper into a 10-slide pitch deck.', 'Creating a sales presentation from product spec sheets.', 'Generating speaker notes to accompany visual data.']
+            },
+            'mindmaps': { 
+                category: 'Visuals & Presentations', emoji: '🧠', title: 'Mind Maps & Infographics', 
+                desc: 'Leverages the underlying Gemini AI capabilities to visually map out concepts. It can identify nodes and relationships in your data to help you build visual hierarchies and infographics.',
+                uses: ['Visualizing the family tree in a complex novel.', 'Mapping out a software architecture based on codebase documentation.', 'Creating flowchart summaries for complex legal processes.']
+            },
+            'videos': { 
+                category: 'Visuals & Presentations', emoji: '🎞️', title: 'Video Overviews', 
+                desc: 'An emerging feature that goes beyond audio by generating short visual explainers and dynamic layouts based on your text-heavy materials, making data consumption even more accessible.',
+                uses: ['Turning a textbook chapter into an animated educational short.', 'Generating quick social media teaser videos from a blog post.', 'Visualizing data trends with animated charts.']
+            }
+        };
+
+        // UI Interaction Logic
+        const folders = document.querySelectorAll('.tree-folder');
+        const leaves = document.querySelectorAll('.leaf');
+        
+        // Handle Folder Expand/Collapse
+        folders.forEach(folder => {
+            folder.addEventListener('click', function(e) {
+                const parentLi = this.parentElement;
+                const childUl = parentLi.querySelector('ul');
+                
+                if (childUl) {
+                    childUl.classList.toggle('hidden');
+                    parentLi.classList.toggle('expanded');
+                }
+            });
+        });
+
+        // Handle Leaf Selection and Data Population
+        leaves.forEach(leaf => {
+            leaf.addEventListener('click', function(e) {
+                // Remove active class from all
+                leaves.forEach(l => l.classList.remove('active'));
+                // Add active class to clicked
+                this.classList.add('active');
+
+                const id = this.getAttribute('data-id');
+                const data = detailsData[id];
+                
+                if (data) {
+                    // Hide default, show detail
+                    document.getElementById('default-view').classList.add('hidden');
+                    const detailView = document.getElementById('detail-view');
+                    
+                    // Reset animation by triggering reflow
+                    detailView.classList.remove('hidden');
+                    detailView.style.animation = 'none';
+                    detailView.offsetHeight; /* trigger reflow */
+                    detailView.style.animation = null; 
+                    
+                    // Populate Content
+                    document.getElementById('detail-category').textContent = data.category;
+                    document.getElementById('detail-emoji').textContent = data.emoji;
+                    document.getElementById('detail-title').textContent = data.title;
+                    document.getElementById('detail-desc').textContent = data.desc;
+                    
+                    // Populate Use Cases list
+                    const usesList = document.getElementById('detail-uses');
+                    usesList.innerHTML = ''; // Clear previous
+                    data.uses.forEach(use => {
+                        const li = document.createElement('li');
+                        li.textContent = use;
+                        usesList.appendChild(li);
+                    });
+                }
+            });
+        });
+    </script>
+	
+
+</body>
+</html>

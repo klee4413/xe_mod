@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini AI College Admission Review</title>
+	<!--Connected to google sheets Quiz1_DB Quiz1_table NO SQL YET-->
+    <style>
+        /* Modern, phone-friendly reset */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #bdf2bd; 
+            padding: 10px; /* Reduced padding for mobile */
+            color: #333;
+        }
+
+        .quiz-container { 
+            max-width: 800px; 
+            margin: 20px auto; 
+            background: white; 
+            padding: 15px; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+        }
+
+        h1 { font-size: 1.5rem; margin-bottom: 10px; text-align: center; }
+        p { text-align: center; margin-bottom: 20px; font-size: 0.9rem; }
+
+        /* Mobile-friendly responsive grid */
+        .quiz-row { 
+            display: grid; 
+            /* Columns: No, Select, Statement, Random (Hidden/Small on mobile) */
+            grid-template-columns: 40px 50px 1fr 40px; 
+            gap: 5px;
+            align-items: center; 
+            padding: 12px 5px; 
+            border-bottom: 1px solid #eee; 
+            font-size: 0.85rem;
+        }
+
+        .header-row { 
+            font-weight: bold; 
+            background-color: #2e7d32; 
+            color: white; 
+            border-radius: 8px; 
+            position: sticky; 
+            top: 0;
+            z-index: 10;
+        }
+
+        .checkbox-cell { text-align: center; }
+        
+        /* Large touch targets for checkboxes on mobile */
+        .quiz-check { 
+            width: 20px; 
+            height: 20px; 
+            cursor: pointer; 
+        }
+
+        .random-cell { 
+            font-weight: bold; 
+            color: #FFFFFF; 
+            text-align: right;
+            font-size: 0.75rem;
+        }
+		 .random-no { 
+            font-weight: bold; 
+            color: #666; 
+            text-align: right;
+            font-size: 0.75rem;
+        }
+
+        /* Phone-friendly button */
+        .btn-container { text-align: center; margin-top: 20px; }
+        .btn-finish { 
+            padding: 15px 40px; 
+            background: #2e7d32; 
+            color: white; 
+            border: none; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-size: 1.1rem; 
+            font-weight: bold;
+            width: 100%; /* Full width on mobile */
+            max-width: 300px;
+        }
+        .btn-finish:hover { background-color: #1b5e20; }
+
+        /* Adjustments for very small screens */
+        @media (max-width: 480px) {
+            .quiz-row { grid-template-columns: 30px 40px 1fr 30px; font-size: 0.8rem; }
+            h1 { font-size: 1.2rem; }
+        }
+		/* Added for Footer */
+		/* GAC Bright Green Footer Style */
+.gac-footer {
+    background-color: #66ff00; /* Bright Green */
+    height: 0.5in;             /* Half-inch tall */
+    display: flex;             /* Centers text vertically and horizontally */
+    align-items: center;       /* Vertical center */
+    justify-content: center;    /* Horizontal center */
+    width: 100%;
+    margin-top: 30px;          /* Space between content and footer */
+    border-top: 2px solid #2e7d32; /* Dark green accent line */
+}
+
+.footer-text {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #1b5e20;            /* Dark green text for readability */
+}
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>Admission Review Interview</h1>
+    <p>Please select topics, thoughts, ideas, and desires those you agree with.</p>
+    
+    <div class="quiz-row header-row">
+        <div>No.</div>
+        <div class="checkbox-cell">Select</div>
+        <div>Statements</div>
+        <div class="random-cell">Random</div>
+    </div>
+
+    <div id="quiz-display">Loading Interview Database...</div>
+    
+    <div class="btn-container">
+        <button class="btn-finish" onclick="submitSelection()">Finish</button>
+    </div>
+</div>
+
+<script>
+    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSHPCI9_XojJb1boxGQibUzQlIpNhrVKiwe-W584Pu3a__gU-OIhn0zMa_wecpqsVCDuRqGlLYJMyDV/pub?gid=0&single=true&output=csv';
+
+    async function loadAndShuffleQuiz() {
+        try {
+            const response = await fetch(SHEET_CSV_URL);
+            const data = await response.text();
+            
+            let rows = data.split('\n').slice(1).filter(row => row.trim() !== "");
+            
+            // Shuffle
+            for (let i = rows.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [rows[i], rows[j]] = [rows[j], rows[i]];
+            }
+
+            const display = document.getElementById('quiz-display');
+            display.innerHTML = ''; 
+
+            rows.slice(0, 40).forEach((row, index) => {
+                const cols = row.split(',');
+                if (cols.length >= 2) {
+                    const rowDiv = document.createElement('div');
+                    rowDiv.className = 'quiz-row';
+                    rowDiv.innerHTML = `
+                      <div><b>${index + 1}</b></div>
+                        <div class="checkbox-cell">
+                            <input type="checkbox" class="quiz-check" 
+                                data-no="${cols[0]}" 
+                                data-quiz="${cols[1].replace(/"/g, '&quot;')}" 
+                                data-result="${(cols[2] || '').trim()}" 
+                                data-weight="${(cols[3] || '0').trim()}"
+                                data-pn="${(cols[5] || 'P').trim()}"> </div>
+                        <div>${cols[1]}</div>
+                        <div class="random-no">${cols[0]}</div>
+                    `;
+                    display.appendChild(rowDiv);
+                }
+            });
+        } catch (error) {
+            console.error(error);
+            document.getElementById('quiz-display').innerText = "Error connecting to Database.";
+        }
+    }
+
+    function submitSelection() {
+        // 1. Get all checkboxes currently displayed in the 40-item list
+        const allCheckboxes = document.querySelectorAll('.quiz-check');
+        const selectedElements = document.querySelectorAll('.quiz-check:checked');
+
+        if (selectedElements.length === 0) {
+            alert("Please select at least one statement!");
+            return;
+        }
+
+        const selectedData = [];
+        const unselectedData = [];
+
+        // 2. Loop through ALL 40 checkboxes to sort into two buckets
+        allCheckboxes.forEach(cb => {
+            const quizItem = {
+                no: cb.dataset.no,
+                quiz: cb.dataset.quiz,
+                result: cb.dataset.result,
+                weight: cb.dataset.weight,
+                pn: cb.dataset.pn
+            };
+
+            if (cb.checked) {
+                selectedData.push(quizItem);
+            } else {
+                unselectedData.push(quizItem);
+            }
+        });
+
+        // 3. Save to localStorage
+        localStorage.setItem('gac_selected_quizzes', JSON.stringify(selectedData));
+        localStorage.setItem('gac_unselected_quizzes', JSON.stringify(unselectedData));
+
+        console.log("Trace Initialized: ", selectedData.length, "selected /", unselectedData.length, "unselected.");
+        
+        alert(`Saved ${selectedData.length} statements for analysis!`);
+
+        // 4. Redirect
+        window.location.href = 'analysis.html';
+    }
+
+    loadAndShuffleQuiz();
+</script>
+<footer class="gac-footer">
+    <div class="footer-text">Copyright  AI Gemini College 2026</div><br>
+	<div class="footer-text">--Applied HPAM Interview Evaluation Model by AGC research </div>
+</footer>
+</body>
+</html>

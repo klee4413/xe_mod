@@ -1,0 +1,7 @@
+# GAC Infrastructure Security Shield
+db-connect.php
+db_connect.php
+*.sql
+.env
+.htaccess
+/aigc-core/config/database.php

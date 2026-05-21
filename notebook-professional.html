@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google NotebookLM Masterclass | Professional Workflows</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #030712;
+            color: #f3f4f6;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        .slide {
+            height: 100vh;
+            width: 100vw;
+            display: none;
+            padding: 5rem 4rem 4rem 4rem;
+            position: relative;
+            background: radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.04) 0%, transparent 60%),
+                        radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.04) 0%, transparent 60%);
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: slideFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideFadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glass-card {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(16, 185, 129, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .subtitle-hover {
+            position: relative;
+            display: inline-block;
+        }
+        .subtitle-hover::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #10b981;
+            transition: width 0.3s ease;
+        }
+        .subtitle-hover:hover::after {
+            width: 100%;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: #10b981;
+            color: #10b981;
+            transform: scale(1.05);
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, #10b981, #3b82f6);
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .top-header {
+            background: rgba(3, 7, 18, 0.8);
+            backdrop-filter: blur(8px);
+            border-b: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-emerald-500/20 selection:text-emerald-400">
+
+    <header class="fixed top-0 left-0 right-0 z-[100] top-header h-16 px-8 flex items-center justify-between border-b border-white/5">
+        <div class="flex items-center gap-3">
+            <div class="w-7 h-7 bg-emerald-600 rounded-lg flex items-center justify-center text-slate-950 font-black text-sm">N</div>
+            <div>
+                <p class="text-[10px] font-black text-emerald-400 uppercase tracking-widest leading-none">NotebookLM Masterclass</p>
+                <p class="text-xs text-slate-400 font-bold">2026 Executive Strategy Deck</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-6">
+            <span class="text-[10px] bg-slate-800 text-slate-400 font-mono px-2.5 py-1 rounded border border-white/5 tracking-wider uppercase">Source Grounded</span>
+        </div>
+    </header>
+
+    <div class="slide active" id="slide-1">
+        <div class="max-w-5xl mx-auto text-center">
+            <span class="inline-block px-4 py-1 rounded-full border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-widest mb-6 bg-emerald-500/5">
+                Chapter 01: Core Architecture
+            </span>
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-8 leading-tight">
+                Source-Grounded AI vs.<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-500">Generative Hallucination</span>
+            </h1>
+            <p class="text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed mb-12 font-medium">
+                Unlike open-domain LLMs that synthesize probabilistically from training sets [00:02:15], NotebookLM alters the logical paradigm to a <span class="text-white font-bold">Source-Grounded System</span>. It eliminates hallucination parameters by isolating computation strictly inside raw data uploads [00:01:27].
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-4xl mx-auto">
+                <div class="p-6 glass-card rounded-2xl border-l-4 border-rose-500/50">
+                    <h4 class="font-bold text-rose-400 text-lg mb-2">Standard Conversational LLM</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">Generates responses based on statistical word associations. Vulnerable to structural hallucination and unverified metrics [00:01:07].</p>
+                </div>
+                <div class="p-6 glass-card rounded-2xl border-l-4 border-emerald-500/50">
+                    <h4 class="font-bold text-emerald-400 text-lg mb-2">NotebookLM Paradigm</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">Operates as a verified local knowledge engine. Queries pull directly from raw parameters with explicit citation back-links [00:02:53].</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide-2">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-12">
+                <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Chapter 02: Engine Evolution</span>
+                <h2 class="text-4xl font-black mt-2 mb-4">Gemini 3.1 Pro & 1M Token Context</h2>
+                <p class="text-slate-400 text-sm">The transformation from isolated document processing to massive cross-source reasoning loops.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 glass-card rounded-2xl">
+                    <div class="text-2xl mb-4">🧠</div>
+                    <h3 class="text-lg font-bold text-white mb-2 subtitle-hover">Gemini 3.1 Pro Core</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Handles structural reasoning across highly disparate sources, detecting logical alignment and deep patterns inside dense files [00:04:05].</p>
+                </div>
+                <div class="p-6 glass-card rounded-2xl">
+                    <div class="text-2xl mb-4">📊</div>
+                    <h3 class="text-lg font-bold text-white mb-2 subtitle-hover">1 Million Token Boundary</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Enables simultaneous upload of thousands of pages, extensive video logs, and historical databases without context window throttling [00:04:25].</p>
+                </div>
+                <div class="p-6 glass-card rounded-2xl">
+                    <div class="text-2xl mb-4">🔄</div>
+                    <h3 class="text-lg font-bold text-white mb-2 subtitle-hover">Gemini Interface Sync</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Direct bi-directional data pipelines. Native Gemini windows pull individual notebooks instantly via localized context tokens [00:04:45].</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide-3">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-12 items-center">
+            <div class="md:col-span-5">
+                <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Chapter 03: Data Pipelines</span>
+                <h2 class="text-4xl font-black mt-2 mb-6">Multi-Modal Ingestion</h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                    NotebookLM synthesizes non-uniform, multi-modal structures into an identical embeddings vector matrix. Raw audio logs, tabular files, and images execute via standard semantic search [00:07:36].
+                </p>
+                <div class="p-4 bg-slate-900 rounded-xl border border-white/5 mono text-xs text-slate-400">
+                    Max: 500,000 Words / 200MB Per Source [00:07:54]
+                </div>
+            </div>
+            <div class="md:col-span-7 grid grid-cols-2 gap-4">
+                <div class="p-5 glass-card rounded-xl">
+                    <h4 class="font-bold text-sm text-emerald-400 mb-1">Unstructured Media</h4>
+                    <p class="text-[11px] text-slate-400">YouTube URLs auto-extract multi-speaker transcriptions seamlessly [00:07:45].</p>
+                </div>
+                <div class="p-5 glass-card rounded-xl">
+                    <h4 class="font-bold text-sm text-blue-400 mb-1">OCR Hand-Written Engraving</h4>
+                    <p class="text-[11px] text-slate-400">Advanced document scans parse raw ink and sketches into legible strings [00:07:36].</p>
+                </div>
+                <div class="p-5 glass-card rounded-xl">
+                    <h4 class="font-bold text-sm text-purple-400 mb-1">Structured Corpora</h4>
+                    <p class="text-[11px] text-slate-400">Native integration with Google Docs, Slides, sheets, and standard Markdown structures [00:07:36].</p>
+                </div>
+                <div class="p-5 glass-card rounded-xl">
+                    <h4 class="font-bold text-sm text-amber-400 mb-1">Audio Footprints</h4>
+                    <p class="text-[11px] text-slate-400">Converts long-form phone logs or meetings into clean, indexed text formats [00:07:45].</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide-4">
+        <div class="max-w-5xl mx-auto">
+            <div class="mb-12 text-center">
+                <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Chapter 04: Ingestion Automation</span>
+                <h2 class="text-4xl font-black mt-2">The 'Grab' Bulk Ingestion Protocol</h2>
+                <p class="text-slate-400 text-sm mt-2">Bypassing manual pipeline bottlenecks via bulk web link scrapers.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="p-6 bg-slate-900 rounded-2xl border border-white/5">
+                    <h3 class="font-bold text-lg mb-4 text-emerald-400">Pipeline Ingestion Bottleneck</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                        Manually capturing dozens of separate source URLs or video indexes limits real-time competitive analysis workflows.
+                    </p>
+                    <h3 class="font-bold text-lg mb-2 text-blue-400">The 'Grab' Extension Fix</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Utilizing browser automation tools like 'Grab' allows operators to select whole YouTube channels or website indexes, extraction loops automatically dump links into the notebook structure with zero overhead [00:08:13].
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="p-4 glass-card rounded-xl border-l-4 border-emerald-500">
+                        <h4 class="font-bold text-sm text-white">Target Resource Indexing</h4>
+                        <p class="text-[11px] text-slate-400">Isolate target documentation catalogs, lists, or channel views.</p>
+                    </div>
+                    <div class="p-4 glass-card rounded-xl border-l-4 border-blue-500">
+                        <h4 class="font-bold text-sm text-white">Execution Loop</h4>
+                        <p class="text-[11px] text-slate-400">Drag execution boundary box over raw video or hyperlink elements [00:08:13].</p>
+                    </div>
+                    <div class="p-4 glass-card rounded-xl border-l-4 border-purple-500">
+                        <h4 class="font-bold text-sm text-white">Mass Ingestion</h4>
+                        <p class="text-[11px] text-slate-400">Structured links auto-populate internal source structures instantly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide-5">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-12">
+                <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Chapter 05: Discovery Architecture</span>
+                <h2 class="text-4xl font-black mt-2">Deep Research vs. Fast Research Profiles</h2>
+                <p class="text-slate-400 text-sm">Deploying active discovery instances across live network environments.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="p-8 glass-card rounded-[2rem] border-t-4 border-blue-500/50">
+                    <span class="indicator-tag bg-blue-500/10 text-blue-400">Fast Profile</span>
+                    <h3 class="text-2xl font-bold my-4 text-white">Surface Verification Loop</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-6">
+                        Scans public indexes within seconds, extracting quick contextual answers and high-level verification link structures into the source container [00:08:41].
+                    </p>
+                    <div class="text-[11px] mono text-blue-400 bg-blue-500/5 p-3 rounded-xl">Execution Horizon: &lt; 60 Seconds</div>
+                </div>
+                <div class="p-8 glass-card rounded-[2rem] border-t-4 border-emerald-500/50">
+                    <span class="indicator-tag bg-emerald-500/10 text-emerald-400">Deep Profile</span>
+                    <h3 class="text-2xl font-bold my-4 text-white">Deep Research Autonomous Loop</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-6">
+                        Spends up to 10+ minutes systematically executing cross-checks across multiple documentation webs, generating an indexed synthesis containing 40+ distinct references [00:08:59].
+                    </p>
+                    <div class="text-[11px] mono text-emerald-400 bg-emerald-500/5 p-3 rounded-xl">Replaces half-day corporate analysis tasks [00:09:10]</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide-6">
+        <div class="max-w-5xl mx-auto grid md:grid-cols-12 gap-12 items-center">
+            <div class="md:col-span-7 space-y-6">
+                <div>
+                    <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Chapter 06: Data Hygiene</span>
+                    <h2 class="text-4xl font-black mt-2 mb-4">The Pinpoint Sorting Strategy</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        As a notebook grows to contain dozens of overlapping records, context contamination degrades synthesis precision. Operators must implement clean architectural barriers [00:09:36].
+                    </p>
+                </div>
+                <div class="p-6 bg-slate-900 rounded-2xl border border-white/5 space-y-4">
+                    <h4 class="font-bold text-sm text-emerald-400">Prefix Prioritization Protocol</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Injecting character tokens like <span class="mono text-white bg-slate-800 px-1 py-0.5 rounded">!!</span> directly before high-priority file handles forces the platform to index them at the top of the interface [00:09:47].
+                    </p>
+                    <h4 class="font-bold text-sm text-blue-400">Target Isolation</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        This enables instant deselect loops for background noise data, forcing studio engines to compute outcomes exclusively from authoritative documents [00:09:57].
+                    </p>
+                </div>
+            </div>
+            <div class="md:col-span-5 bg-slate-900/40 p-8 rounded-[2.5rem] border border-white/5">
+                <p class="text-[10px] uppercase font-bold text-slate-500 mb-4 tracking-widest text-center">Context Filtration Map</p>
+                <div class="space-y-2 text-xs font-mono">
+                    <div class="p-2 bg-emerald-500/10 border border-emerald-500/30 rounded text-emerald-400">✓ !! Authoritative_Blueprint.pdf</div>
+                    <div class="p-2 bg-emerald-500/10 border border-emerald-500/30 rounded text-emerald-400">✓ !! Core_Financial_Ledger.csv</div>
+                    <div class="p-2 bg-slate-800/40 border border-white/5 rounded text-slate-500">✗ Raw_Market_Sentiment_Dump.txt</div>
+                    <div class="p-2 bg-slate-800/40 border border-white/5 rounded text-slate-500">✗ Public_Forum_Scrape.md</div>
+                </div>
+                <p class="text-[10px] text-slate-500 text-center mt-6">Filtration drops contextual contamination vectors by 80%</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide-7">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-10">
+                <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Chapter 07: Output Generation</span>
+                <h2 class="text-4xl font-black mt-2">The Studio Engine Pipeline</h2>
+                <p class="text-slate-400 text-sm">Converting verified internal repositories into diverse architectural structures [00:10:37].</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="p-5 glass-card rounded-2xl">
+                    <div class="text-xl mb-2">🎙️</div>
+                    <h4 class="font-bold text-sm text-white mb-1">Audio Overview</h4>
+                    <p class="text-[11px] text-slate-400 leading-normal">Deep Dive, Brief, Critical, or Debates. Real-time multi-speaker interactive conversation loops [00:10:56].</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl">
+                    <div class="text-xl mb-2">🎬</div>
+                    <h4 class="font-bold text-sm text-white mb-1">Video Outlines</h4>
+                    <p class="text-[11px] text-slate-400 leading-normal">Compiles flat scripts into schematic animated visuals backed by clear text voice synthesis narration [00:11:39].</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl">
+                    <div class="text-xl mb-2">🌿</div>
+                    <h4 class="font-bold text-sm text-white mb-1">Mind Maps</h4>
+                    <p class="text-[11px] text-slate-400 leading-normal">Traces deep document clusters, mapping raw dependencies across files visually [00:12:01].</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl">
+                    <div class="text-xl mb-2">📝</div>
+                    <h4 class="font-bold text-sm text-white mb-1">Strategic Briefs</h4>
+                    <p class="text-[11px] text-slate-400 leading-normal">Auto-formats internal data directly into blog copy, analysis documentation, or briefing papers [00:12:16].</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl">
+                    <div class="text-xl mb-2">🎴</div>
+                    <h4 class="font-bold text-sm text-white mb-1">Flashcards</h4>
+                    <p class="text-[11px] text-slate-400 leading-normal">Extracts high-impact definitions and concept keys for real-time mobile study pipelines [00:12:25].</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl">
+                    <div class="text-xl mb-2">❓</div>
+                    <h4 class="font-bold text-sm text-white mb-1">AI Examination</h4>
+                    <p class="text-[11px] text-slate-400 leading-normal">Generates responsive quiz parameters with detailed logical verification paths for errors [00:12:34].</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl">
+                    <div class="text-xl mb-2">🖼️</div>
+                    <h4 class="font-bold text-sm text-white mb-1">Data Graphics</h4>
+                    <p class="text-[11px] text-slate-400 leading-normal">Compresses long tracking metrics into an authoritative, single-sheet static infographic layout [00:12:44].</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl border-emerald-500/30 bg-emerald-500/5">
+                    <div class="text-xl mb-2">📊</div>
+                    <h4 class="font-bold text-sm text-emerald-400 mb-1">Data Grid Tables</h4>
+                    <p class="text-[11px] text-slate-300 leading-normal">Parses multi-source parameters into clean rows for direct export into Google Sheets [00:14:09].</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide-8">
+        <div class="max-w-5xl mx-auto text-center">
+            <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Chapter 08: Custom Tuning</span>
+            <h2 class="text-4xl font-black mt-2 mb-6">Persona Tuning & Custom Directives</h2>
+            <p class="text-slate-400 text-sm max-w-3xl mx-auto leading-relaxed mb-10">
+                NotebookLM expanded prompt boundaries from short 500-character entries to a massive <span class="text-white font-bold">10,000-character limits</span> [00:14:36]. This enables the injection of whole operational manuals and enterprise persona guidelines directly into runtime logic.
+            </p>
+            <div class="bg-slate-900 rounded-3xl p-8 border border-white/5 text-left max-w-3xl mx-auto">
+                <p class="text-[10px] uppercase font-bold text-slate-500 mb-4 tracking-widest font-mono">// Advanced Enterprise Persona Matrix Template [00:14:44]</p>
+                <div class="p-5 bg-slate-950 rounded-xl border border-white/5 text-xs font-mono text-emerald-400 space-y-2 leading-relaxed">
+                    <p><span class="text-purple-400">ROLE:</span> Act as an elite corporate risk assessment advisor with 20+ years of digital marketing optimization context [00:15:04].</p>
+                    <p><span class="text-purple-400">TASK:</span> Parse the source documentation matrix to map precise target persona gaps and missed keyword connections [00:15:04].</p>
+                    <p><span class="text-purple-400">CRITERIA:</span> If competitor tracking maps is detected, generate three clear defensive messaging positioning pivots [00:15:14].</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide-9">
+        <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Chapter 09: Knowledge Compounding</span>
+                <h2 class="text-4xl font-black mt-2 mb-6">High-Density Recirculation Loops</h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                    Most operators extract static summaries and stop. Advanced enterprise workflows deploy a compounding loop, feeding generated synthesis models back into the primary knowledge repository [00:17:01].
+                </p>
+                <div class="space-y-3 font-semibold text-xs">
+                    <div class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Execute complex queries across disparate files [00:17:20]</div>
+                    <div class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Save top-tier outputs immediately to raw internal notes [00:17:29]</div>
+                    <div class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-purple-500"></span> Append saved notes straight back as a secondary source vector [00:17:29]</div>
+                    <div class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Isolate legacy files to run pure-play synthesis from updated source data [00:17:38]</div>
+                </div>
+            </div>
+            <div class="p-8 glass-card rounded-[3rem] border border-white/5 flex flex-col justify-center text-center relative min-h-[320px]">
+                <div class="space-y-4">
+                    <div class="p-3 bg-slate-950 rounded-xl border border-white/5 text-xs text-slate-400">1. Raw Multi-Source Matrix Ingestion</div>
+                    <div class="text-emerald-500 text-xl font-bold">⬇ Generation Link</div>
+                    <div class="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs text-emerald-400 font-bold">2. Refined Internal Note Output Matrix</div>
+                    <div class="text-blue-500 text-xl font-bold">↺ Source Injection Loop</div>
+                    <div class="p-3 bg-blue-500/10 border border-blue-500/30 rounded-xl text-xs text-blue-400 font-bold">3. Absolute Source Authority Attained</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide-10">
+        <div class="max-w-6xl mx-auto text-center">
+            <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Chapter 10: Vertical Workflows</span>
+            <h2 class="text-5xl font-black mt-2 mb-6 tracking-tight uppercase">Vertical Team Deployment Protocols</h2>
+            <p class="text-slate-400 text-sm max-w-2xl mx-auto mb-12">Isolating target repositories to distinct functional groups maximizes query resolution speed and prevents data drift [00:10:15].</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-left">
+                <div class="p-5 glass-card rounded-2xl border-t-2 border-emerald-500">
+                    <h4 class="font-bold text-white mb-2">Corporate Strategy</h4>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Loads financial logs, reports, and analyst charts. Employs "Critical Audio Overviews" to evaluate performance gaps [00:18:16].</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl border-t-2 border-blue-500">
+                    <h4 class="font-bold text-white mb-2">Marketing Operations</h4>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Ingests interview feedback logs and competitor blogs. Generates cross-format copy and infographic assets simultaneously [00:19:12].</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl border-t-2 border-purple-500">
+                    <h4 class="font-bold text-white mb-2">Human Resources</h4>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Uploads operational handbooks and safety procedures. Translates outputs to 50+ languages via native localized audio engines [00:19:49].</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl border-t-2 border-amber-500">
+                    <h4 class="font-bold text-white mb-2">Enterprise Sales</h4>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Compiles product spec sheets and client targets. Outputs tactical 1-page "Battle Cards" for objection handling [00:20:24].</p>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-white/5 flex flex-col items-center">
+                <button onclick="window.open('campus.php', '_blank')" class="bg-emerald-600 hover:bg-emerald-500 text-slate-950 px-10 py-3.5 rounded-full font-black uppercase tracking-widest text-xs transition-all shadow-xl shadow-emerald-500/10 active:scale-95">
+                    Back to Campus
+                </button>
+                <p class="text-[9px] text-slate-600 font-bold uppercase tracking-widest mt-3">Interactive Framework Infrastructure Initialized</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-12 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-12 flex justify-between items-center">
+            <div class="text-[10px] font-mono text-slate-500 tracking-widest uppercase">
+                Slide <span id="current-slide-num">1</span> / 10
+            </div>
+            <div class="flex gap-4">
+                <button onclick="prevSlide()" class="nav-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button onclick="nextSlide()" class="nav-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width: 10%"></div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 10;
+
+        function updateSlides() {
+            document.querySelectorAll('.slide').forEach((s, i) => {
+                s.classList.toggle('active', i + 1 === currentSlide);
+            });
+            document.getElementById('current-slide-num').innerText = currentSlide;
+            document.getElementById('progress-fill').style.width = (currentSlide / totalSlides) * 100 + '%';
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlides();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateSlides();
+            }
+        }
+
+        // Native Hardware Keyboard Event Listeners
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            }
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+    </script>
+</body>
+</html>

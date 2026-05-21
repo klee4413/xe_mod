@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGC Admission Analysis Report</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #bdf2bd; padding: 20px; }
+        .analysis-container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { color: #1b5e20; margin-bottom: 20px; }
+        h2 { color: #2e7d32; border-bottom: 2px solid #66ff00; padding-bottom: 10px; margin-top: 40px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #fff; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #2e7d32; color: white; }
+        .center-text { text-align: center; }
+        .summary-row { font-weight: bold; background-color: #f1f8e9; }        
+        /* Buttons */
+        .btn-group { display: flex; gap: 20px; justify-content: center; margin-top: 40px; }
+        .btn { padding: 15px 40px; border: none; border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: bold; transition: 0.3s; }
+        .btn-continue { background-color: #2e7d32; color: white; }
+        .btn-quit { background-color: #d32f2f; color: white; }        
+        /* Footer */
+        .gac-footer { background-color: #66ff00; height: 0.5in; display: flex; align-items: center; justify-content: center; width: 100%; margin-top: 50px; border-top: 2px solid #2e7d32; }
+        .footer-text { font-size: 0.9rem; font-weight: bold; color: #1b5e20; }        
+        /* AI Placeholder Section */
+        #gemini-ai-section { background: #f0f4ff; border: 2px dashed #3f51b5; padding: 20px; border-radius: 10px; margin-top: 30px; }
+    </style>
+</head>
+<body>
+<div class="analysis-container">
+        <!--span class="text-red-600 text-xl md:text-2xl ml-4 font-mono">
+            ID:<?php echo $_SESSION['user_id']; ?>       
+			<?php echo $_SESSION['first_name'] . " " . $_SESSION['last_name']; ?>
+        </span-->
+    <center><h1>Admission Interview Analysis Report: <?php echo $_SESSION['first_name'] . " " . $_SESSION['last_name']; ?></h1></center>
+     <center><h2>Selected Response & Public Rating</h2></center>
+
+    <table>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Statement Selected</th>
+                <th><center>Cognitive<br>Attribute</Center</th>
+                <!--th>Importance</th-->
+				<th><center>Public<br>Rating</Center></th>
+            </tr>
+        </thead>
+        <tbody id="statement-body">
+            </tbody>
+        <tfoot>
+            <tr id="statement-footer" class="summary-row">
+                </tr>
+        </tfoot>
+    </table>
+
+    <h2>Attitudinal, Behavioral, Cognitive, Performance Factor Selected Summary</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Attribute</th>
+                <th class="center-text">Selection<br>Count</th>
+                <th class="center-text">Sum of Public Rating</th>
+                <th class="center-text">Rating<br>Avg.</th>
+            </tr>
+        </thead>
+        <tbody id="category-body">
+            </tbody>
+    </table>
+
+    <div id="gemini-ai-section">
+        <h2>Continuing Professional Evaluation for </h2>
+        <p><i>Awaiting evaluation ...</i></p>
+        <div id="ai-output">Click "Continue" to proceed with professional assessment.</div>
+    </div>
+ 
+    <div class="btn-group">
+	    <a href="sel-unsel-analysis2.html"
+         <button class="btn btn-continue" onclick="handleContinue()">Continue</button>
+		</a>
+        <button class="btn btn-quit" onclick="handleQuit()">Quit</button>
+   </div>
+</div>
+
+<footer class="gac-footer">
+    <div class="footer-text">Copyright AI Gemini  College 2026</div><div class="footer-text">--Applied HPAM Interview Evaluation Model by AGC research </div>
+</footer>
+
+<script>
+    // Load the data saved from the interview page
+    const selectedData = JSON.parse(localStorage.getItem('gac_selected_quizzes')) || [];
+
+    function renderAnalysis() {
+        const statementBody = document.getElementById('statement-body');
+        const categoryBody = document.getElementById('category-body');
+        const footer = document.getElementById('statement-footer');
+
+        if (selectedData.length === 0) {
+            statementBody.innerHTML = "<tr><td colspan='4' class='center-text'>No data selected.</td></tr>";
+            return;
+        }
+
+        // Sort data by Category for cleaner reading
+        selectedData.sort((a, b) => a.result.localeCompare(b.result));
+
+        let totalWeightOverall = 0;
+        const categoryStats = {};
+
+        // --- SECTION 1 LOGIC ---
+        selectedData.forEach((item, index) => {
+            const text = item.quiz || "Statement Missing";
+            const cat = item.result || "Uncategorized";
+            const weight = parseFloat(item.weight) || 0;
+
+            totalWeightOverall += weight;
+
+            // Generate Detailed List Row
+            statementBody.innerHTML += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td style="word-wrap: break-word; min-width: 300px; white-space: normal;">${text}</td>
+                    <td>${cat}</td>
+                    <td>${weight}</td>
+                </tr>
+            `;
+
+            // Accumulate stats for Section 2
+            if (!categoryStats[cat]) {
+                categoryStats[cat] = { total: 0, count: 0 };
+            }
+            categoryStats[cat].total += weight;
+            categoryStats[cat].count += 1;
+        });
+
+        // Section 1 Footer (Overall Average)
+        const overallAvg = (totalWeightOverall / selectedData.length).toFixed(2);
+        footer.innerHTML = `
+            <td colspan="3" style="text-align:right">Total Public Rating: ${totalWeightOverall} Avg:</td>
+            <td> ${overallAvg}</td>
+			        `;
+
+        // --- SECTION 2 LOGIC (COUNT & AVG) ---
+        for (const cat in categoryStats) {
+            const sum = categoryStats[cat].total;
+            const cnt = categoryStats[cat].count;
+            const avg = (sum / cnt).toFixed(2);
+
+            categoryBody.innerHTML += `
+                <tr>
+                    <td>${cat}</td>
+                    <td class="center-text">${cnt}</td>
+                    <td class="center-text">${sum}</td>
+                    <td class="center-text" style="font-weight:bold;">${avg}</td>
+                </tr>
+            `;
+        }
+    }
+
+   // function handleContinue() {
+   //     alert("Thank you for your admission interview. Data is prepared for Dean's Review.");
+   // Future: trigger your gatekeeper.php here
+   //}
+   
+  function handleContinue() {
+      window.location.href = 'sel-unsel-analysis2.html';
+    }
+    function handleQuit() {
+        window.location.href = 'index.php';
+    }
+
+    // Run the engine
+    renderAnalysis();
+</script>
+</body>
+</html>

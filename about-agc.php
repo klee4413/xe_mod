@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+    <title>About AGC | AI GEMINI College Institutional Introduction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains+Mono', monospace; }
+        .card-hover:hover { transform: translateY(-5px); transition: all 0.3s ease; }
+        .logic-tier-card { border-left-width: 6px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 leading-relaxed">
+
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center text-white font-bold text-xl"> AGC </div>
+                <span class="font-bold text-xl tracking-tight text-emerald-900 uppercase">About AI GEMINI COLLEGE</span>
+            </div>
+            <div class="hidden md:flex space-x-8 font-semibold text-sm text-slate-600">
+                <a href="#mission" class="hover:text-emerald-600 transition">Mission</a>
+                <a href="#tiers" class="hover:text-emerald-600 transition">Logic Tiers</a>
+                <a href="#syllabi" class="hover:text-emerald-600 transition">Syllabi</a>
+                <a href="#books" class="hover:text-emerald-600 transition">Library</a>
+                <a href="#compliance" class="hover:text-emerald-600 transition">Compliance</a>
+				 <a href="index.php" class="hover:text-emerald-600 transition">Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <header id="mission" class="pt-32 pb-20 px-6">
+        <div class="max-w-5xl mx-auto text-center">
+            <span class="inline-block px-4 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold tracking-widest uppercase mb-6">AGC Educational Architecture</span>
+            <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 mb-8 leading-tight">Empowering the High-Skill Workforce with <span class="text-emerald-600">High-Performance AI Literacy</span></h1>
+            <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100 italic text-lg md:text-xl text-slate-700 leading-relaxed">
+                "The mission of AI GEMINI COLLEGE is to empower students and the high-skill workforce with high-performance AI literacy by providing grounded, human-verified educational resources and specialized curriculum. We are dedicated to eliminating AI hallucinations and faulty logic through rigorous HITL (Human-In-The-Loop) validation, ensuring that artificial intelligence remains a safe, ethical, and accurate partner for human advancement."
+            </div>
+        </div>
+    </header>
+
+    <section id="tiers" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-16 text-center">
+                <h2 class="text-3xl font-bold text-slate-900">Institutional Introduction: Four Logic Tiers</h2>
+                <p class="text-slate-500 mt-4">Eliminating Administrative Fiction while highlighting the 100%+ Productivity Leap.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="logic-tier-card border-emerald-500 bg-emerald-50/30 p-8 rounded-2xl card-hover border border-slate-200">
+                    <h3 class="text-xl font-bold text-emerald-900 mb-4">I. The AGC AI-Applied Educational Methodology</h3>
+                    <ul class="space-y-4 text-slate-700 text-sm">
+                        <li><strong>Interactive Learning Briefs:</strong> Moving beyond static textbooks to dynamic, self-directed query-based learning grounded in motivated learning AI studies.</li>
+                        <li><strong>AI Application Tool Directory:</strong> Access to Gemini, NotebookLM, Copilot, Claude, AntiGravity, Gem, Canvas, and the Nano Banana image suite.</li>
+                        <li><strong>Learn by doing, not by preparing to do:</strong>  An experiential approach where knowledge is acquired through active, hands-on participation and real-world application by Socratic interface, Audio dialog, and Lab participation.</li>
+                    </ul>
+                </div>
+
+                <div class="logic-tier-card border-blue-500 bg-blue-50/30 p-8 rounded-2xl card-hover border border-slate-200">
+                    <h3 class="text-xl font-bold text-blue-900 mb-4">II. Institutional Infrastructure & Flexible Integration</h3>
+                    <ul class="space-y-4 text-slate-700 text-sm">
+                        <li><strong>Zero-Friction Admissions:</strong> A 10-minute online interview replaces SAT, GMAT, GRE, or ACT. We measure Grit and Logic.</li>
+                        <li><strong>Hyper-Flexible Enrollment:</strong> "Single-Class Focus" allows mastery of one unit at a time without rigid time limits.</li>
+                        <li><strong>24/7 Digital Foundry:</strong> Accessing master-level faculty and education consultants leveraging technology for high level AI access, engaging specialized online networks, and adopting proactive professional networking.</li>
+                    </ul>
+                </div>
+
+                <div class="logic-tier-card border-amber-500 bg-amber-50/30 p-8 rounded-2xl card-hover border border-slate-200">
+                    <h3 class="text-xl font-bold text-amber-900 mb-4">III. The Ethical Compass & Federal Compliance</h3>
+                    <ul class="space-y-4 text-slate-700 text-sm">
+                        <li><strong>The 10/90 Ratio:</strong> Unwavering commitment to 10% Human Intelligence (HI) and 90% Artificial Intelligence (AI) utility.</li>
+                        <li><strong>Socratic AI Mentorship:</strong>—probing questions, dialogue, and scaffolding—to guide learners toward discovering answers themselves, rather than providing direct solutions. </li>
+                        <li><strong>Data-Protective Guardrails:</strong> Student individual study and research materials remain in a protected Google Drive/NotebookLM individually, exceeding FERPA 2.0 federal privacy regulation.</li>
+                    </ul>
+                </div>
+
+                <div class="logic-tier-card border-slate-800 bg-slate-100 p-8 rounded-2xl card-hover border border-slate-200">
+                    <h3 class="text-xl font-bold text-slate-900 mb-4">IV. Economic Value & ROI Analysis</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-300">
+                                    <th class="py-2">Program</th>
+                                    <th class="py-2">Cost Model</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 font-bold text-emerald-700">AGC (Specialized)</td>
+                                    <td class="py-2">$99 per credit hour</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2">Purdue Global</td>
+                                    <td class="py-2">$933 per credit hour</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="mt-4 text-xs text-slate-500 italic">Risk-Free Evaluation: Experience AGC for two weeks with no financial risk.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="syllabi" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-12 text-center">AI Foundation Certificate Course Syllabi</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h4 class="font-bold text-emerald-800 mb-2">A Prompt Acts as a Bridge to AI</h4>
+                    <span class="text-xs bg-slate-100 px-2 py-1 rounded">3 Credit Hours</span>
+                    <p class="text-sm mt-3 text-slate-600">Master core components: Persona, Task, Context, Format (PTCF) and Chain of Thought (CoT). Includes Prompt Lab practice.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h4 class="font-bold text-emerald-800 mb-2">Google Drive Workspace</h4>
+                    <span class="text-xs bg-slate-100 px-2 py-1 rounded">3 Credit Hours</span>
+                    <p class="text-sm mt-3 text-slate-600">Build an AI-powered "Vault" in Google Drive using AI structured Docs and Sheets data chunking logic gates.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h4 class="font-bold text-emerald-800 mb-2">Mastering NotebookLM</h4>
+                    <span class="text-xs bg-slate-100 px-2 py-1 rounded">3 Credit Hours</span>
+                    <p class="text-sm mt-3 text-slate-600">Covers dynamic architecture, Socratic questioning, conversational podcasts, and DSEM study-quiz practice.</p>
+                </div>
+				<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h4 class="font-bold text-emerald-800 mb-2">AI Ethics & Faulty Logic</h4>
+                    <span class="text-xs bg-slate-100 px-2 py-1 rounded">3 Credit Hours</span>
+                    <p class="text-sm mt-3 text-slate-600">"Faulty Logic" is the strict technical designation used to replace the popular but misleading term AI "hallucination" to be prevented.</p>
+                </div>
+				
+                <div class="md:col-span-2 lg:col-span-4 bg-emerald-900 text-white p-8 rounded-2xl">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2">AI Professional Certificate (CERT-1)</h3>
+                            <p class="text-emerald-200 text-sm mb-4">12 Credit Hour Intensive: Anchoring the HI/AI Collaboration Architecture.</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-3xl font-bold">$990</span>
+                            <p class="text-xs uppercase tracking-widest text-emerald-300">Enrollment Fee</p>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </section>
+
+    <section id="books" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold">AGC Textbook Library</h2>
+                <a href="https://davidsarahlee.myshopify.com" class="text-emerald-600 font-semibold hover:underline mt-2 inline-block">Visit store.aigeminicollege.org</a>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div class="p-4 border border-slate-100 rounded-lg bg-slate-50 text-xs font-semibold hover:bg-emerald-50 transition cursor-default">AI-Assisted Data-Driven Decision Making</div>
+                <div class="p-4 border border-slate-100 rounded-lg bg-slate-50 text-xs font-semibold hover:bg-emerald-50 transition cursor-default">The AI Web Portal Blueprint</div>
+                <div class="p-4 border border-slate-100 rounded-lg bg-slate-50 text-xs font-semibold hover:bg-emerald-50 transition cursor-default">Study Smarter with NotebookLM</div>
+                <div class="p-4 border border-slate-100 rounded-lg bg-slate-50 text-xs font-semibold hover:bg-emerald-50 transition cursor-default">Machine Learning & System Architecture</div>
+                <div class="p-4 border border-slate-100 rounded-lg bg-slate-50 text-xs font-semibold hover:bg-emerald-50 transition cursor-default">AI Engineering & Agent Architecture</div>
+                <div class="p-4 border border-slate-100 rounded-lg bg-slate-50 text-xs font-semibold hover:bg-emerald-50 transition cursor-default">AI & Python Overview</div>
+                <div class="p-4 border border-slate-100 rounded-lg bg-slate-50 text-xs font-semibold hover:bg-emerald-50 transition cursor-default">AI Fundamentals & Machine Logic</div>
+                <div class="p-4 border border-slate-100 rounded-lg bg-slate-50 text-xs font-semibold hover:bg-emerald-50 transition cursor-default">CLIs for AI Development</div>
+                <div class="p-4 border border-slate-100 rounded-lg bg-slate-50 text-xs font-semibold hover:bg-emerald-50 transition cursor-default">AI Software & Cloud Infrastructure</div>
+                <div class="p-4 border border-slate-100 rounded-lg bg-slate-50 text-xs font-semibold hover:bg-emerald-50 transition cursor-default">AI & JavaScript & HTML</div>
+                <div class="p-4 border border-slate-100 rounded-lg bg-slate-50 text-xs font-semibold hover:bg-emerald-50 transition cursor-default">Applications of Artificial Intelligence</div>
+                <div class="p-4 border border-slate-100 rounded-lg bg-slate-50 text-xs font-semibold hover:bg-emerald-50 transition cursor-default">Languages in AI Applications</div>
+                <div class="p-4 border border-slate-100 rounded-lg bg-slate-50 text-xs font-semibold hover:bg-emerald-50 transition cursor-default">The Basics of Prompting</div>
+                <div class="p-4 border border-slate-100 rounded-lg bg-slate-50 text-xs font-semibold hover:bg-emerald-50 transition cursor-default">AI Ethics & Faulty Logic</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="compliance" class="py-20 bg-slate-900 text-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-8">Decentralized Knowledge & Security</h2>
+            <div class="space-y-6 text-slate-300 text-lg">
+                <p>"AI GEMINI COLLEGE operates on a Decentralized Knowledge Model. We provide the 'Syllabus and Logic Gates' while the student maintains individually private 'Knowledge Repository.' This architecture meets FERPA 2.0 requirements by ensuring that no sensitive student study or research is stored on AGC-controlled servers."</p>
+                <div class="grid md:grid-cols-2 gap-8 text-left text-sm pt-8">
+                    <div class="bg-slate-800 p-6 rounded-xl">
+                        <h5 class="text-emerald-400 font-bold mb-2">Examination Security</h5>
+                        <p>Minimum of 50+ True/False term and final exams. Randomized Sequencing (Inference Stack) unique to every session to prevent copy/paste and pattern memorization.</p>
+                    </div>
+                    <div class="bg-slate-800 p-6 rounded-xl">
+                        <h5 class="text-emerald-400 font-bold mb-2">Pedagogical Integrity</h5>
+                        <p>Education specialists act as the "Manual Spark" audit of all curriculum and feedback to ensure alignment with AGC study and learning guide.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+		  <div class="flex space-x-4 text-align: center">
+                    <a href="index.php" class="text-[#3177EA] font-bold text-sm hover:underline">Home</a>                    
+                </div>
+    </section>
+              
+    <footer class="py-12 border-t border-slate-200 text-center text-slate-400 text-xs uppercase tracking-widest">
+        &copy; 2026 AI GEMINI COLLEGE | Bridge theoretical AI and industrial-scale application.
+    </footer>
+
+</body>
+</html>

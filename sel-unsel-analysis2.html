@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGC Analysis - HI-AI Collaborative Summary</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f0fdf4; padding: 20px; color: #333; }
+        .container { max-width: 1100px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        
+        h2 { font-size: 1.4rem; margin-bottom: 15px; border-bottom: 3px solid #66ff00; display: inline-block; padding-bottom: 5px; }
+        .unsel-title { border-bottom: 3px solid #d32f2f; color: #b91c1c; margin-top: 40px; }
+
+        table { width: 100%; border-collapse: collapse; margin-bottom: 10px; font-size: 0.95rem; }
+        th { padding: 12px; text-align: center; color: white; border: 1px solid #ddd; }
+        td { padding: 12px; border: 1px solid #ddd; text-align: center; }
+
+        /* MODIFICATION 1: Green Table Head for Selected */
+        .selected-table th { background-color: #2e7d32; }
+        .selected-table tr:nth-child(even) { background-color: #f9f9f9; }
+
+        /* Gray Table Head for Unselected */
+        .unselected-table th { background-color: #94a3b8; }
+        .unselected-table tr:nth-child(even) { background-color: #f1f5f9; }
+
+        /* MODIFICATION 2 & 3: Totals Bar Styling */
+        .totals-bar { 
+            display: flex; 
+            justify-content: space-around; 
+            background: #f8fafc; 
+            padding: 15px; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            font-size: 1.1rem; 
+            border: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+        .total-item span { color: #2e7d32; margin-left: 10px; }
+        .unsel-totals span { color: #b91c1c; }
+
+        .avg-cell { font-weight: bold; }
+        .btn-container { text-align: center; margin-top: 30px; }
+        .btn-proceed { 
+            padding: 15px 50px; background: #66ff00; color: #1b5e20; border: none; 
+            border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold;
+            box-shadow: 0 4px 0 #2e7d32; transition: 0.2s;
+        }
+        .btn-proceed:hover { transform: translateY(2px); box-shadow: 0 2px 0 #2e7d32; }
+
+        .footer { background: #66ff00; padding: 10px; text-align: center; margin-top: 40px; font-weight: bold; color: #1b5e20; border-top: 2px solid #2e7d32; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Attitudinal, Behavioral, Cognitive, Performance Factors - <span style="color:#2e7d32">Selected Summary</span></h2>
+    <table class="selected-table">
+        <thead>
+            <tr>
+                <th style="text-align:left;">Attribute</th>
+                <th>Selection Count</th>
+                <th>Sum of Public Rating</th>
+                <th>Rating Avg.</th>
+            </tr>
+        </thead>
+        <tbody id="selected-body"></tbody>
+    </table>
+
+    <div class="totals-bar" id="selected-totals-bar">
+        <div class="total-item">Selected total: <span id="sel-total-count">0</span></div>
+        <div class="total-item">Rank total: <span id="sel-total-rank">0</span></div>
+        <div class="total-item">Rank Avg: <span id="sel-total-avg">0.00</span></div>
+    </div>
+
+    <h2 class="unsel-title">Attitudinal, Behavioral, Cognitive, Performance Factors - Unselected Summary</h2>
+    <table class="unselected-table">
+        <thead>
+            <tr>
+                <th style="text-align:left;">Attribute</th>
+                <th>Unselected Count</th>
+                <th>Sum of Public Rating</th>
+                <th>Rating Avg.</th>
+            </tr>
+        </thead>
+        <tbody id="unselected-body"></tbody>
+    </table>
+
+    <div class="totals-bar unsel-totals" id="unselected-totals-bar">
+        <div class="total-item">Unselected total: <span id="unsel-total-count">0</span></div>
+        <div class="total-item">Rank total: <span id="unsel-total-rank">0</span></div>
+        <div class="total-item">Rank Avg: <span id="unsel-total-avg">0.00</span></div>
+    </div>
+
+    <div class="btn-container">
+        <!--button class="btn-proceed" onclick="proceedToAI()">Proceed to AI Analysis</button-->
+		 <button class="btn-proceed" onclick="proceedToAI()">Congratulations! Interview finished successfully. Notify to your email in 48 hours.</button>
+    </div>
+</div>
+
+<footer class="footer">
+    Copyright  AI Gemini College 2026 - Applied HPAM Interview Evaluation Model by AGC research
+</footer>
+
+<script>
+    function calculateSummary(data) {
+        const summary = {};
+        let grandTotalCount = 0;
+        let grandTotalRank = 0;
+
+        data.forEach(item => {
+            const attr = item.result || "General";
+            if (!summary[attr]) {
+                summary[attr] = { count: 0, sum: 0 };
+            }
+            const weight = parseFloat(item.weight || 0);
+            summary[attr].count++;
+            summary[attr].sum += weight;
+            
+            grandTotalCount++;
+            grandTotalRank += weight;
+        });
+
+        return { 
+            grouped: summary, 
+            grandCount: grandTotalCount, 
+            grandRank: grandTotalRank,
+            grandAvg: grandTotalCount > 0 ? (grandTotalRank / grandTotalCount).toFixed(2) : "0.00"
+        };
+    }
+
+    function renderTable(tableId, summaryObj, totalsIds) {
+        const tbody = document.getElementById(tableId);
+        tbody.innerHTML = '';
+        const summaryData = summaryObj.grouped;
+        
+        const sortedKeys = Object.keys(summaryData).sort();
+
+        sortedKeys.forEach(attr => {
+            const row = summaryData[attr];
+            const avg = (row.sum / row.count).toFixed(2);
+            
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="text-align:left;">${attr}</td>
+                <td>${row.count}</td>
+                <td>${row.sum}</td>
+                <td class="avg-cell">${avg}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        // Update Totals
+        document.getElementById(totalsIds.count).innerText = summaryObj.grandCount;
+        document.getElementById(totalsIds.rank).innerText = summaryObj.grandRank;
+        document.getElementById(totalsIds.avg).innerText = summaryObj.grandAvg;
+    }
+
+    window.onload = function() {
+        const selectedRaw = JSON.parse(localStorage.getItem('gac_selected_quizzes')) || [];
+        const unselectedRaw = JSON.parse(localStorage.getItem('gac_unselected_quizzes')) || [];
+
+        const selAnalysis = calculateSummary(selectedRaw);
+        const unselAnalysis = calculateSummary(unselectedRaw);
+
+        renderTable('selected-body', selAnalysis, {
+            count: 'sel-total-count',
+            rank: 'sel-total-rank',
+            avg: 'sel-total-avg'
+        });
+
+        renderTable('unselected-body', unselAnalysis, {
+            count: 'unsel-total-count',
+            rank: 'unsel-total-rank',
+            avg: 'unsel-total-avg'
+        });
+    };
+
+    function proceedToAI() {
+     // window.location.href = 'sel-unsel-analysis1.html';
+		window.location.href = 'index.php';
+    }
+</script>
+
+</body>
+</html>
