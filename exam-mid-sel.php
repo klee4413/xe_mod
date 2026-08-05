@@ -1,6 +1,6 @@
 <?php
 // [TIMESTAMP: 2026-04-05] -exam-mid-sel.php
-require_once 'db-connect.php';
+require_once __DIR__ . '/../db-connect.php';
 session_start();
 $student_id = $_SESSION['user_id'] ?? null;
 $first_name = $_SESSION['first_name'] ?? 'Scholar';
@@ -8,7 +8,7 @@ $last_name  = $_SESSION['last_name'] ?? '';
 if (!$student_id) {    header("Location: login.php");    exit();}
 $date = date("F j, Y");
 // 2. DATABASE CONNECTIVITY
-$host = 'localhost'; $db = 'ai-hi-work'; $user = 'root'; $pass = ''; 
+//$host = 'localhost'; $db = 'ai-hi-work'; $user = 'root'; $pass = ''; 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION

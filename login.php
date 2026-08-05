@@ -4,7 +4,7 @@
 //try {$pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 //} catch (PDOException $e) { //die("Database Connection Fault: " . $e->getMessage());}
 session_start();
-include 'db_connect.php';
+require_once __DIR__ . '/../db-connect.php';
 $error = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email_input = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);

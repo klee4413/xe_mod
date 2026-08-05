@@ -4,36 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NotebookLM: Comprehensive Feature Explorer wb-what-notebook.html</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #1a73e8;
-            --primary-hover: #1557b0;
-            --bg-color: #f8f9fa;
+            --primary: #059669;
+            --primary-hover: #047857;
+            --bg-color: #065f46;
             --sidebar-bg: #ffffff;
-            --text-dark: #202124;
-            --text-muted: #5f6368;
-            --border-color: #e0e0e0;
+            --text-dark: #000000;
+            --text-muted: #374151;
+            --border-color: #000000;
         }
 
         body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            display: flex; 
-            height: 100vh; 
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             margin: 0; 
+            padding: 12px;
             background-color: var(--bg-color);
             color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        /* Outer Frame Container */
+        #main-outer-frame {
+            width: 100%;
+            max-width: 1380px;
+            height: calc(100vh - 24px);
+            background-color: #fffbeb; /* bg-amber-50 */
+            border: 8px solid #059669; /* Thick Green Frame */
+            border-radius: 20px;
+            box-shadow: 12px 12px 0px #000000;
+            display: flex;
             overflow: hidden;
+            position: relative;
         }
         
         /* Layout */
         #sidebar { 
-            width: 350px; 
-            min-width: 300px;
+            width: 360px; 
+            min-width: 320px;
             background-color: var(--sidebar-bg); 
             padding: 24px; 
-            border-right: 1px solid var(--border-color); 
+            border-right: 4px solid var(--border-color); 
             overflow-y: auto; 
-            box-shadow: 2px 0 8px rgba(0,0,0,0.03);
             display: flex;
             flex-direction: column;
             gap: 16px;
@@ -41,29 +59,35 @@
         
         #content { 
             flex-grow: 1; 
-            padding: 48px; 
+            padding: 36px; 
             overflow-y: auto; 
             display: flex;
             align-items: flex-start;
             justify-content: center;
+            background-color: #fef3c7; /* Subtle amber fill inside content */
         }
 
         /* Typography & Header */
         h1 {
             font-size: 1.5rem;
+            font-weight: 900;
             margin: 0;
-            color: var(--primary);
+            color: #000;
             display: flex;
             align-items: center;
             gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
         }
 
         .subtitle {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 16px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: #000;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            border-bottom: 3px solid var(--border-color);
+            padding-bottom: 12px;
         }
 
         /* Tree Styles */
@@ -75,32 +99,38 @@
         
         ul.tree ul {
             list-style-type: none;
-            padding-left: 24px;
-            margin-top: 4px;
-            border-left: 1px dashed var(--border-color);
-            margin-left: 12px;
+            padding-left: 20px;
+            margin-top: 6px;
+            border-left: 3px solid var(--border-color);
+            margin-left: 14px;
         }
         
         ul.tree li { 
             margin: 8px 0; 
             cursor: pointer; 
             position: relative; 
-            font-weight: 500;
+            font-weight: 800;
             user-select: none;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
         /* Parent Nodes */
         .tree-folder {
             display: flex;
             align-items: center;
-            padding: 6px 8px;
-            border-radius: 6px;
-            transition: background 0.2s;
+            padding: 8px 10px;
+            border-radius: 10px;
+            border: 2px solid #000;
+            background-color: #a7f3d0;
+            box-shadow: 3px 3px 0px #000;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            font-size: 0.9rem;
         }
 
         .tree-folder:hover {
-            background-color: #f1f3f4;
+            background-color: #6ee7b7;
+            transform: translate(-1px, -1px);
+            box-shadow: 4px 4px 0px #000;
         }
         
         .tree-folder::before { 
@@ -108,7 +138,6 @@
             display: inline-block; 
             margin-right: 8px; 
             font-size: 14px; 
-            transition: transform 0.2s ease; 
         }
         
         li.expanded > .tree-folder::before { 
@@ -117,17 +146,28 @@
 
         /* Leaf Nodes */
         ul.tree li.leaf { 
-            font-weight: 400; 
-            color: var(--text-muted); 
-            padding: 6px 8px 6px 28px;
-            border-radius: 6px;
-            transition: all 0.2s ease;
+            font-weight: 700; 
+            font-size: 0.85rem;
+            color: #000; 
+            padding: 8px 10px 8px 30px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: all 0.15s ease;
             position: relative;
         }
         
-        ul.tree li.leaf:hover, ul.tree li.leaf.active { 
-            color: var(--primary); 
-            background-color: #e8f0fe;
+        ul.tree li.leaf:hover { 
+            color: #000; 
+            background-color: #fde047;
+            border-color: #000;
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        ul.tree li.leaf.active {
+            color: #000;
+            background-color: #67e8f9;
+            border-color: #000;
+            box-shadow: 3px 3px 0px #000;
         }
 
         ul.tree li.leaf::before { 
@@ -141,212 +181,244 @@
         
         /* Interactive Detail Card */
         .detail-card { 
-            background: #fff; 
-            border: 1px solid var(--border-color); 
-            padding: 40px; 
+            background: #ffffff; 
+            border: 4px solid var(--border-color); 
+            padding: 32px; 
             border-radius: 16px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            box-shadow: 8px 8px 0px #000000; 
             max-width: 800px;
             width: 100%;
-            animation: fadeIn 0.4s ease-out;
+            animation: fadeIn 0.3s ease-out;
         }
 
         .detail-header {
             display: flex;
             align-items: center;
             gap: 16px;
-            margin-bottom: 24px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 3px solid var(--border-color);
         }
 
         .detail-icon {
-            font-size: 2.5rem;
-            background: #e8f0fe;
+            font-size: 2.2rem;
+            background: #a7f3d0;
+            border: 3px solid #000;
+            box-shadow: 3px 3px 0px #000;
             width: 64px;
             height: 64px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 12px;
+            flex-shrink: 0;
         }
 
         .detail-card h2 { 
-            color: var(--text-dark); 
+            color: #000; 
             margin: 0; 
             font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
         }
 
         .tag {
             display: inline-block;
             padding: 4px 10px;
-            background: #f1f3f4;
-            color: var(--text-muted);
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            background: #fde047;
+            color: #000;
+            border: 2px solid #000;
+            box-shadow: 2px 2px 0px #000;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .detail-card p { 
-            line-height: 1.7; 
-            color: #444; 
-            font-size: 1.15rem; 
-            margin-bottom: 20px;
+            line-height: 1.6; 
+            color: #111827; 
+            font-size: 1.05rem; 
+            font-weight: 600;
+            margin-bottom: 24px;
         }
 
         .use-cases {
-            background: #f8f9fa;
+            background: #a7f3d0;
             padding: 20px;
             border-radius: 12px;
-            border-left: 4px solid var(--primary);
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0px #000;
         }
 
         .use-cases h4 {
             margin-top: 0;
-            color: var(--primary);
+            color: #000;
+            font-size: 1.1rem;
+            font-weight: 900;
+            text-transform: uppercase;
             margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .use-cases ul {
             margin: 0;
             padding-left: 20px;
-            color: #444;
+            color: #000;
+            font-weight: 700;
         }
 
         .use-cases li {
             margin-bottom: 8px;
+            line-height: 1.5;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            body { flex-direction: column; }
-            #sidebar { width: 100%; height: 40vh; border-right: none; border-bottom: 1px solid var(--border-color); }
-            #content { height: 60vh; padding: 20px; }
+        /* Responsive Handling */
+        @media (max-width: 868px) {
+            #main-outer-frame {
+                flex-direction: column;
+                height: auto;
+                max-height: none;
+            }
+            #sidebar { 
+                width: 100%; 
+                max-height: 45vh; 
+                border-right: none; 
+                border-bottom: 4px solid var(--border-color); 
+            }
+            #content { 
+                padding: 20px; 
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar with Use Tree -->
-    <div id="sidebar">
-        <div>
-            <h1>🧠 NotebookLM</h1>
-            <div class="subtitle">Architecture & Capabilities Tree</div>
-        </div>
-        
-        <ul class="tree" id="useTree">
-            
-            <!-- Category 1: Study & Learning -->
-            <li class="expanded">
-                <div class="tree-folder">📚 Study & Learning</div>
-                <ul>
-                    <li class="leaf" data-id="study_guides">Study Guides & Notes</li>
-                    <li class="leaf" data-id="quizzes">Interactive Quizzes</li>
-                    <li class="leaf" data-id="socratic">Socratic Thinking Partner</li>
-                </ul>
-            </li>
+    <!-- Outer Thick Green Framed Container -->
+    <div id="main-outer-frame">
 
-            <!-- Category 2: Research & Search -->
-            <li class="expanded">
-                <div class="tree-folder">🔍 Search & Deep Research</div>
-                <ul>
-                    <li class="leaf" data-id="grounded_search">Document-Grounded Search</li>
-                    <li class="leaf" data-id="web_discover">Web Source Discovery</li>
-                    <li class="leaf" data-id="deep_research">Deep Research Agent</li>
-                </ul>
-            </li>
-
-            <!-- Category 3: Dialog & Synthesis -->
-            <li class="expanded">
-                <div class="tree-folder">💬 Dialog & Synthesis</div>
-                <ul>
-                    <li class="leaf" data-id="chat_sources">Chat with Sources (Gemini-like)</li>
-                    <li class="leaf" data-id="multi_notebook">Multi-Notebook Context</li>
-                    <li class="leaf" data-id="summary_briefs">Executive Summaries & Briefs</li>
-                </ul>
-            </li>
-
-            <!-- Category 4: Audio & Podcast -->
-            <li class="expanded">
-                <div class="tree-folder">🎧 Audio & Podcast Tools</div>
-                <ul>
-                    <li class="leaf" data-id="audio_overview">Podcast Audio Overviews</li>
-                    <li class="leaf" data-id="audio_custom">Customizing Podcast Tone</li>
-                    <li class="leaf" data-id="transcription">Audio/YouTube Transcription</li>
-                </ul>
-            </li>
-
-            <!-- Category 5: Visuals & Exports -->
-            <li class="expanded">
-                <div class="tree-folder">📊 Visuals & Presentations</div>
-                <ul>
-                    <li class="leaf" data-id="slides">Presentation Slides</li>
-                    <li class="leaf" data-id="mindmaps">Mind Maps & Infographics</li>
-                    <li class="leaf" data-id="videos">Video Overviews</li>
-                </ul>
-            </li>
-
-        </ul>
-		 
-           
+        <!-- Sidebar with Use Tree -->
+        <div id="sidebar">
+            <div>
+                <h1>🧠 NotebookLM</h1>
+                <div class="subtitle">Architecture & Capabilities Tree</div>
             </div>
+            
+            <ul class="tree" id="useTree">
+                
+                <!-- Category 1: Study & Learning -->
+                <li class="expanded">
+                    <div class="tree-folder">📚 Study & Learning</div>
+                    <ul>
+                        <li class="leaf" data-id="study_guides">Study Guides & Notes</li>
+                        <li class="leaf" data-id="quizzes">Interactive Quizzes</li>
+                        <li class="leaf" data-id="socratic">Socratic Thinking Partner</li>
+                    </ul>
+                </li>
+
+                <!-- Category 2: Research & Search -->
+                <li class="expanded">
+                    <div class="tree-folder">🔍 Search & Deep Research</div>
+                    <ul>
+                        <li class="leaf" data-id="grounded_search">Document-Grounded Search</li>
+                        <li class="leaf" data-id="web_discover">Web Source Discovery</li>
+                        <li class="leaf" data-id="deep_research">Deep Research Agent</li>
+                    </ul>
+                </li>
+
+                <!-- Category 3: Dialog & Synthesis -->
+                <li class="expanded">
+                    <div class="tree-folder">💬 Dialog & Synthesis</div>
+                    <ul>
+                        <li class="leaf" data-id="chat_sources">Chat with Sources (Gemini-like)</li>
+                        <li class="leaf" data-id="multi_notebook">Multi-Notebook Context</li>
+                        <li class="leaf" data-id="summary_briefs">Executive Summaries & Briefs</li>
+                    </ul>
+                </li>
+
+                <!-- Category 4: Audio & Podcast -->
+                <li class="expanded">
+                    <div class="tree-folder">🎧 Audio & Podcast Tools</div>
+                    <ul>
+                        <li class="leaf" data-id="audio_overview">Podcast Audio Overviews</li>
+                        <li class="leaf" data-id="audio_custom">Customizing Podcast Tone</li>
+                        <li class="leaf" data-id="transcription">Audio/YouTube Transcription</li>
+                    </ul>
+                </li>
+
+                <!-- Category 5: Visuals & Exports -->
+                <li class="expanded">
+                    <div class="tree-folder">📊 Visuals & Presentations</div>
+                    <ul>
+                        <li class="leaf" data-id="slides">Presentation Slides</li>
+                        <li class="leaf" data-id="mindmaps">Mind Maps & Infographics</li>
+                        <li class="leaf" data-id="videos">Video Overviews</li>
+                    </ul>
+                </li>
+
+            </ul>
+
+            <!-- Library Link Banner -->
+            <div class="mt-auto pt-4 border-t-2 border-black text-center">
+                <a href="webbook-lib.php" 
+                   class="inline-block w-full bg-rose-400 hover:bg-rose-300 text-black font-black py-2 px-3 rounded-lg border-2 border-black shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 transition-all text-xs uppercase tracking-wider">
+                    <i class="fa-solid fa-book-bookmark mr-1"></i> Library Home
+                </a>
+            </div>
+
         </div>
 
-    </div>
-
-   <div class="fixed bottom-3 right-3 text-[19px] font-bold text-emerald-200 uppercase tracking-widest opacity-40">
-          <center><a href="campus.php" >
-                   <b> to Campus</b>
-                </a></center>
-    </div>
-    </div>
-
-    <!-- Main Detail Display -->
-    <div id="content">
-        <div id="default-view" class="detail-card">
-            <div class="detail-header">
-                <div class="detail-icon">✨</div>
-                <div>
-                    <h2>Welcome to the NoteBookLM</h2>
-                    <div class="tag">Interactive Guide</div>
+        <!-- Main Detail Display -->
+        <div id="content">
+            
+            <!-- Default Home View -->
+            <div id="default-view" class="detail-card">
+                <div class="detail-header">
+                    <div class="detail-icon">✨</div>
+                    <div>
+                        <h2>Welcome to NoteBookLM</h2>
+                        <div class="tag">Interactive Guide</div>
+                    </div>
+                </div>
+                <p>Select a node from the interactive tree on the left to explore the detailed functions, use cases, and workflows of Google NotebookLM.</p>
+                <div class="use-cases">
+                    <h4><i class="fa-solid fa-compass"></i> Getting Started</h4>
+                    <ul>
+                        <li>Expand the folders on the left to reveal specific capabilities.</li>
+                        <li>Click on a specific document icon (📄) to load its technical details.</li>
+                        <li>Discover how NotebookLM bridges the gap between raw data and cognitive insight.</li>
+                    </ul>
                 </div>
             </div>
-            <p>Select a node from the interactive tree on the left to explore the detailed functions, use cases, and workflows of Google NotebookLM.</p>
-            <div class="use-cases">
-                <h4>Getting Started</h4>
-                <ul>
-                    <li>Expand the folders on the left to reveal specific capabilities.</li>
-                    <li>Click on a specific document icon (📄) to load its technical details.</li>
-                    <li>Discover how NotebookLM bridges the gap between raw data and cognitive insight.</li>
-                </ul>
+
+            <!-- Dynamic Leaf Detail View -->
+            <div id="detail-view" class="detail-card hidden">
+                <div class="tag" id="detail-category">Category</div>
+                <div class="detail-header">
+                    <div class="detail-icon" id="detail-emoji">📝</div>
+                    <h2 id="detail-title">Title</h2>
+                </div>
+                <p id="detail-desc">Description goes here...</p>
+                
+                <div class="use-cases">
+                    <h4><i class="fa-solid fa-list-check"></i> Practical Simple Prompt Use Cases</h4>
+                    <ul id="detail-uses">
+                        <!-- Populated dynamically by JavaScript -->
+                    </ul>
+                </div>
             </div>
+            
         </div>
 
-        <div id="detail-view" class="detail-card hidden">
-            <div class="tag" id="detail-category">Category</div>
-            <div class="detail-header">
-                <div class="detail-icon" id="detail-emoji">📝</div>
-                <h2 id="detail-title">Title</h2>
-            </div>
-            <p id="detail-desc">Description goes here...</p>
-            
-            <div class="use-cases">
-                <h4>Practical Use Cases</h4>
-                <ul id="detail-uses">
-                    <!-- Populated by JS -->
-                </ul>
-            </div>
-			
-        </div>
-		
     </div>
 
     <!-- Interactive Logic -->
@@ -367,7 +439,7 @@
             'socratic': { 
                 category: 'Study & Learning', emoji: '🤔', title: 'Socratic Thinking Partner', 
                 desc: 'Instead of just handing you the answer, NotebookLM acts as an augmented reasoning partner. You can ask it to critique your arguments, spot logical fallacies, and guide you to conclusions via Socratic questioning.',
-                uses: ['Brainstorming essay outlines and having the AI poke holes in your thesis.', 'Verifying the logical structure of a research paper.', 'Debating interpretations of a philosophical text.']
+                uses: ['Brainstorming essay outlines and having the AI poke holes in my study.', 'Verifying the logical structure of a research paper.', 'Debating interpretations of a philosophical text.']
             },
 
             // Search
@@ -424,7 +496,7 @@
             // Visuals
             'slides': { 
                 category: 'Visuals & Presentations', emoji: '📽️', title: 'Presentation Slides', 
-                desc: 'Synthesizes messy notes and long documents into structured presentation outlines. With Gemini integrations, it can auto-generate slide decks and speaker notes, eliminating the \"blank page\" phase of presentation building.',
+                desc: 'Synthesizes messy notes and long documents into structured presentation outlines. With Gemini integrations, it can auto-generate slide decks and speaker notes, eliminating the "blank page" phase of presentation building.',
                 uses: ['Converting a research paper into a 10-slide pitch deck.', 'Creating a sales presentation from product spec sheets.', 'Generating speaker notes to accompany visual data.']
             },
             'mindmaps': { 
@@ -496,7 +568,6 @@
             });
         });
     </script>
-	
 
 </body>
 </html>

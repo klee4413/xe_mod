@@ -1,6 +1,6 @@
 <?php
 // GAC FOUNDRY: Multi-Language Laboratory v4.0
-require_once 'db-connect.php';
+require_once __DIR__ . '/../db-connect.php';
 // Use backticks around the table name to handle the hyphen
  
 // 1. SOVEREIGN API FETCH

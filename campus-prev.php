@@ -1,8 +1,8 @@
 <?php
-// 1. Database Connection campus-lang2code-lab.php
+// 1. Database Connection campus.php
 session_start();
 require_once __DIR__ . '/../db-connect.php';
-
+//require_once 'db-config.php';
 $student_id = $_SESSION['user_id']    ?? 0;
 $first_name = $_SESSION['first_name'] ?? 'Scholar';
 $last_name  = $_SESSION['last_name']  ?? '';
@@ -13,9 +13,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
- 
-//2, 6, 7, 16, 18, 29, 31, 33, 39
-$rooms_query = "SELECT id, room_name, description, linkto, button_color FROM campus_table WHERE id IN (2, 6, 7, 16, 18, 29, 31, 33, 39) and status = 'active' ORDER BY id ASC";
+// 2. SELECT description for the Hero Header
+$header_query = "SELECT description FROM campus_table WHERE room_name = 'header' LIMIT 1";
+$header_result = $conn->query($header_query);
+$hero_description = ($header_result->num_rows > 0) ? $header_result->fetch_assoc()['description'] : "Welcome to GAC Central Campus.";
+// CORRECT
+//$hero_description = ($header_result->num_rows > 0) ? ...
+// 4. SELECT rooms excluding header, sorted by group_order
+//$rooms_query = "SELECT id, room_name, description, linkto FROM campus_table WHERE room_name <> 'header' ORDER BY group_order ASC LIMIT 24";
+$rooms_query = "SELECT id, room_name, description, linkto, button_color FROM campus_table WHERE room_name <> 'header' and status = 'active' and group_order <> '0' ORDER BY room_group ASC";
 $rooms_result = $conn->query($rooms_query);
 ?>
 
@@ -29,21 +35,21 @@ $rooms_result = $conn->query($rooms_query);
     <title>AIGC Central Campus | Directory</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-   <style>
-    /* Clean, professional light blue gradient transition */
-    .hero-gradient { background: linear-gradient(135deg, #f0f9ff 0%, #83530F 100%); }
-    .card-transition { transition: all 0.3s ease; }
-    .hidden-description { display: none; }
-</style>
+    <style>
+        .hero-gradient { background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%); }
+        .card-transition { transition: all 0.3s ease; }
+        .hidden-description { display: none; }
+    </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800">
 
     <header class="hero-gradient border-b border-green-100 py-12 px-6">
         <div class="max-w-5xl mx-auto text-center">
-             
+            <!--h1 class="text-3xl md:text-4xl font-bold text-green-800 mb-6">GAC Central Campus</h1-->
 			 <h1 class="text-3xl md:text-4xl font-bold text-green-800 mb-2">
-             AIGC Administration
-              
+             AI Gemini College Central Campus 
+             <!--span class="text-green-600 text-xl md:text-2xl ml-4 font-mono"-->
+            <!--?php echo " ID:". $student_id. " - ". $first_name . " " . $last_name; ?-->
 			<span class="text-green-600 text-xl md:text-2xl ml-4 font-mono">
     <?php 
         // We use the locally assigned variables, not the raw $_SESSION keys
@@ -52,23 +58,23 @@ $rooms_result = $conn->query($rooms_query);
 </span>
         </span>
     </h1>
-            <!--p class="text-lg font-bold leading-relaxed text-green-700 max-w-4xl mx-auto">
+            <p class="text-lg font-bold leading-relaxed text-green-700 max-w-4xl mx-auto">
                 <?php echo htmlspecialchars($hero_description); ?>
-            </p-->
+            </p>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto py-12 px-4">
-        <!--h2 class="text-xl font-bold text-green-700 mb-8 tracking-widest uppercase">Campus labs</h2-->
+        <!--h2 class="text-xl font-bold text-green-700 mb-8 tracking-widest uppercase">Campus Facility Directory</h2-->
 		 
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">        
-        <h2 class="text-xl font-bold text-green-700 tracking-widest uppercase">AIGC Administration</h2>        
-        <a href="campus.php" 
+        <h2 class="text-xl font-bold text-green-700 tracking-widest uppercase">Campus Facility Directory</h2>        
+        <a href="logout.php" 
            class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-full transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2 text-sm uppercase tracking-wider">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewviewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
-            Back to Campus
+            Logout
         </a>
     </div>
 
@@ -111,7 +117,16 @@ $rooms_result = $conn->query($rooms_query);
                            Link to
                         </a>
                     </div>
- 
+<!--------MODIFIED----------------------------------------------------------------------------------------------------------
+<div class="mt-auto">
+    <a href="<?php echo htmlspecialchars($row['linkto']); ?>" target="_blank" rel="noopener noreferrer"					
+       style="background-color: #<?php echo ltrim($row['button_color'], '#'); ?>;"
+       class="inline-block text-white px-4 py-2 rounded-lg text-sm font-medium hover:brightness-90 transition-all shadow-sm">
+	          class="inline-block bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">
+       Link to
+    </a>
+</div>
+------------------------------------------------------------------------------------------------------------------->
 
 </div>
             <?php endwhile; ?>

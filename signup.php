@@ -1,47 +1,63 @@
 <?php
-// [TIMESTAMP: 2026-03-30] - signup.php
-//$host = 'localhost'; $db = 'ai-hi-work'; $user = 'root'; $pass = ''; 
-//try {$pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);} catch (PDOException $e) { die("Database Connection Fault."); }
-include 'db_connect.php';
+// =========================================================================
+// GAC COGNITIVE FOUNDRY — REGISTRATION GATEWAY : signup.php modified 6/9/2026 Tues
+// PURPOSE: SANITIZED, ROBUST SIGNUP CONTROLLER FOR ADMISSIONS PIPELINE
+// =========================================================================
+session_start();
+require_once __DIR__ . '/../db-connect.php'; // Corrected file pointer referencing standard hyphen convention
+date_default_timezone_set('America/Los_Angeles');
+
 $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // 1. SURGICAL SANITIZATION (Standard ASCII space validation)
     $first_name = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_SPECIAL_CHARS);
     $last_name  = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_SPECIAL_CHARS);
-    $email         = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    $password   = $_POST['password'];
-    $passcode   = $_POST['passcode'];
-    $phone_no   = filter_input(INPUT_POST, 'phone_no', FILTER_SANITIZE_NUMBER_INT);
-    $education  =  filter_input(INPUT_POST, 'education', FILTER_SANITIZE_SPECIAL_CHARS);    
+    $email      = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    
+    $password   = isset($_POST['password']) ? $_POST['password'] : '';
+    $passcode   = isset($_POST['passcode']) ? $_POST['passcode'] : '';
+    $education  = filter_input(INPUT_POST, 'education', FILTER_SANITIZE_SPECIAL_CHARS);    
+    
+    // 2. MOBILE-FRIENDLY PHONE NUMBER NORMALIZATION
+    $phone_raw  = isset($_POST['phone_no']) ? $_POST['phone_no'] : '';
+    $phone_no   = preg_replace('/[^0-9]/', '', $phone_raw); // Strip all parentheses, hyphens, spaces, and signs
+    
     $password_hash = password_hash($password, PASSWORD_BCRYPT);
+    
     try {
+        // Enforce basic parameters checks before database interaction
+        if (strlen($phone_no) !== 10) {
+            throw new Exception("Please enter a valid 10-digit phone number.");
+        }
+
         $stmt = $pdo->prepare("INSERT INTO sign_up (first_name, last_name, email, password_hash, passcode, phone_no, education) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $result = $stmt->execute([$first_name, $last_name, $email, $password_hash, $passcode, $phone_no, $education]);
 
-        if ($result) { session_start();
-			
-			                      // 2. SURGICAL PURIFICATION: Clear and Regenerate
-                                      session_unset();       // Removes all existing session variables (the old user)
-                                      session_destroy();   // Destroys the old session file
-                                      session_start();        // Starts a brand new, clean session for the NEW user
-                                      session_regenerate_id(true); // Creates a new session ID for security
+        if ($result) {
+            // 3. SECURE SESSION REGENERATION
+            session_unset();       // Clear old user states
+            session_destroy();     // Destroy old session file
+            session_start();       // Begin clean session state
+            session_regenerate_id(true);
 
-                                      $new_id = $pdo->lastInsertId();
+            $new_id = $pdo->lastInsertId();
 
-                                      // 3. GROUND NEW IDENTITY
-                                     $_SESSION['user_id'] = $new_id;
-                                     $_SESSION['first_name'] = $first_name;
-                                     $_SESSION['last_name'] = $last_name;
-                                     $_SESSION['email'] = $email;			
+            // 4. ESTABLISH SESSION IDENTITY
+            $_SESSION['user_id'] = $new_id;
+            $_SESSION['first_name'] = $first_name;
+            $_SESSION['last_name'] = $last_name;
+            $_SESSION['email'] = $email;            
+            
             $interviewee_data = [
-               // "id" => $pdo->lastInsertId(),
-			     "id" => $new_id,
+                "id" => $new_id,
                 "first_name" => $first_name,
                 "last_name" => $last_name,
                 "email" => $email,
                 "status" => "interviewee_pending"
             ];
             $_SESSION['interviewee_json'] = json_encode($interviewee_data);
+            
             header("Location: interview-guide.php");
             exit();
         }
@@ -50,8 +66,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($e->getCode() == 23000) {
             $error = "This email is in our records. Please sign in instead.";
         } else {
-            $error = " Logic Error: Contact Admin.";
+            // Include actual system diagnostic details for administrators during debugging
+            $error = "System Error: " . htmlspecialchars($e->getMessage());
         }
+    } catch (Exception $e) {
+        $error = htmlspecialchars($e->getMessage());
     }
 }
 ?>
@@ -75,9 +94,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="admin-card w-full max-w-[500px] p-10 shadow-sm">
         <div class="text-center mb-8">
-		<div class="h-10 w-14 bg-[#BC4A3C] rounded mx-auto mb-2 flex items-center justify-center text-white font-bold">AGC</div>
+            <div class="h-10 w-14 bg-[#BC4A3C] rounded mx-auto mb-2 flex items-center justify-center text-white font-bold">AGC</div>
             <h1 class="text-2xl font-normal text-[#202124]">Create AI Gemini College Account</h1>
-			<p class="text-[#91352A] mt-2 text-sm">Protected by Advanced Encryption</p>
+            <p class="text-[#91352A] mt-2 text-sm">Protected by Advanced Encryption</p>
         </div>
 
         <?php if($error): ?>
@@ -105,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             
             <input type="password" name="passcode" placeholder="Passcode(6-10 numbers & letters)" class="admin-input" required minlength="8" autocomplete="off">
-            <input type="tel" name="phone_no" placeholder="Phone number (10 digits)" class="admin-input" required maxlength="10" autocomplete="off">
+            <input type="tel" name="phone_no" placeholder="Phone number (10 digits)" class="admin-input" required maxlength="14" autocomplete="off">
             <input type="text" name="education" placeholder="Education - GED,AA,BS,or Other" class="admin-input" required minlength="2" autocomplete="off">
 
             <div class="flex items-center space-x-2 py-4">

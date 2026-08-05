@@ -1,6 +1,6 @@
 <?php
 // [TIMESTAMP: 2026-04-05] -exam-fin-sel.php
-require_once 'db-connect.php';
+require_once __DIR__ . '/../db-connect.php';
 session_start();
 $student_id = $_SESSION['user_id'] ?? null;
 $first_name = $_SESSION['first_name'] ?? 'Scholar';

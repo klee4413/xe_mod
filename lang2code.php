@@ -1,6 +1,6 @@
 <?php
 // AIGC FOUNDRY: Multi-Language Laboratory v4.1  lab-lang2code.php
-require_once 'db-connect.php'; //DATABASE ID AND PASSWORD EXTRACTED SECURELY through app db-connect.php 
+require_once __DIR__ . '/../db-connect.php'; //DATABASE ID AND PASSWORD EXTRACTED SECURELY through app db-connect.php 
                                //which can be used localhost and google cloud server
 // Use backticks around the table name to handle the hyphen
 // API KEY FETCHES SECURELY FROM DB

@@ -1,6 +1,6 @@
 <?php
 // AIGC FOUNDRY: Official Privacy & Data Sovereignty Protocol
-require_once 'db-connect.php';
+require_once __DIR__ . '/../db-connect.php';
 session_start();
 
 $first_name = $_SESSION['first_name'] ?? 'Scholar';

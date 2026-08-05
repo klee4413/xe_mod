@@ -6,7 +6,7 @@ $username = "admin";
 $password = "Kgemini7521";
 $dbname = "ai-hi-work";
 //$password = "";
-//require_once 'db-connect.php'; 
+//require_once __DIR__ . '/../db-connect.php'; 
 date_default_timezone_set('America/Los_Angeles');
 
 $conn = new mysqli($servername, $username, $password, $dbname);

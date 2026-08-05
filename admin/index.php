@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'db-connect.php'; //  PDO connection adlogin.php to index.php to admin
+require_once __DIR__ . '/../../db-connect.php'; //  PDO connection adlogin.php to index.php to admin
 
 // 1. SET THE NEURAL CLOCK TO PST
 date_default_timezone_set('America/Los_Angeles');

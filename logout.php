@@ -10,6 +10,6 @@ if (ini_get("session.use_cookies")) { $params = session_get_cookie_params();
 // 3. Destroy the server-side session
 session_destroy();
 // 4. Return to the Login Gate
-header("Location: index.html");
+header("Location: index.php");
 exit();
 ?>

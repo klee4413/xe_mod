@@ -3,7 +3,7 @@
  * MISSION: DYNAMIC API RETRIEVAL & GCP STABILITY
  */
 session_start();
-require_once 'db-connect.php'; // Ensure this file has your PDO $pdo connection
+require_once __DIR__ . '/../../db-connect.php'; // Ensure this file has your PDO $pdo connection
 date_default_timezone_set('America/Los_Angeles');
 
 // 1. DYNAMIC API KEY RETRIEVAL (Institutional Hook)

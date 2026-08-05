@@ -1,10 +1,15 @@
 <?php
-// tri-qna.php - Surgical Knowledge Hub
+// tri-qna.php - communication Knowledge Hub
+
 session_start();
-// Database connection same as above...
+require_once __DIR__ . '/../db-connect.php';
+//require_once 'db-connect.php';
+$student_id = $_SESSION['user_id']    ?? 0;
+$first_name = $_SESSION['first_name'] ?? 'Scholar';
+$last_name  = $_SESSION['last_name']  ?? '';
+$email     = $_SESSION['email']      ?? '';
 
 // 1. DATABASE GATEWAY
-$host = 'localhost'; $db = 'ai-hi-work'; $user = 'root'; $pass = ''; 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
@@ -17,47 +22,92 @@ try {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>GAC | Unified Q&A Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIGC | Unified Q&A Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .q-card { border-left: 4px solid #BC4A3C; transition: transform 0.2s; }
-        .q-card:hover { transform: translateX(4px); }
+        /* Neo-Brutalist card hover animation preserving search display */
+        .q-card {
+            transition: all 0.15s ease-in-out;
+        }
+        .q-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px #000;
+        }
     </style>
 </head>
-<body class="bg-slate-50 py-12 px-6">
-    <div class="max-w-4xl mx-auto">
-        <header class="mb-10 text-center">
-            <h1 class="text-3xl font-black text-slate-900">GAC Unified Knowledge Q&A Hub</h1>
-            <p class="text-slate-500 mt-2">Search by Building, Keyword, or Category</p>
+<body class="bg-emerald-700 min-h-screen p-3 md:p-8 font-sans">
+
+    <!-- Outer Thick Green Framed Container -->
+    <div class="max-w-5xl mx-auto bg-amber-50 rounded-2xl border-8 border-emerald-600 shadow-[10px_10px_0px_#000] p-6 md:p-10">
+        
+        <!-- Header with Top-Right Campus Button -->
+        <header class="mb-8 pb-6 border-b-4 border-black flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-black text-black tracking-tight uppercase">
+                    AIGC Knowledge Q&A
+                </h1>
+                <p class="text-sm font-bold text-gray-700 mt-1 uppercase tracking-wide">
+                    Search by Building, Keyword, or Category
+                </p>
+            </div>
+
+            <!-- Top Right Campus Link Button -->
+            <a href="campus.php" 
+               class="bg-yellow-400 hover:bg-yellow-300 text-black font-black py-2.5 px-5 rounded-xl border-3 border-black shadow-[4px_4px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000] transition-all flex items-center gap-2 text-xs uppercase tracking-wider shrink-0">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to Campus
+            </a>
         </header>
 
-        <input type="text" id="triSearch" onkeyup="triFilter()" placeholder="Search 'Bursar', 'Technical', 'Login'..." 
-               class="w-full p-5 rounded-2xl border-none shadow-xl mb-10 focus:ring-2 focus:ring-[#30C89F] outline-none">
+        <!-- Search Input (Neo-Brutalist Box) -->
+        <div class="mb-8">
+            <input type="text" id="triSearch" onkeyup="triFilter()" 
+                   placeholder="Search 'Bursar', 'Technical', 'Login'..." 
+                   class="w-full p-4 md:p-5 rounded-xl border-4 border-black bg-white text-black font-bold placeholder-gray-400 shadow-[5px_5px_0px_#000] focus:outline-none focus:bg-cyan-50 focus:shadow-[7px_7px_0px_#000] transition-all text-base md:text-lg">
+        </div>
 
-        <div id="qnaGrid" class="space-y-4">
+        <!-- Q&A Cards Grid -->
+        <div id="qnaGrid" class="space-y-5">
             <?php
-            $stmt = $pdo->query("SELECT * FROM qnachat_table ORDER BY category DESC");
+            $stmt = $pdo->query("SELECT * FROM qnachat_table ORDER BY category ASC");
             while($row = $stmt->fetch()): ?>
-                <div class="q-card bg-white p-6 rounded-r-xl shadow-sm" 
-                     data-keyword="<?php echo strtolower($row['keyword_trigger']); ?>"
-                     data-name="<?php echo strtolower($row['building_name']); ?>"
-                     data-category="<?php echo strtolower($row['category']); ?>">
+                <div class="q-card bg-white p-6 rounded-xl border-3 border-black shadow-[4px_4px_0px_#000]" 
+                     data-keyword="<?php echo htmlspecialchars(strtolower($row['keyword_trigger'])); ?>"
+                     data-name="<?php echo htmlspecialchars(strtolower($row['building_name'])); ?>"
+                     data-category="<?php echo htmlspecialchars(strtolower($row['category'])); ?>">
                     
                     <div class="flex justify-between items-center mb-3">
-                        <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2 py-1 rounded">
-                            <?php echo $row['category']; ?>
+                        <!-- Category Tag -->
+                        <span class="text-xs font-black uppercase tracking-wider text-black bg-cyan-300 px-3 py-1 rounded-md border-2 border-black shadow-[2px_2px_0px_#000]">
+                            <?php echo htmlspecialchars($row['category']); ?>
                         </span>
-                        <span class="text-[9px] font-mono text-slate-400">
-                            LOC: <?php echo $row['building_name'] ?: 'General'; ?>
+                        
+                        <!-- Location Tag -->
+                        <span class="text-xs font-mono font-bold text-black bg-rose-200 px-2.5 py-0.5 rounded border border-black">
+                            LOC: <?php echo htmlspecialchars($row['building_name'] ?: 'General'); ?>
                         </span>
                     </div>
-                    <h3 class="font-bold text-slate-800 mb-2"><?php echo $row['question']; ?></h3>
-                    <p class="text-sm text-slate-600 leading-relaxed"><?php echo $row['answer']; ?></p>
+
+                    <h3 class="font-extrabold text-black text-lg mb-2">
+                        <?php echo htmlspecialchars($row['question']); ?>
+                    </h3>
+                    <p class="text-sm font-medium text-gray-800 leading-relaxed bg-stone-100 p-3 rounded-lg border border-black/20">
+                        <?php echo htmlspecialchars($row['answer']); ?>
+                    </p>
                 </div>
             <?php endwhile; ?>
         </div>
+
+        <!-- Footer -->
+        <footer class="mt-10 pt-6 border-t-4 border-black text-center font-bold text-xs text-black uppercase tracking-wider">
+            &copy; 2026 AI Gemini College. Unified Knowledge Hub.
+        </footer>
+
     </div>
 
+    <!-- Client-Side Search Script -->
     <script>
         function triFilter() {
             const query = document.getElementById('triSearch').value.toLowerCase();

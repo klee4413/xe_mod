@@ -1,12 +1,12 @@
 <?php
 // 1. Database Connection campus.php
 session_start();
-require_once 'db-connect.php';
-//require_once 'db-config.php';
+require_once __DIR__ . '/../db-connect.php';
+//require_once 'db-connect.php';
 $student_id = $_SESSION['user_id']    ?? 0;
 $first_name = $_SESSION['first_name'] ?? 'Scholar';
 $last_name  = $_SESSION['last_name']  ?? '';
-$email      = $_SESSION['email']  ?? '';
+$email      = $_SESSION['email']      ?? '';
  
 $conn = new mysqli($host, $user, $pass, $db);
 if ($conn->connect_error) {
@@ -16,127 +16,122 @@ if ($conn->connect_error) {
 // 2. SELECT description for the Hero Header
 $header_query = "SELECT description FROM campus_table WHERE room_name = 'header' LIMIT 1";
 $header_result = $conn->query($header_query);
-$hero_description = ($header_result->num_rows > 0) ? $header_result->fetch_assoc()['description'] : "Welcome to GAC Central Campus.";
-// CORRECT
-//$hero_description = ($header_result->num_rows > 0) ? ...
-// 4. SELECT rooms excluding header, sorted by group_order
-//$rooms_query = "SELECT id, room_name, description, linkto FROM campus_table WHERE room_name <> 'header' ORDER BY group_order ASC LIMIT 24";
-$rooms_query = "SELECT id, room_name, description, linkto, button_color FROM campus_table WHERE room_name <> 'header' and status = 'active' and group_order <> '0' ORDER BY room_group ASC";
+$hero_description = ($header_result && $header_result->num_rows > 0) ? $header_result->fetch_assoc()['description'] : "Welcome to GAC Central Campus.";
+
+// 3. SELECT active rooms excluding header
+$rooms_query = "SELECT id, room_name, description, linkto, button_color FROM campus_table WHERE room_name <> 'header' AND status = 'active' AND group_order <> '0' ORDER BY room_group ASC";
 $rooms_result = $conn->query($rooms_query);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
-<link rel="shortcut icon" href="images/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+    <link rel="shortcut icon" href="images/favicon-32.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIGC Central Campus | Directory</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .hero-gradient { background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%); }
         .card-transition { transition: all 0.3s ease; }
         .hidden-description { display: none; }
     </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800">
+<body class="bg-emerald-700 min-h-screen p-2 md:p-6 font-sans text-gray-800">
 
-    <header class="hero-gradient border-b border-green-100 py-12 px-6">
-        <div class="max-w-5xl mx-auto text-center">
-            <!--h1 class="text-3xl md:text-4xl font-bold text-green-800 mb-6">GAC Central Campus</h1-->
-			 <h1 class="text-3xl md:text-4xl font-bold text-green-800 mb-2">
-             AI Gemini College Central Campus 
-             <!--span class="text-green-600 text-xl md:text-2xl ml-4 font-mono"-->
-            <!--?php echo " ID:". $student_id. " - ". $first_name . " " . $last_name; ?-->
-			<span class="text-green-600 text-xl md:text-2xl ml-4 font-mono">
-    <?php 
-        // We use the locally assigned variables, not the raw $_SESSION keys
-        echo " ID: " . htmlspecialchars($student_id) . " - " . htmlspecialchars($first_name) . " " . htmlspecialchars($last_name); 
-    ?>
-</span>
-        </span>
-    </h1>
-            <p class="text-lg font-bold leading-relaxed text-green-700 max-w-4xl mx-auto">
-                <?php echo htmlspecialchars($hero_description); ?>
-            </p>
-        </div>
-    </header>
+    <!-- Outer Green Border Wrapper -->
+    <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-emerald-600">
+        
+        <!-- Header Section -->
+        <header class="bg-white pt-6 pb-4 px-6 border-b border-gray-100">
+            <div class="text-center mb-4">
+                <h1 class="text-2xl md:text-3xl font-extrabold text-emerald-800 inline-flex flex-wrap items-center justify-center gap-2">
+                    <span>AI Gemini College Central Campus</span>
+                    <span id="studentIdentity" class="text-emerald-700 text-lg md:text-xl font-mono ml-2">
+                        ID: <?= htmlspecialchars($student_id) ?> - <?= htmlspecialchars(strtoupper($first_name . " " . $last_name)) ?>
+                    </span>
+                </h1>
+            </div>
 
-    <main class="max-w-7xl mx-auto py-12 px-4">
-        <!--h2 class="text-xl font-bold text-green-700 mb-8 tracking-widest uppercase">Campus Facility Directory</h2-->
-		 
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">        
-        <h2 class="text-xl font-bold text-green-700 tracking-widest uppercase">Campus Facility Directory</h2>        
-        <a href="logout.php" 
-           class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-full transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2 text-sm uppercase tracking-wider">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewviewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            Logout
-        </a>
+            <!-- 2400x800 Header Banner Image -->
+            <div class="w-full h-48 md:h-64 lg:h-72 rounded-xl overflow-hidden shadow-inner border border-gray-200 bg-gray-100">
+                <img 
+                    src="images/campus-header.jpg" 
+                    alt="AI Gemini College Campus Header" 
+                    class="w-full h-full object-cover object-center"
+                    onerror="this.src='https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2400&q=80'"
+                >
+            </div>
+        </header>
+
+        <!-- Main Directory Area -->
+        <main class="p-6 md:p-8 bg-gray-50/50">
+            
+            <!-- Directory Title & Logout -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">        
+                <h2 class="text-lg font-bold text-emerald-800 tracking-wider uppercase flex items-center gap-2">
+                    Campus Facility Directory
+                </h2>        
+                <a href="logout.php" 
+                   class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-5 rounded-xl transition-all duration-300 shadow-sm hover:shadow flex items-center gap-2 text-xs uppercase tracking-wider">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    Logout
+                </a>
+            </div>
+
+            <!-- Room Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <?php while($row = $rooms_result->fetch_assoc()): ?>
+                    <div class="bg-emerald-100/70 rounded-xl border border-emerald-200/80 p-5 card-transition hover:shadow-md relative flex flex-col justify-between">
+                        
+                        <!-- Toggle Expand/Collapse Button -->
+                        <button onclick="toggleDesc(<?= $row['id']; ?>)" 
+                                class="absolute top-4 right-4 text-emerald-800/60 hover:text-emerald-900 transition-colors p-1">
+                            <i id="icon-<?= $row['id']; ?>" class="fa-solid fa-chevron-down text-sm"></i>
+                        </button>
+
+                        <div>
+                            <!-- Room Title -->
+                            <div class="flex items-start gap-2.5 mb-3 pr-6">
+                                <span class="text-emerald-700 text-base mt-0.5"><i class="fa-solid fa-door-open"></i></span>
+                                <h3 class="font-bold text-gray-900 text-base leading-snug">  
+                                    <span class="text-xs font-normal text-emerald-600 mr-1"><?= $row['id']; ?>.</span> 
+                                    <?= htmlspecialchars($row['room_name']); ?> 
+                                </h3>
+                            </div>
+
+                            <!-- Expandable Description -->
+                            <div id="desc-<?= $row['id']; ?>" class="hidden-description mb-4 bg-white/60 p-3 rounded-lg border border-emerald-100">
+                                <p class="text-xs text-gray-700 leading-relaxed">
+                                    <?= htmlspecialchars($row['description']); ?>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Link Button -->
+                        <div class="mt-3 pt-2">
+                            <a href="<?= htmlspecialchars($row['linkto']); ?>" target="_blank" rel="noopener noreferrer"   
+                               style="background-color: #<?= ltrim($row['button_color'], '#'); ?>;"                       
+                               class="inline-block text-white px-4 py-1.5 rounded-lg text-xs font-semibold hover:brightness-90 transition-all shadow-sm">
+                               Link to
+                            </a>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center py-6 text-gray-400 text-xs border-t border-gray-100 bg-white">
+            &copy; 2026 AI Gemini College. All rights reserved.
+        </footer>
+
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        </div>
-</main>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <?php while($row = $rooms_result->fetch_assoc()): ?>
-                <div class="bg-green-100 rounded-xl shadow-sm border border-black-100 p-6 card-transition hover:shadow-md relative">
-                    
-                    <button onclick="toggleDesc(<?php echo $row['id']; ?>)" 
-                            class="absolute top-4 right-4 text-gray-400 hover:text-green-600 transition-colors">
-                        <i id="icon-<?php echo $row['id']; ?>" class="fa-solid fa-chevron-down"></i>
-                    </button>
-
-                    <div class="flex items-start gap-3 mb-4">
-                        <span class="text-green-600 text-xl"><i class="fa-solid fa-door-open"></i></span>
-                        <!--h3 class="font-bold text-gray-900 text-lg">
-                            <?php echo $row['id'] . ". " . htmlspecialchars($row['room_name']); ?>
-                        </h3-->
-<h3 class="font-bold text-gray-900 text-lg"> 
-    <span class="text-xs font-normal text-gray-400"><?php echo $row['id']; ?>.</span> 
-    <?php echo htmlspecialchars($row['room_name']); ?> 
-</h3>
-
-                    </div>
-
-                    <div id="desc-<?php echo $row['id']; ?>" class="hidden-description mb-6">
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            <?php echo htmlspecialchars($row['description']); ?>
-                        </p>
-                    </div>
-
-                    <div class="mt-auto">
-                        <a href="<?php echo htmlspecialchars($row['linkto']); ?>" target="_blank" rel="noopener noreferrer"	
-                         style="background-color: #<?php echo ltrim($row['button_color'], '#'); ?>;"						
-                           
-						 class="inline-block text-white px-4 py-2 rounded-lg text-sm font-medium hover:brightness-90 transition-all shadow-sm">
-                           Link to
-                        </a>
-                    </div>
-<!--------MODIFIED----------------------------------------------------------------------------------------------------------
-<div class="mt-auto">
-    <a href="<?php echo htmlspecialchars($row['linkto']); ?>" target="_blank" rel="noopener noreferrer"					
-       style="background-color: #<?php echo ltrim($row['button_color'], '#'); ?>;"
-       class="inline-block text-white px-4 py-2 rounded-lg text-sm font-medium hover:brightness-90 transition-all shadow-sm">
-	          class="inline-block bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">
-       Link to
-    </a>
-</div>
-------------------------------------------------------------------------------------------------------------------->
-
-</div>
-            <?php endwhile; ?>
-        </div>
-    </main>
-
-    <footer class="text-center py-10 text-gray-400 text-xs">
-        &copy; 2026 AI Gemini  College. All rights reserved.
-    </footer>
-
+    <!-- Client-Side JavaScript -->
     <script>
         function toggleDesc(id) {
             const desc = document.getElementById('desc-' + id);
@@ -150,29 +145,27 @@ $rooms_result = $conn->query($rooms_query);
                 icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
             }
         }
-	async function groundStudentIdentity() {
-    try {
-        const response = await fetch('get_student_session.php');
-        const student = await response.json();
 
-        if (student.status === "Authorized") {
-            // Surgical UI Injection
-            const identityDisplay = document.getElementById('studentIdentity');
-            if (identityDisplay) {
-                identityDisplay.innerText = `Scholar: ${student.first_name} ${student.last_name} (ID: ${student.id})`;
+        async function groundStudentIdentity() {
+            try {
+                const response = await fetch('get_student_session.php');
+                const student = await response.json();
+
+                if (student.status === "Authorized") {
+                    const identityDisplay = document.getElementById('studentIdentity');
+                    if (identityDisplay) {
+                        identityDisplay.innerText = `ID: ${student.id} - ${student.first_name.toUpperCase()} ${student.last_name.toUpperCase()}`;
+                    }
+                    console.log("GAC Campus: Identity Grounded", student);
+                } else {
+                    window.location.href = "login.php";
+                }
+            } catch (error) {
+                console.error("Logic Error: Identity Bridge Failed", error);
             }
-            console.log("GAC Campus: Identity Grounded", student);
-        } else {
-            // Security Redirect if session is lost
-            window.location.href = "login.php";
         }
-    } catch (error) {
-        console.error("Logic Error: Identity Bridge Failed", error);
-    }
-}
 
-// Trigger on load
-window.onload = groundStudentIdentity;
+        window.onload = groundStudentIdentity;
     </script>
 </body>
 </html>

@@ -1,9 +1,14 @@
 <?php
 // [TIMESTAMP: 2026-04-02] - GAC Enrollment & Credit Logic Gate course-regit-list.php
 session_start();
-
+require_once __DIR__ . '/../db-connect.php';
+//require_once 'db-connect.php';
+$student_id = $_SESSION['user_id']    ?? 0;
+$first_name = $_SESSION['first_name'] ?? 'Scholar';
+$last_name  = $_SESSION['last_name']  ?? '';
+$email      = $_SESSION['email']      ?? '';
 //$host = 'localhost'; $db = 'ai-hi-work'; $user = 'root'; $pass = ''; 
-require_once 'db_connect.php';
+
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION

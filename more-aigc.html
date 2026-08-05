@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head> <!-- www.aigeminicollege.org/index.html --changed to more-aigc.html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> AI Gemini College | Higher Education Landing Page</title>    
+    <!-- Meta Tags for SEO & Social -->
+    <meta name="description" content="AI Gemini  College (AGC): AI Learning with a 100% efficiency leap through AI Knowledge and the AI 10/ HI 90 HACA philosophy.">
+    <meta name="keywords" content="AI Gemini  College, AGC, EdTech 2026, AI Education, AI Application, Spark AI, Online Education">    
+    <!-- Tailwind CSS & Google Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">    
+    <style>
+        :root {
+            --gac-emerald: #10b981;
+            --gac-slate: #0f172a;
+            --gac-ivory: #fdfdfb;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--gac-ivory);
+            color: var(--gac-slate);
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+        }
+
+        .logic-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
+        }
+
+        .logic-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--gac-emerald);
+            box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.15);
+        }
+
+        .subtitle-hover {
+            position: relative;
+            display: inline-block;
+        }
+
+        .subtitle-hover::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--gac-emerald);
+            transition: width 0.3s ease;
+        }
+
+        .subtitle-hover:hover::after {
+            width: 100%;
+        }
+
+        .hero-gradient {
+            background: radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="antialiased selection:bg-emerald-100 selection:text-emerald-900">
+
+    <!-- Navigation -->
+    <nav class="glass-nav sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white font-black text-xl italic shadow-lg shadow-slate-200">AI</div>
+                <div class="leading-none">
+                    <span class="block font-extrabold text-lg tracking-tighter">AI GEMINI COLLEGE</span>
+                    <span class="block text-[10px] font-bold text-emerald-600 tracking-widest uppercase">More About</span>
+                </div>
+            </div>
+            <div class="hidden md:flex gap-10 text-sm font-semibold text-slate-500 uppercase tracking-widest">
+                <a href="#methodology" class="hover:text-emerald-600 transition">Methodology</a>
+                <a href="#infrastructure" class="hover:text-emerald-600 transition">Infrastructure</a>
+                <a href="#ethics" class="hover:text-emerald-600 transition">Ethics</a>
+                <a href="#economics" class="hover:text-emerald-600 transition">Economic Value</a>
+            </div>
+            <!--a href="#store" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition shadow-lg shadow-emerald-100 active:scale-95">
+                Bookstore
+            </a-->
+			<a href="about-gac.html" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition shadow-lg shadow-emerald-100 active:scale-95"-->
+                More Details
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient pt-24 pb-32 px-6">
+        <div class="max-w-5xl mx-auto text-center animate-fade-in">
+            <span class="inline-block px-4 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-[10px] font-black uppercase tracking-[0.3em] mb-8">
+                Institutional Introduction
+            </span>
+            <h1 class="text-6xl md:text-8xl font-extrabold text-slate-900 tracking-tighter leading-[0.9] mb-8">
+                An <span class="text-emerald-600">Absolute Safe Haven</span> for AI Application Knowledge Learning.
+            </h1>
+            <p class="text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed mb-12 font-medium">
+                Eliminating administrative fiction to highlight the <span class="text-slate-700 font-bold">100% Learning Productivity Leap</span>. Grounded in the 10/90 HACA (Human AI Collaboration Architecture) philosophy.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-green-900 text-white px-10 py-4 rounded-2xl font-bold hover:bg-green-800 transition shadow-xl active:scale-95">AI Foundation Certificate Course - $990</button>
+                <button class="bg-white border border-slate-200 text-slate-600 px-10 py-4 rounded-2xl font-bold hover:bg-slate-50 transition active:scale-95">12 Credit Hours</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Logic Tier I: Methodology -->
+    <section id="methodology" class="py-24 px-6 border-t border-slate-100">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
+                <div class="max-w-2xl">
+                    <h2 class="text-xs font-black text-emerald-600 uppercase tracking-[0.3em] mb-4">Logic Tier I</h2>
+                    <h3 class="text-4xl font-extrabold text-slate-900 tracking-tight">AI Application Education</h3>
+                    <p class="text-slate-500 mt-4 font-medium">Mastering AI applications to boost your dexterity in computing, advanced search, and audio-video (AV) processing..</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="logic-card bg-white p-8 rounded-[2.5rem] shadow-sm">
+                    <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 text-2xl mb-6">💡</div>
+                    <h4 class="text-xl font-bold mb-3 subtitle-hover">Interactive Study & Research Briefs</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">Moving beyond static textbooks to dynamic, query-based learning grounded in peer-reviewed personalized study and research.</p>
+                </div>
+                <div class="logic-card bg-white p-8 rounded-[2.5rem] shadow-sm">
+                    <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 text-2xl mb-6">🛠️</div>
+                    <h4 class="text-xl font-bold mb-3 subtitle-hover">AI Tool Directory</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">Direct access to a curated ecosystem: Gemini, NotebookLM, Claude, Canvas, Gem and the Nano Banana suite.</p>
+                </div>
+                <div class="logic-card bg-white p-8 rounded-[2.5rem] shadow-sm">
+                    <div class="w-12 h-12 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 text-2xl mb-6">📊</div>
+                    <h4 class="text-xl font-bold mb-3 subtitle-hover">Data-Driven Outcomes</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">Real-time dashboards visualize measurable performance and retention improvements correlating to advanced AI tool usage.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Logic Tier II: Infrastructure -->
+    <section id="infrastructure" class="py-24 px-6 bg-slate-900 text-white overflow-hidden relative">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="mb-20">
+                <h2 class="text-xs font-black text-emerald-400 uppercase tracking-[0.3em] mb-4">Logic Tier II</h2>
+                <h3 class="text-4xl font-extrabold tracking-tight">Institutional Infrastructure</h3>
+                <p class="text-slate-400 mt-4 max-w-4xl">Our advanced Learning Management System utilizes AI to deliver real-time Socratic study and research. Features include unlimited instant quiz practice designed for practical review and enhanced natural memorization—not stressful evaluation. Additionally, comprehensive online exams and an AI Prompt & Coding Lab build academic muscle memory with minimal instructor supervision. 
+online comprehensive exams, and ai prompt and computer language lab to increase muscle memory of study with minimum instructor's supervision.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="flex gap-6 items-start">
+                        <div class="text-3xl font-black text-emerald-500 mono">01</div>
+                        <div>
+                            <h5 class="text-xl font-bold mb-2">Zero-Friction Admissions and Learning</h5>
+                            <p class="text-slate-400 text-sm">No SAT, GMAT, or GRE. Potential is measured by Grit and Logic via a 10-minute online interview and review of simple education and career experience. AIGC welcomes everybody, young or old.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 items-start">
+                        <div class="text-3xl font-black text-emerald-500 mono">02</div>
+                        <div>
+                            <h5 class="text-xl font-bold mb-2">Hybrid Integration Model</h5>
+                            <p class="text-slate-400 text-sm">Our Hybrid Integration Model combines Human Intelligence (HI) strengths—such as context, empathy, and ethical judgment—with AI's computational power.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 items-start">
+                        <div class="text-3xl font-black text-emerald-500 mono">03</div>
+                        <div>
+                            <h5 class="text-xl font-bold mb-2">Knowledge Hub Architecture</h5>
+                            <p class="text-slate-400 text-sm">Learning via Knowledge Vault: AIGC uses AI based semi-automated learning systems, 
+referred to as a "Knowledge Vault," to search, gather, and verify facts from various knowledge database.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-800/50 p-10 rounded-[3rem] border border-slate-700 backdrop-blur-sm">
+                    <div class="text-center">
+                        <p class="text-emerald-400 font-bold mb-2 uppercase tracking-widest text-[10px]">AI Foundation Certificate Course</p>
+                        <h4 class="text-3xl font-black mb-6">The Holy Trinity in AI Learning</h4>
+                        <div class="space-y-3">
+                            <div class="h-2 bg-slate-700 rounded-full w-full"></div>
+                            <div class="h-2 bg-slate-700 rounded-full w-3/4 mx-auto"></div>
+                            <div class="h-2 bg-slate-700 rounded-full w-1/2 mx-auto"></div>
+                        </div>
+                        <div class="mt-8 grid grid-cols-3 gap-4">
+                            <div class="aspect-square bg-emerald-500/20 rounded-2xl flex items-center justify-center text-emerald-400 font-bold">Smart Learning<br>with<br>NotebookLM<br>in Google Drive</div>
+                            <div class="aspect-square bg-blue-500/20 rounded-2xl flex items-center justify-center text-blue-400 font-bold">Verified Learning<br>from<br> AI Ethics & <br>Faulty Logic</div>
+                            <div class="aspect-square bg-purple-500/20 rounded-2xl flex items-center justify-center text-purple-400 font-bold">Mastering Prompt <br>for<br>Fluent Interface<br>with AI</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Decorative elements -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px]"></div>
+    </section>
+
+    <!-- Logic Tier III: Ethics -->
+    <section id="ethics" class="py-24 px-6 bg-white">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-xs font-black text-emerald-600 uppercase tracking-[0.3em] mb-4">Logic Tier III</h2>
+                <h3 class="text-5xl font-extrabold text-slate-900 tracking-tight mb-6">Ethical Stewardship</h3>
+                <div class="h-1 w-24 bg-emerald-600 mx-auto rounded-full mb-8"></div>
+                <h4 class="text-2xl font-bold text-slate-700 mb-4">The 10/90 HACA Philosophy</h4>
+                <p class="text-slate-500 font-medium text-lg italic">"Humanity-Augmented Computer-Aided"</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="bg-emerald-50 p-12 rounded-[3rem] border border-emerald-100">
+                    <h5 class="text-2xl font-bold text-emerald-900 mb-6 uppercase tracking-tight">The HACA Rule</h5>
+                    <p class="text-emerald-800 leading-relaxed font-medium">
+                        At AIGC, we recognize that AI is a tool to augment human intuition. Our ethics framework ensures students leverage AI to handle repetitive tasks while retaining 100% control over critical reasoning and final synthesis.
+                    </p>
+                </div>
+                <div class="space-y-6">
+                    <div class="p-6 bg-white border border-slate-100 rounded-2xl hover:border-emerald-200 transition">
+                        <h6 class="font-bold text-slate-900 mb-1 subtitle-hover">AI Ethics & Faulty Logic</h6>
+                        <p class="text-xs text-slate-500">A core curriculum focusing on bias detection and responsible AI governance.</p>
+                    </div>
+                    <div class="p-6 bg-white border border-slate-100 rounded-2xl hover:border-emerald-200 transition">
+                        <h6 class="font-bold text-slate-900 mb-1 subtitle-hover">Sovereign Data Protection</h6>
+                        <p class="text-xs text-slate-500">Merging high-reliability logic with private AI knowledge hubs to ensure student data sovereignty.</p>
+                    </div>
+                    <div class="p-6 bg-white border border-slate-100 rounded-2xl hover:border-emerald-200 transition">
+                        <h6 class="font-bold text-slate-900 mb-1 subtitle-hover">Human-in-the-Loop Validation</h6>
+                        <p class="text-xs text-slate-500">Our systems require human verification for all high-stakes academic decisions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Logic Tier IV: Economics & Store -->
+    <section id="economics" class="py-24 px-6 bg-slate-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-xs font-black text-emerald-600 uppercase tracking-[0.3em] mb-4">Logic Tier IV</h2>
+                <h3 class="text-5xl font-extrabold text-slate-900 tracking-tight">Economic Value Engine</h3>
+                <p class="text-slate-500 mt-4 max-w-xl mx-auto font-medium">Maximizing career ROI while maintaining radical affordability.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
+                <div class="lg:col-span-2 bg-white p-12 rounded-[3.5rem] shadow-sm border border-slate-200">
+                    <h4 class="text-3xl font-black mb-8">The 12 Credit Hour Intensive</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 text-sm text-slate-600">
+                        <ul class="space-y-4">
+                            <li class="flex items-center gap-3"><span class="text-emerald-500 font-bold">✓</span> Mastering NotebookLM</li>
+                            <li class="flex items-center gap-3"><span class="text-emerald-500 font-bold">✓</span> AI Ethics & Logic</li>
+                            <li class="flex items-center gap-3"><span class="text-emerald-500 font-bold">✓</span> Prompting as a Bridge</li>
+                        </ul>
+                        <ul class="space-y-4">
+                            <li class="flex items-center gap-3"><span class="text-emerald-500 font-bold">✓</span> AI Knowledge Hubs</li>
+                            <li class="flex items-center gap-3"><span class="text-emerald-500 font-bold">✓</span> 100% Productivity Goal</li>
+                            <li class="flex items-center gap-3"><span class="text-emerald-500 font-bold">✓</span> Limited-Time $999 Rate</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-emerald-600 text-white p-12 rounded-[3.5rem] shadow-2xl flex flex-col justify-between items-center text-center">
+                    <div>
+                        <p class="text-[10px] font-black uppercase tracking-[0.4em] opacity-80 mb-4">Full Enrollment</p>
+                        <h4 class="text-6xl font-black mb-2">$990</h4>
+                        <p class="text-sm font-bold opacity-90">One-time Intensive Rate</p>
+                    </div>
+                    <button class="w-full bg-white text-emerald-700 py-4 rounded-2xl font-black uppercase tracking-widest text-xs mt-8 shadow-xl hover:bg-emerald-50 transition active:scale-95">Enroll Now</button>
+                </div>
+            </div>
+
+            <!-- AIGC Bookstore -->
+            <div id="store" class="bg-slate-900 rounded-[4rem] p-12 md:p-20 text-white">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-16">
+                    <div class="text-center md:text-left">
+                        <h4 class="text-4xl font-extrabold mb-2">AI GEMINI COLLEGE Library</h4>
+                        <p class="text-emerald-400 font-bold uppercase tracking-widest text-xs">Proprietary Textbooks • $3.99 Each</p>
+                    </div>
+                    <a href="https://store.aigeminicollege.org" target="_blank" class="border border-white/20 hover:bg-white/10 px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition">Visit Full Store</a>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition group cursor-default">
+                        <p class="text-[10px] text-emerald-400 font-bold mb-4 uppercase">Volume 01</p>
+                        <h5 class="text-sm font-bold leading-snug group-hover:text-emerald-400 transition">Study Smarter with NotebookLM</h5>
+                    </div>
+                    <div class="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition group cursor-default">
+                        <p class="text-[10px] text-emerald-400 font-bold mb-4 uppercase">Volume 02</p>
+                        <h5 class="text-sm font-bold leading-snug group-hover:text-emerald-400 transition">AI-Assisted Data Decision Making</h5>
+                    </div>
+                    <div class="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition group cursor-default">
+                        <p class="text-[10px] text-emerald-400 font-bold mb-4 uppercase">Volume 03</p>
+                        <h5 class="text-sm font-bold leading-snug group-hover:text-emerald-400 transition">Machine Learning & Architecture</h5>
+                    </div>
+                    <div class="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition group cursor-default">
+                        <p class="text-[10px] text-emerald-400 font-bold mb-4 uppercase">Volume 04</p>
+                        <h5 class="text-sm font-bold leading-snug group-hover:text-emerald-400 transition">AI Engineering & Agents</h5>
+                    </div>
+                    <div class="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition group cursor-default">
+                        <p class="text-[10px] text-emerald-400 font-bold mb-4 uppercase">Volume 05</p>
+                        <h5 class="text-sm font-bold leading-snug group-hover:text-emerald-400 transition">The AI Web Portal Blueprint</h5>
+                    </div>
+                    <div class="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition group cursor-default">
+                        <p class="text-[10px] text-emerald-400 font-bold mb-4 uppercase">Volume 06</p>
+                        <h5 class="text-sm font-bold leading-snug group-hover:text-emerald-400 transition">AI & JavaScript & JSX Logic</h5>
+                    </div>
+                    <div class="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition group cursor-default">
+                        <p class="text-[10px] text-emerald-400 font-bold mb-4 uppercase">Volume 07</p>
+                        <h5 class="text-sm font-bold leading-snug group-hover:text-emerald-400 transition">AI Ethics & Faulty Logic</h5>
+                    </div>
+                    <div class="p-6 bg-white/10 border border-emerald-500/50 rounded-2xl flex items-center justify-center text-center cursor-pointer hover:bg-white/20 transition">
+                        <span class="text-[10px] font-black uppercase tracking-[0.2em]">+ 10 More Titles</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ <section id="compliance" class="py-20 bg-slate-900 rounded-[4rem] text-white w-[90%] mx-auto">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-8">Decentralized Knowledge & Security</h2>
+            <div class="space-y-6 text-slate-300 text-lg">
+                <p>" AI Gemini College operates on a Decentralized Knowledge Model. We provide the 'Syllabus and Logic Gates,' while the student maintains a private 'Knowledge Repository.' This architecture exceeds FERPA 2.0 requirements by ensuring that no sensitive student research is stored on AIGC-controlled servers."</p>
+                <div class="grid md:grid-cols-2 gap-8 text-left text-sm pt-8">
+                    <div class="bg-slate-800 p-6 rounded-xl">
+                        <h5 class="text-emerald-400 font-bold mb-2">Examination Security</h5>
+                        <p>Minimum of 50+ randomized True/False term and final exams. Randomized Sequencing (Inference Stack) unique to every session to prevent copy/paste and pattern memorization.</p>
+                    </div>
+                    <div class="bg-slate-800 p-6 rounded-xl">
+                        <h5 class="text-emerald-400 font-bold mb-2">Pedagogical Integrity</h5>
+                        <p>Education specialists act as the "Manual Spark" (10%) audit of all curriculum and feedback to ensure alignment with AIGC study and research.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-white py-20 px-6 border-t border-slate-100">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="col-span-2">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white font-black text-sm italic">G</div>
+                    <span class="font-extrabold text-lg tracking-tighter">GEMINI AI COLLEGE</span>
+                </div>
+                <p class="text-slate-500 text-sm max-w-sm leading-relaxed mb-8">
+                    The Global standard for AI-applied education. Engineering sovereign knowledge hubs for scholars who demand 100% productivity.
+                </p>
+                <div class="flex gap-4">
+                    <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center hover:bg-emerald-50 hover:text-emerald-600 transition cursor-pointer">𝕏</div>
+                    <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center hover:bg-emerald-50 hover:text-emerald-600 transition cursor-pointer">in</div>
+                    <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center hover:bg-emerald-50 hover:text-emerald-600 transition cursor-pointer">yt</div>
+                </div>
+            </div>
+            <div>
+                <h5 class="font-bold bg-slate-900 mb-6 uppercase tracking-widest text-xs">The logic</h5>
+                <ul class="space-y-4 text-sm text-slate-500">
+                    <li><a href="#methodology" class="hover:text-emerald-600 transition">Methodology</a></li>
+                    <li><a href="#infrastructure" class="hover:text-emerald-600 transition">Infrastructure</a></li>
+                    <li><a href="#ethics" class="hover:text-emerald-600 transition">Ethics</a></li>
+                    <li><a href="#economics" class="hover:text-emerald-600 transition">Economic Value</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-bold text-slate-900 mb-6 uppercase tracking-widest text-xs">Resources</h5>
+                <ul class="space-y-4 text-sm text-slate-500">
+                    <li><a href="https://store.aigeminicollege.org" class="hover:text-emerald-600 transition">AIGC Store</a></li>
+                    <!--li><a hre="#" class="hover:text-emerald-600 transition">Student Login</a></li-->
+                    <li><a href="privacy.php" class="hover:text-emerald-600 transition">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-emerald-600 transition">Support</a></li>
+					<li><a href="about-gac.html" class="hover:text-emerald-600 transition">More on AIGC</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">© 2026 AI GEMINI COLLEGE College. All Rights Reserved.</p>
+            <p class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mono">System Status: Sovereign Sanctuary ACTIVE</p>
+        </div>
+    </footer>
+<div style="text-align: center; margin: 20px 0;">
+    <a href="index.php" style="
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #0070f3;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-family: sans-serif;
+        font-weight: bold;
+        font-size: 14px;
+        transition: background-color 0.2s;
+    " onmouseover="this.style.backgroundColor='#0051b3'" onmouseout="this.style.backgroundColor='#0070f3'">
+        ← Return to Main Portal
+    </a>
+</div>
+    <script>
+        // Interactive Elements
+        document.addEventListener('DOMContentLoaded', () => {
+            // Logic for smooth scroll is already handled by CSS 'scroll-smooth'
+            
+            // Console log for initialization
+            console.log("AIGC Landing Portal Initialized: Logic Tiers Loaded.");
+        });
+    </script>
+</body>
+</html>

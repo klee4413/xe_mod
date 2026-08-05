@@ -1,7 +1,7 @@
 <?php
 // [TIMESTAMP: 2026-03-02] - AIGC HIGH-VISIBILITY ANALYSIS 2.0
 session_start();
-require_once 'db-connect.php';
+require_once __DIR__ . '/../../db-connect.php';
 
 // --- 1. THE DEPARTMENT LOGIC MAP ---
 $dept_logic = [

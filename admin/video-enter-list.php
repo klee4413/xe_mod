@@ -1,6 +1,6 @@
 <?php
 // GAC FOUNDRY: Unified Video Entry & Monitor
-require_once 'db-connect.php';
+require_once __DIR__ . '/../../db-connect.php';
 
 $msg = "";
 

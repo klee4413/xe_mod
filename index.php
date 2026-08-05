@@ -226,12 +226,23 @@
         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
           <div>
             <h2 class="text-3xl font-black text-gray-800 uppercase tracking-tight">AIGC AI Professional Certificate</h2>
-            <p class="text-[#BC4A3C] font-bold uppercase text-xs tracking-[0.3em] mt-1">Learn AI theories and skills for real workplace tasks</p>
+            <p class="text-[#BC4A3C] font-bold uppercase text-xs tracking-[0.1em] mt-1">1.AI Ethics 2.Google Drive 3.Prompt 4.NotebookLM</p>
           </div>
           <div class="mt-4 md:mt-0 bg-gray-100 px-6 py-2 rounded-full border border-gray-200">
             <span class="text-gray-900 font-black">12 UNITS</span>
           </div>
         </div>
+		<!------------------------------------------------------------------------------->
+		 <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+          <div>
+            <h2 class="text-3xl font-black text-gray-800 uppercase tracking-tight">AIGC Auto Machenic Certificate</h2>
+            <p class="text-[#BC4A3C] font-bold uppercase text-xs tracking-[0.1em] mt-1">1.Automotive Fundamentals 2.Basic Electrical System 3.Braking System</p>
+          </div>
+          <div class="mt-4 md:mt-0 bg-gray-100 px-6 py-2 rounded-full border border-gray-200">
+            <span class="text-gray-900 font-black">9 UNITS</span>
+          </div>
+        </div>
+		<!------------------------------------------------------------------------------->
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="space-y-4">
@@ -239,13 +250,13 @@
               <div class="h-6 w-6 rounded bg-[#BC4A3C]/10 flex items-center justify-center mt-1 mr-3 shrink-0">
                 <span class="text-[#BC4A3C] font-bold text-xs">01</span>
               </div>
-              <p class="text-gray-700 text-sm font-medium"><span class="font-bold">4 Fundamental Courses: </span>1.AI Ethics & Faulty Logic  2.Google Drive Components  3.Prompt Logic  4.Smart & Easy Learn with NotebookLM</p>
+              <p class="text-gray-700 text-sm font-medium"><span class="font-bold">Core Essential Fundamental Courses </span></p>
             </div>
             <div class="flex items-start">
               <div class="h-6 w-6 rounded bg-[#BC4A3C]/10 flex items-center justify-center mt-1 mr-3 shrink-0">
                 <span class="text-[#BC4A3C] font-bold text-xs">02</span>
               </div>
-              <p class="text-gray-700 text-sm font-medium"><span class="font-bold">Fully Transferable:</span> All 12 units apply directly toward AIGC degree programs.</p>
+              <p class="text-gray-700 text-sm font-medium"><span class="font-bold">Fully Transferable:</span> All units apply directly toward AIGC degree programs.</p>
             </div>
           </div>
 
@@ -254,20 +265,24 @@
               <div class="h-6 w-6 rounded bg-green-100 flex items-center justify-center mt-1 mr-3 shrink-0">
                 <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
               </div>
-              <p class="text-gray-700 text-sm font-medium">No Degree or Diploma Required for Admission. No Application and Free  Online Interview.</p>
+              <p class="text-gray-800 text-sm font-small">No Degree or Diploma Required for Admission. No Application and Free  Online Interview.</p>
             </div> 
             <div class="flex items-start">
               <div class="h-6 w-6 rounded bg-green-100 flex items-center justify-center mt-1 mr-3 shrink-0">
                 <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
               </div>
-              <p class="text-gray-700 text-sm font-medium">Self-Paced AI Assisited Socratic Learning Model Option among Quiz Exercise, Video Overview, Chat Dialog, Images, Slide Deck and more .</p>
+              <p class="text-gray-800 text-sm font-small">Self-Paced AI Assisited Learning with Quiz, Video Overview, Chat Dialog, Images and more.</p>
             </div>
           </div>
         </div>
 
         <div class="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between">
-            <p class="text-xs text-gray-500 italic">"The shortest path to AI proficiency for the Sovereign Scholar."</p>
-            <a href="about-agc.php" class="text-[#BC4A3C] font-black text-sm uppercase hover:underline">*View More about AIGC →</a>
+            <!--p class="text-sm text-gray-500 italic">"The fastest path to proficiency by AI assistance."</p-->
+            <a href="wb-prompt1.php" class="text-[#BC4A3C] font-black text-sm uppercase hover:underline">*More on AI Learning Courses→</a>
+        <!--/div-->
+		 <!--div class="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between"-->
+            <!--p class="text-xs text-gray-500 italic">"The shortest path to AI proficiency for the Sovereign Scholar."</p-->
+            <a href="auto-course1.html" class="text-[#BC4A3C] font-black text-sm uppercase hover:underline">*More on Automotive courses →</a>
         </div>
       </div>
 
@@ -547,9 +562,10 @@ referred to as a "Knowledge Vault," to search, gather, and verify facts from var
 
       <div>
         <h5 class="font-black uppercase text-xs tracking-widest mb-4 opacity-80">Resources</h5>
-        <ul class="space-y-2 text-sm">
-          <li><a href="https://store.aigemincollege.org" class="hover:underline">AIGC Store</a></li>
+        <ul class="space-y-2 text-sm">         
+		  <li><a href="new-edu1.html" class="hover:underline">Education Policy</a></li>
           <li><a href="about-agc.php" class="hover:underline">About AIGC</a></li>
+		   <li><a href="https://store.aigemincollege.org" class="hover:underline">AIGC Store</a></li>
 		  <li><a href="privacy.php" class="hover:underline">Privacy</a></li>
           <li><a href="#" class="hover:underline">Terms of Use</a></li>
         </ul>

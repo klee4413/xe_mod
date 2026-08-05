@@ -1,6 +1,6 @@
 <?php
 session_start();//Using webbook_lib
-require_once 'db-connect.php';
+require_once __DIR__ . '/../db-connect.php';
 //require_once 'db-config.php';
 $student_id = $_SESSION['user_id']    ?? 0;
 $first_name = $_SESSION['first_name'] ?? 'Scholar';

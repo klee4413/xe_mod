@@ -1,12 +1,13 @@
 <?php
 // [TIMESTAMP: 2026-03-01] - AIGC ACTIVE ENROLLMENT FOUNDRY course-select-active.php
 session_start();
-require_once 'db_connect.php';
-//require_once 'db_connect_local.php';
-    $student_id = $_SESSION['user_id'] ?? null;
-    $first_name = $_SESSION['first_name'] ?? '';
-    $last_name  = $_SESSION['last_name'] ?? '';
-    $email      = $_SESSION['email'] ?? '';	
+require_once __DIR__ . '/../db-connect.php';
+
+$student_id = $_SESSION['user_id'] ?? null;
+$first_name = $_SESSION['first_name'] ?? '';
+$last_name  = $_SESSION['last_name'] ?? '';
+$email      = $_SESSION['email'] ?? '';	
+
 // [TIMESTAMP: 2026-04-01] - AIGC Enrollment Session Bridge
 // Logic: Catch the selection via AJAX and ground it in the session
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_save'])) {
@@ -14,8 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_save'])) {
     echo json_encode(["status" => "grounded"]);
     exit;
 }
-// ... rest of your existing db_connect and fetch code ...
-require_once 'db_connect.php'; 
+
 try {
     // SELECT ONLY UNLOCKED CLASSES AS REQUESTED
     $stmt = $pdo->prepare("SELECT * FROM classes WHERE status = 'UNLOCKED' ORDER BY class_id ASC");
@@ -24,7 +24,6 @@ try {
 } catch (PDOException $e) {
     die("Database Connection Fault: " . $e->getMessage());
 }
-//  ID:<?php echo $_SESSION['user_id']; ?--> <span class="text-blue-600 text-xl md:text-2xl ml-4 font-mono">
 ?>
 
 <!DOCTYPE html>
@@ -34,142 +33,201 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIGC | Active Course Selection</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .gac-border { border: 6px solid #059669; }
-        .gac-green { background-color: #059669; }
-        #enroll-popup { display: none; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); }
-        /* Large touch-friendly checkboxes for mobile */
-        input[type="checkbox"] { width: 1.6rem; height: 1.6rem; accent-color: #059669; cursor: pointer; }
+        #enroll-popup { 
+            display: none; 
+            background: rgba(0,0,0,0.75); 
+            backdrop-filter: blur(4px); 
+        }
+        /* Touch-friendly neo-brutalist checkboxes */
+        input[type="checkbox"] { 
+            width: 1.75rem; 
+            height: 1.75rem; 
+            accent-color: #059669; 
+            cursor: pointer; 
+            border: 2px solid #000;
+        }
+        .course-card {
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .course-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 7px 7px 0px #000;
+        }
     </style>
 </head>
-<body class="bg-[#F9FAFB] min-h-screen p-2 md:p-10 font-sans">
+<body class="bg-emerald-800 min-h-screen p-3 md:p-8 font-sans">
 
-    <div class="max-w-6xl mx-auto bg-white gac-border rounded-[3rem] overflow-hidden shadow-2xl relative">
+    <!-- Outer Thick Green Framed Container -->
+    <div class="max-w-6xl mx-auto bg-amber-50 rounded-2xl border-8 border-emerald-600 shadow-[12px_12px_0px_#000] p-6 md:p-10 relative">
         
-        <header class="p-8 md:p-12 bg-white border-b border-gray-100 flex flex-col md:flex-row justify-between items-center gap-6">
+        <!-- Header Banner Section -->
+        <header class="bg-emerald-300 border-4 border-black shadow-[6px_6px_0px_#000] rounded-xl p-6 md:p-8 mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
-                <h1 class="text-[10px] font-black uppercase tracking-[0.4em] text-green-900 mb-2">AIGC Course Enrollment</h1>
-                <h2 class="text-4xl font-black text-gray-900 tracking-tighter">AIGC Active Course Selection to Register</h2>
-                <p class="text-[20px] text-red-800 mt-2">12 Credit Hours (Full Time) Enrollment Allowed for Simultaneous Study.</p>
+                <span class="bg-yellow-300 border-2 border-black px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-widest text-black shadow-[2px_2px_0px_#000]">
+                    AIGC Course Enrollment
+                </span>
+                <h1 class="text-3xl md:text-4xl font-black text-black tracking-tight uppercase mt-3">
+                    Active Course Selection
+                </h1>
+                <p class="text-xs md:text-sm font-black text-rose-700 uppercase tracking-wide mt-1">
+                    <i class="fa-solid fa-circle-info mr-1"></i> 12 Credit Hours (Full Time) Allowed for Simultaneous Study
+                </p>
             </div>
-            <div class="bg-green-50 px-8 py-4 rounded-2xl border border-green-100 text-center">
-                <p class="text-[9px] font-bold text-green-600 uppercase tracking-widest">Student Account</p>
-                <!--p class="font-black text-gray-800"><?php echo htmlspecialchars($student_id); ?></p-->
-				  ID:<span class="text-blue-600 text-xl md:text-2xl ml-4 font-mono"><?php echo $student_id; ?> -  <?php echo $_SESSION['first_name'] . " " . $_SESSION['last_name']; ?>
-                 </span>
+
+            <!-- Student Badge -->
+            <div class="bg-white px-6 py-3 rounded-xl border-3 border-black shadow-[4px_4px_0px_#000] text-center shrink-0">
+                <p class="text-[10px] font-black text-emerald-800 uppercase tracking-widest">Student Account</p>
+                <p class="font-mono font-bold text-base md:text-lg text-blue-700 mt-0.5">
+                    ID: <?php echo htmlspecialchars($student_id); ?> - <?php echo htmlspecialchars($first_name . " " . $last_name); ?>
+                </p>
             </div>
         </header>
 
+        <!-- Course Selection Form -->
         <form id="active-enroll-form">
-            <div class="divide-y divide-gray-100">
+            <div class="space-y-6">
                 <?php foreach ($active_classes as $c): ?>
-                    <div class="p-8 md:p-12 flex items-start gap-8 hover:bg-green-50/30 transition-all group">
-                        <div class="pt-2">
+                    <div class="course-card bg-white p-6 md:p-8 rounded-xl border-3 border-black shadow-[5px_5px_0px_#000] flex flex-col sm:flex-row items-start gap-6">
+                        
+                        <!-- Checkbox Container -->
+                        <div class="pt-1 shrink-0 flex items-center justify-center bg-yellow-200 p-3 rounded-lg border-2 border-black shadow-[2px_2px_0px_#000]">
                             <input type="checkbox" name="selected_courses[]" 
                                    value="<?php echo htmlspecialchars($c['class_name']); ?>" 
                                    data-id="<?php echo htmlspecialchars($c['class_id']); ?>"
-                                   class="rounded-lg border-gray-300">
+                                   class="rounded border-2 border-black">
                         </div>
 
-                        <div class="flex-1">
-                            <div class="flex flex-wrap items-center gap-3 mb-4">
-                                <span class="bg-gray-900 text-white text-[10px] font-black px-3 py-1 rounded-md uppercase tracking-widest">
-                                    <?php echo $c['class_id']; ?>
+                        <!-- Course Info Body -->
+                        <div class="flex-1 w-full">
+                            <div class="flex flex-wrap items-center gap-2 mb-3">
+                                <span class="bg-black text-white text-xs font-mono font-black px-3 py-1 rounded border border-black shadow-[2px_2px_0px_#000]">
+                                    <?php echo htmlspecialchars($c['class_id']); ?>
                                 </span>
-                                <span class="text-[10px] font-black text-green-700 uppercase">Tier <?php echo $c['tier']; ?></span>
-                                <span class="text-[10px] font-bold text-black-500 uppercase"><?php echo $c['credit_hour']; ?> Credits</span>
+                                <span class="bg-cyan-300 text-black text-xs font-black px-2.5 py-0.5 rounded border border-black shadow-[2px_2px_0px_#000] uppercase">
+                                    Tier <?php echo htmlspecialchars($c['tier']); ?>
+                                </span>
+                                <span class="bg-emerald-200 text-black text-xs font-bold px-2.5 py-0.5 rounded border border-black shadow-[2px_2px_0px_#000] uppercase">
+                                    <?php echo htmlspecialchars($c['credit_hour']); ?> Credits
+                                </span>
                             </div>
 
-                            <h3 class="text-2xl font-black text-gray-900 mb-4 group-hover:text-green-700 transition-colors">
+                            <h2 class="text-xl md:text-2xl font-black text-black mb-3">
                                 <?php echo htmlspecialchars($c['class_name']); ?>
-                            </h3>
+                            </h2>
 
-                            <div class="bg-gray-50 p-8 rounded-[2rem] border border-gray-100 shadow-inner">
-                                <h4 class="text-[9px] font-black text-gray-400 uppercase mb-3 tracking-widest">Full Academic Syllabus</h4>
-                                <p class="text-sm text-gray-600 leading-relaxed whitespace-pre-line"><?php echo htmlspecialchars($c['syllabus']); ?></p>
+                            <!-- Syllabus Box -->
+                            <div class="bg-stone-50 p-5 rounded-lg border-2 border-black shadow-[3px_3px_0px_#000]">
+                                <h3 class="text-[10px] font-black text-gray-700 uppercase mb-2 tracking-widest border-b border-black/20 pb-1">
+                                    Full Academic Syllabus
+                                </h3>
+                                <p class="text-xs md:text-sm text-gray-800 leading-relaxed font-medium whitespace-pre-line">
+                                    <?php echo htmlspecialchars($c['syllabus']); ?>
+                                </p>
                             </div>
                         </div>
+
                     </div>
                 <?php endforeach; ?>
             </div>
 
-            <div class="p-10 bg-gray-50 border-t border-gray-100 text-center sticky bottom-0 z-40">
+            <!-- Sticky Process Button Footer -->
+            <div class="p-6 bg-emerald-200 rounded-xl border-4 border-black shadow-[6px_6px_0px_#000] text-center sticky bottom-6 z-30 mt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+                
+                <a href="campus.php" 
+                   class="w-full sm:w-auto bg-rose-400 hover:bg-rose-300 text-black font-black px-8 py-3.5 rounded-xl border-3 border-black shadow-[4px_4px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000] transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Campus
+                </a>
+
                 <button type="button" onclick="openEnrollPopup()" 
-                        class="gac-green text-white px-24 py-5 rounded-2xl font-black uppercase text-sm tracking-[0.2em] shadow-2xl hover:bg-green-700 transition-all transform hover:scale-105 active:scale-95">
-                     Process Selected Courses
+                        class="w-full sm:w-auto bg-emerald-400 hover:bg-emerald-300 text-black px-12 py-3.5 rounded-xl border-3 border-black font-black uppercase text-xs md:text-sm tracking-wider shadow-[4px_4px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000] transition-all flex items-center justify-center gap-2">
+                     <i class="fa-solid fa-check-double"></i> Process Selected Courses
                 </button>
+
             </div>
         </form>
+
+        <!-- Page Footer -->
+        <footer class="mt-8 pt-4 border-t-4 border-black text-center font-bold text-xs text-black uppercase tracking-wider">
+            &copy; 2026 AI Gemini College. Active Course Registration Gate.
+        </footer>
+
     </div>
-	   <div class="rounded-md shadow">
-              <a href="campus.php" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-black rounded-md text-white bg-[#BC4A3C] hover:bg-red-800 md:py-4 md:text-lg md:px-10 transition-all transform hover:scale-105">
-               Back to Campus
-              </a>
-            </div>
 
+    <!-- Enrollment Summary Popup -->
     <div id="enroll-popup" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-lg rounded-[3rem] p-10 shadow-2xl border-t-[12px] border-green-600 text-center">
+        <div class="bg-white w-full max-w-lg rounded-2xl p-8 border-4 border-black shadow-[10px_10px_0px_#000] text-center relative">
             
-            <h3 class="text-2xl font-black text-gray-900 mb-2">Enrollment Summary</h3>
-            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-8">Confirming Your Course Selection</p>
+            <h3 class="text-2xl font-black text-black uppercase tracking-tight mb-1">
+                Enrollment Summary
+            </h3>
+            <p class="text-xs font-bold text-gray-600 uppercase tracking-wider mb-6">
+                Confirming Your Course Selection
+            </p>
 
-            <ul id="summary-list" class="space-y-3 mb-10 max-h-60 overflow-y-auto px-4">
-                </ul>
+            <ul id="summary-list" class="space-y-3 mb-8 max-h-60 overflow-y-auto px-2">
+                <!-- Dynamic List Injected via JS -->
+            </ul>
 
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-3">
                 <a href="course-regit2.php" 
-                   class="w-full gac-green text-white py-5 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-xl hover:bg-green-700">
-                    Proceed to Course Registration..
+                   class="w-full bg-emerald-400 hover:bg-emerald-300 text-black py-4 rounded-xl border-3 border-black font-black uppercase text-xs tracking-wider shadow-[4px_4px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000] transition-all block">
+                    Proceed to Course Registration <i class="fa-solid fa-arrow-right ml-1"></i>
                 </a>
-                <button onclick="closeEnrollPopup()" class="text-[10px] text-gray-400 font-bold uppercase hover:text-red-500 tracking-widest">
+                
+                <button onclick="closeEnrollPopup()" 
+                        class="w-full bg-gray-200 hover:bg-gray-300 text-black py-3 rounded-xl border-2 border-black font-bold uppercase text-xs tracking-wider shadow-[2px_2px_0px_#000] transition-all">
                     Go Back & Modify
                 </button>
             </div>
+
         </div>
     </div>
 
+    <!-- JavaScript Handling Session Grounding & Popup Modal -->
     <script>
       async function openEnrollPopup() {
-    const boxes = document.querySelectorAll('input[name="selected_courses[]"]:checked');
-    const summary = document.getElementById('summary-list');
-    summary.innerHTML = '';
+        const boxes = document.querySelectorAll('input[name="selected_courses[]"]:checked');
+        const summary = document.getElementById('summary-list');
+        summary.innerHTML = '';
 
-    if (boxes.length === 0) {
-        alert("AIGC Logic Alert: Please select at least one active course.");
-        return;
-    }
+        if (boxes.length === 0) {
+            alert("AIGC Logic Alert: Please select at least one active course.");
+            return;
+        }
 
-    // 1. Prepare Data for Session Grounding
-    const formData = new FormData();
-    formData.append('ajax_save', '1');
-    boxes.forEach(box => {
-        formData.append('selected_courses[]', box.dataset.id); // Save IDs (AIM100, etc.)
-    });
-
-    // 2. Surgical Dispatch: Send to Session
-    try {
-        await fetch('course-select-active.php', { method: 'POST', body: formData });
-        
-        // 3. Update Visual Summary
+        // 1. Prepare Data for Session Grounding
+        const formData = new FormData();
+        formData.append('ajax_save', '1');
         boxes.forEach(box => {
-            const li = document.createElement('li');
-            li.className = "flex justify-between items-center bg-green-50 p-4 rounded-xl border border-green-100";
-            li.innerHTML = `
-                <span class="text-xs font-bold text-gray-800">${box.value}</span>
-                <span class="text-[10px] font-black text-green-600 bg-white px-2 py-1 rounded shadow-sm">${box.getAttribute('data-id')}</span>
-            `;
-            summary.appendChild(li);
+            formData.append('selected_courses[]', box.dataset.id); // Save IDs (AIM100, etc.)
         });
 
-        document.getElementById('enroll-popup').style.display = 'flex';
-    } catch (e) {
-        alert("Session Grounding Error: Connection Lost.");
-    }
-}
+        // 2. Dispatch: Send to Session
+        try {
+            await fetch('course-select-active.php', { method: 'POST', body: formData });
+            
+            // 3. Update Visual Summary in Neo-Brutalist Cards
+            boxes.forEach(box => {
+                const li = document.createElement('li');
+                li.className = "flex justify-between items-center bg-amber-100 p-3.5 rounded-lg border-2 border-black shadow-[2px_2px_0px_#000]";
+                li.innerHTML = `
+                    <span class="text-xs font-black text-black">${box.value}</span>
+                    <span class="text-[10px] font-mono font-black text-white bg-black px-2 py-0.5 rounded border border-black">${box.getAttribute('data-id')}</span>
+                `;
+                summary.appendChild(li);
+            });
 
-        function closeEnrollPopup() {
-            document.getElementById('enroll-popup').style.display = 'none';
+            document.getElementById('enroll-popup').style.display = 'flex';
+        } catch (e) {
+            alert("Session Grounding Error: Connection Lost.");
         }
+    }
+
+    function closeEnrollPopup() {
+        document.getElementById('enroll-popup').style.display = 'none';
+    }
     </script>
 </body>
 </html>

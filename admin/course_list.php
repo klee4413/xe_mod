@@ -1,8 +1,7 @@
 <?php
 // [TIMESTAMP: 2026-03-01] - GAC COURSE CATALOG course_list.php
 session_start();
-require_once 'db_connect.php';
-
+require_once __DIR__ . '/../../db-connect.php';
 $student_id = $_SESSION['scholar_id'] ?? '2026-AI-001';
 
 // Fetch all 53 classes from the logic gate course_list.php

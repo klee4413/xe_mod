@@ -97,9 +97,16 @@
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                 <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Logic Engine: Active</span>
             </div>
-            <button class="bg-emerald-600 hover:bg-emerald-500 text-slate-950 px-5 py-2 rounded-lg font-black text-[10px] uppercase tracking-widest transition-all shadow-lg shadow-emerald-500/10 active:scale-95">
-                Execute Strategy
-            </button>
+             
+			
+			 <a href="campus.php" target="_blank" style="text-decoration: none;">
+             <button class="bg-emerald-600 hover:bg-emerald-700 text-slate-950 px-10 py-4 rounded-full font-black uppercase tracking-widest text-xs transition transform hover:scale-105 active:scale-95 shadow-xl shadow-emerald-500/20">
+             <i class="fa-solid fa-wand-magic-sparkles"></i> Back to Campus
+             </button>
+             </a>
+			
+			
+			
         </div>
     </header>
 
@@ -366,14 +373,14 @@
                 </div>
             </div>
            <div class="pt-8 border-t border-white/5 flex flex-col items-center">
-    <!--a href="https://workspace.google.com/products/slides/" target="_blank" style="text-decoration: none;"-->
-	<a href="campus.php" target="_blank" style="text-decoration: none;">
-        <button class="bg-emerald-600 hover:bg-emerald-700 text-slate-950 px-10 py-4 rounded-full font-black uppercase tracking-widest text-xs transition transform hover:scale-105 active:scale-95 shadow-xl shadow-emerald-500/20">
-            Back to Campus
-        </button>
-    </a>
-    <p class="text-[10px] text-slate-800 mt-4 uppercase font-bold tracking-[0.3em]">Institutional Grade Output Ready</p>
-</div>
+    
+	         <a href="campus.php" target="_blank" style="text-decoration: none;">
+             <button class="bg-emerald-600 hover:bg-emerald-700 text-slate-950 px-10 py-4 rounded-full font-black uppercase tracking-widest text-xs transition transform hover:scale-105 active:scale-95 shadow-xl shadow-emerald-500/20">
+             <i class="fa-solid fa-wand-magic-sparkles"></i> Back to Campus
+             </button>
+             </a>
+             <p class="text-[10px] text-slate-800 mt-4 uppercase font-bold tracking-[0.3em]">Institutional Grade Output Ready</p>
+          </div>
         </div>
     </div>
 

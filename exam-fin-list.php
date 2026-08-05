@@ -1,7 +1,7 @@
 <?php
 // [TIMESTAMP: 2026-04-05] - GAC TERM EXAM FOUNDRY (Purified)  exam-fin-list.php
 session_start();
-require_once 'db-connect.php';
+require_once __DIR__ . '/../db-connect.php';
 $date = date("F j, Y");
 // 1. UNPACKING THE SOVEREIGN IDENTITY
 $student_id          = $_SESSION['user_id'] ?? null;  

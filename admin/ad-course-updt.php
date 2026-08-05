@@ -1,7 +1,7 @@
 <?php
 // [TIMESTAMP: 2026-03-01] - AIGC ADMINISTRATIVE MASTER CONTROL
 session_start();
-require_once 'db-connect.php';
+require_once __DIR__ . '/../../db-connect.php';
 
 // --- 1. THE CRUD LOGIC GATE ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

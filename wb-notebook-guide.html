@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><!--wb-notebook.html-->
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,27 +7,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brandDark: '#064e3b', /* Emerald 900 */
-                        brandBase: '#10b981', /* Emerald 500 */
-                        brandLight: '#ecfdf5', /* Emerald 50 */
-                        brandCard: '#dcfce7', /* Green 100 */
-                    }
-                }
-            };
-
-        // Interactive Studio Buttons Logic (Step 14)
+        // Interactive Studio Buttons Logic
         function showFeatureDetails(title, description, customization) {
             const displayArea = document.getElementById('feature-display-area');
             displayArea.innerHTML = `
-                <h4 class="text-xl font-bold text-brandDark mb-2"><i class="fa-solid fa-wand-magic-sparkles text-brandBase mr-2"></i>${title}</h4>
-                <p class="text-gray-700 mb-3">${description}</p>
-                <div class="bg-brandLight border-l-4 border-brandBase p-3 rounded-r-lg">
-                    <span class="font-bold text-sm text-brandDark">Customization Options:</span>
-                    <p class="text-sm text-gray-600 mt-1">${customization}</p>
+                <h4 class="text-xl font-black text-black mb-2 flex items-center gap-2"><i class="fa-solid fa-wand-magic-sparkles text-emerald-600"></i>${title}</h4>
+                <p class="text-black font-medium mb-3">${description}</p>
+                <div class="bg-yellow-200 border-2 border-black p-3 rounded-lg shadow-[2px_2px_0px_#000]">
+                    <span class="font-black text-xs uppercase text-black">Customization Options:</span>
+                    <p class="text-xs font-bold text-gray-800 mt-1">${customization}</p>
                 </div>
             `;
             displayArea.classList.remove('hidden');
@@ -36,269 +24,405 @@
     <style>
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .neo-card {
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
-        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        .neo-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 7px 7px 0px #000;
+        }
     </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800">
+<body class="bg-emerald-800 min-h-screen p-3 md:p-8 font-sans">
 
-    <!-- Main Content Area -->
-    <main class="min-h-screen bg-gray-50 relative">
-        <div class="max-w-4xl mx-auto p-6 md:p-10 pb-32 space-y-16">
+    <!-- Outer Thick Green Framed Container -->
+    <div class="max-w-7xl mx-auto bg-amber-50 rounded-2xl border-8 border-emerald-600 shadow-[12px_12px_0px_#000] p-4 md:p-8 relative">
+        
+        <!-- Header Banner Section -->
+        <header class="bg-emerald-300 border-4 border-black shadow-[6px_6px_0px_#000] rounded-xl p-6 md:p-8 mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <span class="bg-yellow-300 border-2 border-black px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-widest text-black shadow-[2px_2px_0px_#000]">
+                    AIGC Interactive Guide
+                </span>
+                <h1 class="text-3xl md:text-4xl font-black text-black tracking-tight uppercase mt-2">
+                   Gemini Notebook (NotebookLM) Desk 
+                </h1>
+                <p class="text-xs md:text-sm font-bold uppercase tracking-wider text-black/80 mt-1">
+                    AI Research & Study Assistant Guide
+                </p>
+            </div>
 
-            <!-- Section: Intro -->
-            <section id="intro" class="webbook-section">
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 mb-8">
-                    <h2 class="text-3xl font-bold text-brandDark mb-4">Class with NotebookLM Desk - Webbook</h2>
-<!--strong>***Direct to the </strong><a href="https://notebooklm.google.com/" target="_blank" class="text-red-600 hover:underline font-bold">Classroom with NotebookLM Desk </a>.</li-->					
-                    <p class="text-lg text-gray-700 leading-relaxed mb-6">
-                        Google NotebookLM is an AI-powered study and research assistant that analyzes uploaded documents (PDFs, Docs, websites, YouTube transcripts) and imported sources to provide grounded summaries, answers, and content generation, prioritizing data privacy.
-                    </p>
+            <a href="campus.php" 
+               class="bg-rose-400 hover:bg-rose-300 text-black font-black px-6 py-2.5 rounded-xl border-3 border-black shadow-[4px_4px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000] transition-all text-xs uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-graduation-cap"></i> Back to Campus
+            </a>
+        </header>
+
+        <!-- Main Body Grid: Left Sidebar Menu + Right Content -->
+        <div class="flex flex-col lg:flex-row gap-8">
+            
+            <!-- Left Sidebar Navigation Bar -->
+            <nav class="lg:w-1/4">
+                <div class="sticky top-6 bg-white rounded-xl p-5 border-4 border-black shadow-[6px_6px_0px_#000]">
+                    <h2 class="text-xs font-black text-black uppercase tracking-widest mb-4 pb-2 border-b-2 border-black flex items-center gap-2">
+                        <i class="fa-solid fa-list-ol"></i> Guide Sections
+                    </h2>
                     
-                    <div class="bg-brandLight p-6 rounded-xl border-l-4 border-brandBase">
-                        <h3 class="text-xl font-bold text-brandDark mb-3"><i class="fa-solid fa-rocket text-brandBase mr-2"></i>Things You Need to Do before and after class work.</h3>
-                        <p class="text-gray-700 mb-4"><b>1.Read textbook first</b> to find what is in there before you go to class NotebookLM desk. <br><b>2.Read this webbook:</b> It gives you a summary and guidance of your study direction quick.</p>
-                        <ul class="space-y-3 text-gray-700">
-                            <li><strong class="text-brandDark">3.Study Tools You Shall Use NotbookLM Desk:</strong> NotbookLM is a study and resarch tool for AI application. This allows students to interrogate the grounded data directly on their workspace<em>!</em></li>
-                            <li><strong class="text-brandDark">4.Study Performance Report:</strong> Use the outputs generated by the Canvas tool to create visual components, such as Infographics or Slide Decks, to visualize the key concepts of your study material for the website.</li>
-                        </ul>
+                    <ul class="space-y-2.5 text-xs font-black uppercase">
+                        <li>
+                            <a href="#intro" class="block p-2 rounded-lg border-2 border-black bg-emerald-100 hover:bg-yellow-300 text-black transition-all shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5">
+                                <i class="fa-solid fa-book-open mr-1"></i> Overview
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#step1-3" class="block p-2 rounded-lg border-2 border-black bg-emerald-100 hover:bg-yellow-300 text-black transition-all shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5">
+                                <i class="fa-solid fa-sliders mr-1"></i> Setup & Sources
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#step4-6" class="block p-2 rounded-lg border-2 border-black bg-emerald-100 hover:bg-yellow-300 text-black transition-all shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5">
+                                <i class="fa-solid fa-folder-tree mr-1"></i> Transform & Organize
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#step7-10" class="block p-2 rounded-lg border-2 border-black bg-emerald-100 hover:bg-yellow-300 text-black transition-all shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5">
+                                <i class="fa-solid fa-share-nodes mr-1"></i> Multimedia & Share
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#step11-13" class="block p-2 rounded-lg border-2 border-black bg-emerald-100 hover:bg-yellow-300 text-black transition-all shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5">
+                                <i class="fa-solid fa-comments mr-1"></i> Deep Engagement
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#step14" class="block p-2 rounded-lg border-2 border-black bg-emerald-100 hover:bg-yellow-300 text-black transition-all shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5">
+                                <i class="fa-solid fa-flask mr-1"></i> Studio Simulator
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#step15-16" class="block p-2 rounded-lg border-2 border-black bg-emerald-100 hover:bg-yellow-300 text-black transition-all shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5">
+                                <i class="fa-solid fa-network-wired mr-1"></i> Prompting & Ecosystem
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="mt-6 pt-4 border-t-2 border-black">
+                        <a href="https://notebooklm.google.com/" target="_blank" 
+                           class="w-full bg-cyan-300 hover:bg-cyan-200 text-black font-black py-2.5 px-3 rounded-lg border-2 border-black shadow-[3px_3px_0px_#000] transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-external-link"></i> Launch NotebookLM
+                        </a>
                     </div>
                 </div>
-            </section>
+            </nav>
 
-            <!-- Section: Steps 1-3 -->
-            <section id="step1-3" class="webbook-section">
-                <h2 class="text-3xl font-bold text-brandDark mb-6 border-b pb-2">Setup & Source Management</h2>
-                
-                <div class="space-y-6">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-xl font-bold text-brandBase mb-3">1. Access and Initial Setup - One time for each class(course)</h3>
-                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4">
-                            <li><strong>Sign In and</strong> Go to the <a href="#" target="_blank" class="text-blue-600 hover:underline">Classroom with NotebookLM</a> to log in using your personal or work NotebookLM account.</li>
-                            <li><strong>Create a Notebook:</strong> Select "Create new notebook" on the home dashboard. Give it a descriptive name to help you identify it later (e.g., "Learning with NotebookLM" or "Bio Lab Notes").</li>
-                        </ul>
-                    </div>
+            <!-- Main Content Area -->
+            <main class="lg:w-3/4 space-y-12">
 
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-xl font-bold text-brandBase mb-3">2. Add Your Sources (Textbook)</h3>
-                        <p class="text-gray-700 mb-3">NotebookLM’s power comes from being "grounded" in your specific documents. You can add up to 50 sources per notebook.</p>
-                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4">
-                            <li><strong>Upload Files:</strong> You can upload PDFs, text files (.txt), or markdown files directly from your computer. Upload up to 500 sources (Plus) or 50 sources (Free) per notebooklm.</li>
-                            <li><strong>Connect Google Drive:</strong> Select and import specific Google Docs or Google Slides.</li>
-                            <li><strong>Link Media:</strong> Paste URLs for YouTube videos (with captions) or public website links to treat them as primary sources.</li>
-                            <li><strong>Pasted Text:</strong> Copy and paste snippets of text directly into the source panel.</li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-xl font-bold text-brandBase mb-3">3. Analyze and Interact (Chat)</h3>
-                        <p class="text-gray-700 mb-3">Once sources are added, NotebookLM automatically generates a summary for each. You can then use the Chat panel at the bottom to query them.</p>
-                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4">
-                            <li><strong>Ask Specific Questions:</strong> Type natural language questions like, "What are the three main risks mentioned in these documents?".</li>
-                            <li><strong>Check Citations:</strong> When the AI answers, it provides numbered citations. Click these to see the exact passage in your original source where the information originated.</li>
-                            <li><strong>Focus Your Query:</strong> Toggle specific sources on or off in the left panel to limit the AI's search to only certain documents.</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section: Steps 4-6 -->
-            <section id="step4-6" class="webbook-section">
-                <h2 class="text-3xl font-bold text-brandDark mb-6 border-b pb-2">Transform, Organize & Collaborate</h2>
-                
-                <div class="space-y-6">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-xl font-bold text-brandBase mb-3">4. Transform and Organize (Studio)</h3>
-                        <p class="text-gray-700 mb-3">The Studio panel allows you to generate new content based on your study material.</p>
-                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4">
-                            <li><strong>Audio Overview (AI Podcast):</strong> Click "Generate" in the Audio Overview section to create a podcast-style discussion between two AI hosts about your sources. You can even use Interactive Mode to talk back to the hosts and ask for clarifications.</li>
-                            <li><strong>Study Tools:</strong> Use the Studio to instantly generate Quizzes, Flashcards, Study Guides, or FAQ lists to test your knowledge.</li>
-                            <li><strong>Structural Reports:</strong> Prompt the AI to create briefing docs, timelines, or even Mind Maps to visualize connections between complex topics.</li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-xl font-bold text-brandBase mb-3">5. Create and Pin Notes</h3>
-                        <p class="text-gray-700">Save AI-generated answers or write your own notes in the notebook, then pin them to create summaries, outlines, or study guides.</p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-xl font-bold text-brandBase mb-3">6. Collaboration and Export</h3>
-                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4">
-                            <li><strong>Share Your Work:</strong> Click the "Share" button in the top-right corner to invite collaborators to view or edit the notebook.</li>
-                            <li><strong>Export Findings:</strong> You can export generated reports directly to Google Docs or tables to Google Sheets for further formatting.</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section: Steps 7-10 -->
-            <section id="step7-10" class="webbook-section">
-                <h2 class="text-3xl font-bold text-brandDark mb-6 border-b pb-2">Advanced Multimedia & Sharing</h2>
-                
-                <div class="space-y-6">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-xl font-bold text-brandBase mb-3">7. Audio Overview</h3>
-                        <p class="text-gray-700">Generate a podcast-style audio summary of your sources.</p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-xl font-bold text-brandBase mb-3">8. Content Transformation</h3>
-                        <p class="text-gray-700">Convert materials into new formats, such as study guides, slide outlines, or creative content.</p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-xl font-bold text-brandBase mb-3">9. Visualizations</h3>
-                        <p class="text-gray-700">Create mind maps and other visualizations to understand complex information.</p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-xl font-bold text-brandBase mb-3">10. Share Notebooks</h3>
-                        <p class="text-gray-700">Collaborate with others by sharing your notebook with its associated AI insights.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section: Steps 11-13 -->
-            <section id="step11-13" class="webbook-section">
-                <h2 class="text-3xl font-bold text-brandDark mb-6 border-b pb-2">Deep Engagement</h2>
-                
-                <div class="space-y-6">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-xl font-bold text-brandBase mb-3">11. Explore the Source Guide</h3>
-                        <p class="text-gray-700">Once sources are uploaded, NotebookLM automatically generates a Source Guide that provides a summary and suggests key questions or topics for exploration.</p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-xl font-bold text-brandBase mb-3">12. Engage with Content (Chat)</h3>
-                        <p class="text-gray-700">Type queries in the chat interface to ask questions about the uploaded sources. The AI will provide answers with citations linking directly to the source document, minimizing hallucinations.</p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-xl font-bold text-brandBase mb-3">13. Create and Pin Notes</h3>
-                        <p class="text-gray-700">Save AI-generated answers or write your own notes in the notebook, then pin them to create summaries, outlines, or study guides.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section: Step 14 (Interactive Interface) -->
-            <section id="step14" class="webbook-section">
-                <h2 class="text-3xl font-bold text-brandDark mb-4 border-b pb-2">14. The Interactive Studio Simulator</h2>
-                <p class="text-gray-600 mb-6">The UI elements below are to explore the functions and <b>customization options</b> within NotebookLM.</p>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Virtual UI Panel -->
-                    <div class="col-span-2 bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
-                        <!-- Top Bar Mock -->
-                        <div class="bg-gray-100 p-3 border-b flex justify-between items-center">
-                            <button onclick="showFeatureDetails('Title Creation', 'Edits the name of the current notebook.', 'Click to rename. Emojis and text supported.')" class="font-bold text-gray-700 hover:text-brandBase"><i class="fa-solid fa-pen-to-square mr-2 text-xs"></i>Tools to Use While Study or Research</button>
-                            <div class="space-x-2">
-                                <button onclick="showFeatureDetails('Sharing', 'Collaborate with others by sharing your notebook.', 'Manage viewing/editing permissions for specific Google accounts or generate a public link.')" class="px-3 py-1 bg-brandBase text-white text-xs rounded-full hover:bg-brandDark"><i class="fa-solid fa-user-plus mr-1"></i> Share</button>
-                                <button onclick="showFeatureDetails('Configure Notebook', 'Access overarching notebook settings.', 'Adjust default language outputs or manage deep integrations.')" class="text-gray-500 hover:text-gray-800"><i class="fa-solid fa-gear"></i></button>
-                            </div>
-                        </div>
-
-                        <div class="flex h-48">
-                            <!-- Left Sidebar Mock (Sources) -->
-                            <div class="w-1/3 bg-gray-50 border-r p-4 overflow-y-auto">
-                                <h5 class="text-xs font-bold text-gray-500 uppercase mb-3">Sources to Import</h5>
-                                <button onclick="showFeatureDetails('Add Sources', 'Upload PDFs, text files, Google Docs, or YouTube links up to the notebook limit.', 'Choose from Local Drive, Google Drive, URL, or Paste Text.')" class="w-full py-2 border-2 border-dashed border-gray-300 rounded-lg text-sm text-gray-500 hover:border-brandBase hover:text-brandBase mb-2"><i class="fa-solid fa-plus mr-1"></i> Add Source</button>
-                                <button onclick="showFeatureDetails('Search the web for new sources', 'Use Google Search to directly pull in and ground new facts from the internet.', 'Input query; NotebookLM automatically converts the web page into a readable source.')" class="w-full py-2 border-2 border-dashed border-gray-300 rounded-lg text-sm text-gray-500 hover:border-brandBase hover:text-brandBase mb-4"><i class="fa-solid fa-globe mr-1"></i> Web Search</button>
-                                
-                                <!--div class="bg-white p-2 rounded shadow-sm text-xs text-gray-700 border-l-2 border-brandBase">Textbook_Ch1.pdf</div-->
-                            </div>
-
-                            <!-- Main Area Mock (Studio/Chat) -->
-                            <div class="w-2/3 h-[50vh] p-4 flex flex-col justify-between">
-                                <div class="grid grid-cols-2 gap-2 mb-4">
-                                    <button onclick="showFeatureDetails('Audio Overview', 'Generates a 2-host podcast discussing your sources.', 'Customize tone, target audience, and specific topics to focus on before generating.')" class="p-2 bg-blue-50 text-blue-700 rounded text-xs text-left hover:bg-blue-100"><i class="fa-solid fa-headphones mr-1"></i> Audio Overview</button>
-                                    <button onclick="showFeatureDetails('Slide Deck', 'Converts your notes into a presentation outline.', 'Specify number of slides, target audience, and export directly to Google Slides.')" class="p-2 bg-orange-50 text-orange-700 rounded text-xs text-left hover:bg-orange-100"><i class="fa-solid fa-presentation-screen mr-1"></i> Slide Deck</button>
-                                    <button onclick="showFeatureDetails('Mind Map', 'Visually maps connections between concepts in your sources.', 'Customize the central node and depth of branches.')" class="p-2 bg-green-50 text-green-700 rounded text-xs text-left hover:bg-green-100"><i class="fa-solid fa-diagram-project mr-1"></i> Mind Map</button>
-                                    <button onclick="showFeatureDetails('Flash Cards / Quiz', 'Generates study materials using active recall.', 'Select difficulty level, question types (multiple choice/open ended), and specific chapters to cover.')" class="p-2 bg-purple-50 text-purple-700 rounded text-xs text-left hover:bg-purple-100"><i class="fa-solid fa-layer-group mr-1"></i> Quiz/Cards</button>
-                                    <button onclick="showFeatureDetails('Data Table', 'Extracts tabular data from unstructured text into rows and columns.', 'Define the exact columns you want extracted and export directly to Google Sheets.')" class="p-2 bg-teal-50 text-teal-700 rounded text-xs text-left hover:bg-teal-100"><i class="fa-solid fa-table mr-1"></i> Data Table</button>
-                                    <button onclick="showFeatureDetails('Reports & Infographics', 'Synthesizes long texts into structured briefings or visual data points.', 'Define the format (e.g., Executive Summary, FAQ, Timeline).')" class="p-2 bg-red-50 text-red-700 rounded text-xs text-left hover:bg-red-100"><i class="fa-solid fa-file-lines mr-1"></i> Reports</button>
-                                </div>
-                                
-                                <!--div class="mt-auto space-y-2"-->
-                                    <!--div class="flex justify-between items-center px-1"-->
-                                        <!--button onclick="showFeatureDetails('Create and Pin Note', 'Saves a response or personal thought to the notebook clipboard.', 'Can be combined with other notes to generate overarching summaries.')" class="text-xs text-gray-500 hover:text-brandBase"><i class="fa-regular fa-note-sticky mr-1"></i> Add Note</button-->
-                                        <!--button onclick="showFeatureDetails('Delete Chat History', 'Clears the current chat interface without deleting sources or saved notes.', 'No customization; this is a permanent reset of the active conversational window.')" class="text-xs text-red-400 hover:text-red-600"><i class="fa-solid fa-trash mr-1"></i> Clear Chat</button-->
-                                    <!--/div-->
-                                    <!--div class="w-full bg-gray-100 rounded-full h-10 flex items-center px-4 text-gray-400 text-sm">
-                                        Ask NotebookLM...
-                                    </div-->
-                                <!--/div-->
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Details Display Area -->
-                    <div id="feature-display-area" class="bg-brandLight border border-brandBase/30 rounded-2xl p-6 hidden">
-                        <!-- Dynamic content injected here via JS -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section: Steps 15-16 -->
-            <section id="step15-16" class="webbook-section">
-                <h2 class="text-3xl font-bold text-brandDark mb-6 border-b pb-2">Prompting & The Google Ecosystem</h2>
-                
-                <div class="space-y-6">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-brandBase">
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">15. How to Use a Correct Prompt in NotebookLM</h3>
-                        <p class="text-gray-700 mb-3">NotebookLM operates on a Retrieval-Augmented Generation (RAG) pipeline. To get the best results, use structured, "Multi-Source Synthesis Prompts" rather than generic requests.</p>
-                        <div class="bg-gray-50 p-4 rounded-lg mt-3">
-                            <h4 class="font-bold text-sm text-brandDark mb-2">The PTCF Formula for NotebookLM:</h4>
-                            <ul class="text-sm text-gray-600 space-y-2">
-                                <li><strong>[P]ersona:</strong> "Act as a strict academic editor..."</li>
-                                <li><strong>[T]ask:</strong> "Synthesize the main arguments regarding AI hallucinations..."</li>
-                                <li><strong>[C]ontext:</strong> "Using only the uploaded research papers..."</li>
-                                <li><strong>[F]ormat:</strong> "Output as a 5-point bulleted list with inline citations."</li>
+                <!-- Section: Intro -->
+                <section id="intro" class="scroll-mt-6">
+                    <div class="neo-card bg-white p-6 md:p-8 rounded-xl border-4 border-black shadow-[5px_5px_0px_#000]">
+                        <h2 class="text-2xl md:text-3xl font-black text-black uppercase mb-4 tracking-tight border-b-2 border-black pb-2">
+                            Class with Gemini Notebook (NotebookLM) 
+                        </h2>
+                        <p class="text-base text-gray-900 font-medium leading-relaxed mb-6">
+                            NotebookLM is an AI-powered study and research assistant that analyzes uploaded documents (PDFs, Docs, websites, YouTube transcripts) and imported sources to provide grounded summaries, answers, and content generation, prioritizing data privacy.
+                        </p>
+                        
+                        <div class="bg-emerald-100 p-6 rounded-xl border-3 border-black shadow-[3px_3px_0px_#000]">
+                            <h3 class="text-lg font-black text-black mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-rocket text-emerald-700"></i> Things You Need to Do Before and After Class Work:
+                            </h3>
+                            <p class="text-sm text-black font-medium mb-4">
+                                <b>1. Overview textbook first</b> to find what is in there before you go to class NotebookLM desk.<br>
+                                <b>2. Read this webbook:</b> It gives you a summary and guidance of your study direction quick.
+                            </p>
+                            <ul class="space-y-3 text-sm text-black font-medium">
+                                <li class="bg-white p-3 rounded-lg border-2 border-black shadow-[2px_2px_0px_#000]">
+                                    <strong class="text-black">3. Study Tools You Shall Use NotebookLM Desk:</strong> NotebookLM is a study and research tool for AI application. This allows students to interrogate the grounded data directly on their workspace!
+                                </li>
+                                <li class="bg-white p-3 rounded-lg border-2 border-black shadow-[2px_2px_0px_#000]">
+                                    <strong class="text-black">4. Study Performance Report:</strong> Use the outputs generated by the Canvas tool to create visual components, such as Infographics or Slide Decks, to visualize the key concepts of your study material for the website.
+                                </li>
                             </ul>
                         </div>
                     </div>
+                </section>
 
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-xl font-bold text-brandBase mb-3">16. Connecting NotebookLM with the Google Ecosystem</h3>
-                        <p class="text-gray-700 mb-4">NotebookLM is powerful, but it is just one part of your AI toolbelt. Integrate it with other tools for a complete workflow:</p>
+                <!-- Section: Steps 1-3 -->
+                <section id="step1-3" class="scroll-mt-6">
+                    <div class="neo-card bg-white p-6 md:p-8 rounded-xl border-4 border-black shadow-[5px_5px_0px_#000] space-y-6">
+                        <h2 class="text-2xl font-black text-black uppercase tracking-tight border-b-3 border-black pb-2">
+                            Setup & Source Management
+                        </h2>
+                        
+                        <div class="bg-stone-50 p-5 rounded-xl border-2 border-black shadow-[3px_3px_0px_#000]">
+                            <h3 class="text-lg font-black text-emerald-800 mb-2">1. Access and Initial Setup - One time for each class (course)</h3>
+                            <ul class="list-disc list-inside text-sm text-gray-900 font-medium space-y-2 ml-2">
+                                <li><strong>Sign In and Go:</strong> Access <a href="https://notebooklm.google.com/" target="_blank" class="text-blue-700 underline font-bold">NotebookLM Classroom</a> to log in using your personal or work account.</li>
+                                <li><strong>Create a Notebook:</strong> Select "Create new notebook" on the home dashboard. Give it a descriptive name to help you identify it later (e.g., "Learning with NotebookLM" or "Bio Lab Notes").</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-stone-50 p-5 rounded-xl border-2 border-black shadow-[3px_3px_0px_#000]">
+                            <h3 class="text-lg font-black text-emerald-800 mb-2">2. Add Your Sources (Textbook)</h3>
+                            <p class="text-sm text-gray-900 font-medium mb-3">NotebookLM’s power comes from being "grounded" in your specific documents. You can add up to 50 sources per notebook.</p>
+                            <ul class="list-disc list-inside text-sm text-gray-900 font-medium space-y-2 ml-2">
+                                <li><strong>Upload Files:</strong> You can upload PDFs, text files (.txt), or markdown files directly from your computer. Upload up to 500 sources (Plus) or 50 sources (Free) per notebook.</li>
+                                <li><strong>Connect Google Drive:</strong> Select and import specific Google Docs or Google Slides.</li>
+                                <li><strong>Link Media:</strong> Paste URLs for YouTube videos (with captions) or public website links to treat them as primary sources.</li>
+                                <li><strong>Pasted Text:</strong> Copy and paste snippets of text directly into the source panel.</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-stone-50 p-5 rounded-xl border-2 border-black shadow-[3px_3px_0px_#000]">
+                            <h3 class="text-lg font-black text-emerald-800 mb-2">3. Analyze and Interact (Chat)</h3>
+                            <p class="text-sm text-gray-900 font-medium mb-3">Once sources are added, NotebookLM automatically generates a summary for each. You can then use the Chat panel at the bottom to query them.</p>
+                            <ul class="list-disc list-inside text-sm text-gray-900 font-medium space-y-2 ml-2">
+                                <li><strong>Ask Specific Questions:</strong> Type natural language questions like, "What are the three main risks mentioned in these documents?".</li>
+                                <li><strong>Check Citations:</strong> When the AI answers, it provides numbered citations. Click these to see the exact passage in your original source where the information originated.</li>
+                                <li><strong>Focus Your Query:</strong> Toggle specific sources on or off in the left panel to limit the AI's search to only certain documents.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Steps 4-6 -->
+                <section id="step4-6" class="scroll-mt-6">
+                    <div class="neo-card bg-white p-6 md:p-8 rounded-xl border-4 border-black shadow-[5px_5px_0px_#000] space-y-6">
+                        <h2 class="text-2xl font-black text-black uppercase tracking-tight border-b-3 border-black pb-2">
+                            Transform, Organize & Collaborate
+                        </h2>
+                        
+                        <div class="bg-stone-50 p-5 rounded-xl border-2 border-black shadow-[3px_3px_0px_#000]">
+                            <h3 class="text-lg font-black text-emerald-800 mb-2">4. Transform and Organize (Studio)</h3>
+                            <p class="text-sm text-gray-900 font-medium mb-3">The Studio panel allows you to generate new content based on your study material.</p>
+                            <ul class="list-disc list-inside text-sm text-gray-900 font-medium space-y-2 ml-2">
+                                <li><strong>Audio Overview (AI Podcast):</strong> Click "Generate" in the Audio Overview section to create a podcast-style discussion between two AI hosts about your sources. You can even use Interactive Mode to talk back to the hosts and ask for clarifications.</li>
+                                <li><strong>Study Tools:</strong> Use the Studio to instantly generate Quizzes, Flashcards, Study Guides, or FAQ lists to test your knowledge.</li>
+                                <li><strong>Structural Reports:</strong> Prompt the AI to create briefing docs, timelines, or even Mind Maps to visualize connections between complex topics.</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-stone-50 p-5 rounded-xl border-2 border-black shadow-[3px_3px_0px_#000]">
+                            <h3 class="text-lg font-black text-emerald-800 mb-2">5. Create and Pin Notes</h3>
+                            <p class="text-sm text-gray-900 font-medium">Save AI-generated answers or write your own notes in the notebook, then pin them to create summaries, outlines, or study guides.</p>
+                        </div>
+
+                        <div class="bg-stone-50 p-5 rounded-xl border-2 border-black shadow-[3px_3px_0px_#000]">
+                            <h3 class="text-lg font-black text-emerald-800 mb-2">6. Collaboration and Export</h3>
+                            <ul class="list-disc list-inside text-sm text-gray-900 font-medium space-y-2 ml-2">
+                                <li><strong>Share Your Work:</strong> Click the "Share" button in the top-right corner to invite collaborators to view or edit the notebook.</li>
+                                <li><strong>Export Findings:</strong> You can export generated reports directly to Google Docs or tables to Google Sheets for further formatting.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Steps 7-10 -->
+                <section id="step7-10" class="scroll-mt-6">
+                    <div class="neo-card bg-white p-6 md:p-8 rounded-xl border-4 border-black shadow-[5px_5px_0px_#000] space-y-6">
+                        <h2 class="text-2xl font-black text-black uppercase tracking-tight border-b-3 border-black pb-2">
+                            Advanced Multimedia & Sharing
+                        </h2>
+                        
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="p-4 border rounded-lg bg-gray-50">
-                                <h4 class="font-bold text-brandDark"><i class="fa-solid fa-sparkles text-blue-500 mr-2"></i>Gemini & Gems</h4>
-                                <p class="text-sm text-gray-600 mt-1">Take factual outputs from NotebookLM and paste them into Gemini or a custom Gem to rewrite them creatively, write code, or search the live web for updates.</p>
+                            <div class="bg-stone-50 p-4 rounded-xl border-2 border-black shadow-[3px_3px_0px_#000]">
+                                <h3 class="text-base font-black text-emerald-800 mb-1">7. Audio Overview</h3>
+                                <p class="text-xs text-gray-800 font-medium">Generate a podcast-style audio summary of your sources.</p>
                             </div>
-                            <div class="p-4 border rounded-lg bg-gray-50">
-                                <h4 class="font-bold text-brandDark"><i class="fa-solid fa-file-pen text-orange-500 mr-2"></i>Google Canvas</h4>
-                                <p class="text-sm text-gray-600 mt-1">Export your NotebookLM reports into Canvas to collaboratively edit, expand, and format the text alongside the AI.</p>
+
+                            <div class="bg-stone-50 p-4 rounded-xl border-2 border-black shadow-[3px_3px_0px_#000]">
+                                <h3 class="text-base font-black text-emerald-800 mb-1">8. Content Transformation</h3>
+                                <p class="text-xs text-gray-800 font-medium">Convert materials into new formats, such as study guides, slide outlines, or creative content.</p>
                             </div>
-                            <div class="p-4 border rounded-lg bg-gray-50">
-                                <h4 class="font-bold text-brandDark"><i class="fa-solid fa-image text-purple-500 mr-2"></i>Nano Banana (Image Gen)</h4>
-                                <p class="text-sm text-gray-600 mt-1">Use the visual descriptions generated by your NotebookLM research to prompt Nano Banana for highly accurate presentation images.</p>
+
+                            <div class="bg-stone-50 p-4 rounded-xl border-2 border-black shadow-[3px_3px_0px_#000]">
+                                <h3 class="text-base font-black text-emerald-800 mb-1">9. Visualizations</h3>
+                                <p class="text-xs text-gray-800 font-medium">Create mind maps and other visualizations to understand complex information.</p>
                             </div>
-                            <div class="p-4 border rounded-lg bg-gray-50">
-                                <h4 class="font-bold text-brandDark"><i class="fa-solid fa-table-list text-green-500 mr-2"></i>Sheets & Docs</h4>
-                                <p class="text-sm text-gray-600 mt-1">Export generated Data Tables directly to Google Sheets, and briefing notes directly to Google Docs with a single click.</p>
+
+                            <div class="bg-stone-50 p-4 rounded-xl border-2 border-black shadow-[3px_3px_0px_#000]">
+                                <h3 class="text-base font-black text-emerald-800 mb-1">10. Share Notebooks</h3>
+                                <p class="text-xs text-gray-800 font-medium">Collaborate with others by sharing your notebook with its associated AI insights.</p>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- Footer / Resources -->
-            <!--div class="text-center pt-8 border-t border-gray-200">
-                <a href="https://support.google.com/notebooklm/answer/16164461?hl=en&co=GENIE.Platform%3DDesktop" target="_blank" class="inline-flex items-center text-blue-600 hover:text-blue-800 hover:underline text-sm font-medium transition-colors">
-                    <i class="fa-solid fa-link mr-2"></i> Link: Further Detail of NotebookLM
-                </a>
-            </div-->
- <div class="text-center pt-8 border-t border-gray-200">
-                <a href="campus.php" target="_blank" class="inline-flex items-center text-blue-600 hover:text-blue-800 hover:underline text-sm font-medium transition-colors">
-                    <i class="fa-solid fa-link mr-2"></i> Link: back to campus
-                </a>
-            </div>
+                <!-- Section: Steps 11-13 -->
+                <section id="step11-13" class="scroll-mt-6">
+                    <div class="neo-card bg-white p-6 md:p-8 rounded-xl border-4 border-black shadow-[5px_5px_0px_#000] space-y-6">
+                        <h2 class="text-2xl font-black text-black uppercase tracking-tight border-b-3 border-black pb-2">
+                            Deep Engagement
+                        </h2>
+                        
+                        <div class="bg-stone-50 p-5 rounded-xl border-2 border-black shadow-[3px_3px_0px_#000]">
+                            <h3 class="text-lg font-black text-emerald-800 mb-2">11. Explore the Source Guide</h3>
+                            <p class="text-sm text-gray-900 font-medium">Once sources are uploaded, NotebookLM automatically generates a Source Guide that provides a summary and suggests key questions or topics for exploration.</p>
+                        </div>
+
+                        <div class="bg-stone-50 p-5 rounded-xl border-2 border-black shadow-[3px_3px_0px_#000]">
+                            <h3 class="text-lg font-black text-emerald-800 mb-2">12. Engage with Content (Chat)</h3>
+                            <p class="text-sm text-gray-900 font-medium">Type queries in the chat interface to ask questions about the uploaded sources. The AI will provide answers with citations linking directly to the source document, minimizing hallucinations.</p>
+                        </div>
+
+                        <div class="bg-stone-50 p-5 rounded-xl border-2 border-black shadow-[3px_3px_0px_#000]">
+                            <h3 class="text-lg font-black text-emerald-800 mb-2">13. Create and Pin Notes</h3>
+                            <p class="text-sm text-gray-900 font-medium">Save AI-generated answers or write your own notes in the notebook, then pin them to create summaries, outlines, or study guides.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Step 14 (Interactive Simulator) -->
+                <section id="step14" class="scroll-mt-6">
+                    <div class="neo-card bg-white p-6 md:p-8 rounded-xl border-4 border-black shadow-[5px_5px_0px_#000]">
+                        <h2 class="text-2xl font-black text-black uppercase tracking-tight mb-2 border-b-3 border-black pb-2">
+                            14. The Interactive Studio Simulator
+                        </h2>
+                        <p class="text-xs md:text-sm font-bold text-red-700 uppercase mb-6">
+                            * Click buttons below to explore functions <br>and <b>customization options</b> within NotebookLM.
+                        </p>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <!-- Virtual UI Panel -->
+                            <div class="lg:col-span-2 bg-amber-50 rounded-xl border-3 border-black shadow-[4px_4px_0px_#000] overflow-hidden">
+                                <!-- Top Bar Mock -->
+                                <div class="bg-emerald-300 p-3 border-b-3 border-black flex justify-between items-center">
+                                    <button onclick="showFeatureDetails('Title Creation', 'Edits the name of the current notebook.', 'Click to rename. Emojis and text supported.')" 
+                                            class="font-black text-xs md:text-sm text-black hover:underline flex items-center gap-2">
+                                        <i class="fa-solid fa-pen-to-square"></i> Tools to Use While Studying
+                                    </button>
+                                    <div class="flex items-center gap-2">
+                                        <button onclick="showFeatureDetails('Sharing', 'Collaborate with others by sharing your notebook.', 'Manage viewing/editing permissions for specific Google accounts or generate a public link.')" 
+                                                class="px-2.5 py-1 bg-yellow-300 border-2 border-black text-black text-[10px] font-black rounded shadow-[1px_1px_0px_#000] hover:bg-yellow-200">
+                                            <i class="fa-solid fa-user-plus mr-1"></i> Share
+                                        </button>
+                                        <button onclick="showFeatureDetails('Configure Notebook', 'Access overarching notebook settings.', 'Adjust default language outputs or manage deep integrations.')" 
+                                                class="p-1 text-black hover:text-emerald-900">
+                                            <i class="fa-solid fa-gear"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col sm:flex-row h-auto sm:h-64">
+                                    <!-- Left Sidebar Mock (Sources) -->
+                                    <div class="w-full sm:w-1/3 bg-white border-b-3 sm:border-b-0 sm:border-r-3 border-black p-3">
+                                        <h5 class="text-[10px] font-black text-black uppercase mb-2">Sources to Import</h5>
+                                        <button onclick="showFeatureDetails('Add Sources', 'Upload PDFs, text files, Google Docs, or YouTube links up to the notebook limit.', 'Choose from Local Drive, Google Drive, URL, or Paste Text.')" 
+                                                class="w-full py-2 border-2 border-black bg-emerald-100 rounded text-xs font-black text-black hover:bg-emerald-200 mb-2 shadow-[2px_2px_0px_#000]">
+                                            <i class="fa-solid fa-plus mr-1"></i> Add Source
+                                        </button>
+                                        <button onclick="showFeatureDetails('Search the web for new sources', 'Use Google Search to directly pull in and ground new facts from the internet.', 'Input query; NotebookLM automatically converts the web page into a readable source.')" 
+                                                class="w-full py-2 border-2 border-black bg-cyan-200 rounded text-xs font-black text-black hover:bg-cyan-100 shadow-[2px_2px_0px_#000]">
+                                            <i class="fa-solid fa-globe mr-1"></i> Web Search
+                                        </button>
+                                    </div>
+
+                                    <!-- Main Area Mock (Studio Features) -->
+                                    <div class="w-full sm:w-2/3 p-4 flex flex-col justify-between bg-stone-50">
+                                        <div class="grid grid-cols-2 gap-2">
+                                            <button onclick="showFeatureDetails('Audio Overview', 'Generates a 2-host podcast discussing your sources.', 'Customize tone, target audience, and specific topics to focus on before generating.')" 
+                                                    class="p-2 bg-cyan-200 border-2 border-black rounded text-xs font-black text-left hover:bg-cyan-100 shadow-[2px_2px_0px_#000]">
+                                                <i class="fa-solid fa-headphones mr-1"></i> Audio Overview
+                                            </button>
+                                            <button onclick="showFeatureDetails('Slide Deck', 'Converts your notes into a presentation outline.', 'Specify number of slides, target audience, and export directly to Google Slides.')" 
+                                                    class="p-2 bg-yellow-200 border-2 border-black rounded text-xs font-black text-left hover:bg-yellow-100 shadow-[2px_2px_0px_#000]">
+                                                <i class="fa-solid fa-presentation-screen mr-1"></i> Slide Deck
+                                            </button>
+                                            <button onclick="showFeatureDetails('Mind Map', 'Visually maps connections between concepts in your sources.', 'Customize the central node and depth of branches.')" 
+                                                    class="p-2 bg-emerald-200 border-2 border-black rounded text-xs font-black text-left hover:bg-emerald-100 shadow-[2px_2px_0px_#000]">
+                                                <i class="fa-solid fa-diagram-project mr-1"></i> Mind Map
+                                            </button>
+                                            <button onclick="showFeatureDetails('Flash Cards / Quiz', 'Generates study materials using active recall.', 'Select difficulty level, question types (multiple choice/open ended), and specific chapters to cover.')" 
+                                                    class="p-2 bg-rose-200 border-2 border-black rounded text-xs font-black text-left hover:bg-rose-100 shadow-[2px_2px_0px_#000]">
+                                                <i class="fa-solid fa-layer-group mr-1"></i> Quiz/Cards
+                                            </button>
+                                            <button onclick="showFeatureDetails('Data Table', 'Extracts tabular data from unstructured text into rows and columns.', 'Define the exact columns you want extracted and export directly to Google Sheets.')" 
+                                                    class="p-2 bg-orange-200 border-2 border-black rounded text-xs font-black text-left hover:bg-orange-100 shadow-[2px_2px_0px_#000]">
+                                                <i class="fa-solid fa-table mr-1"></i> Data Table
+                                            </button>
+                                            <button onclick="showFeatureDetails('Reports & Infographics', 'Synthesizes long texts into structured briefings or visual data points.', 'Define the format (e.g., Executive Summary, FAQ, Timeline).')" 
+                                                    class="p-2 bg-purple-200 border-2 border-black rounded text-xs font-black text-left hover:bg-purple-100 shadow-[2px_2px_0px_#000]">
+                                                <i class="fa-solid fa-file-lines mr-1"></i> Reports
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Details Display Area -->
+                            <div id="feature-display-area" class="bg-amber-100 border-3 border-black rounded-xl p-5 shadow-[4px_4px_0px_#000] hidden">
+                                <!-- Dynamic content injected here via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Steps 15-16 -->
+                <section id="step15-16" class="scroll-mt-6">
+                    <div class="neo-card bg-white p-6 md:p-8 rounded-xl border-4 border-black shadow-[5px_5px_0px_#000] space-y-6">
+                        <h2 class="text-2xl font-black text-black uppercase tracking-tight border-b-3 border-black pb-2">
+                            Prompting in Notebook
+                        </h2>
+                        
+                        <div class="bg-stone-50 p-5 rounded-xl border-2 border-black shadow-[3px_3px_0px_#000]">
+                            <h3 class="text-lg font-black text-emerald-800 mb-2">15. How to Use a Correct Prompt in NotebookLM</h3>
+                            <p class="text-sm text-gray-900 font-medium mb-3">NotebookLM operates on a Retrieval-Augmented Generation (RAG) pipeline. To get the best results, use structured, "Multi-Source Synthesis Prompts" rather than generic requests.</p>
+                            
+                            <div class="bg-amber-100 p-4 rounded-lg border-2 border-black shadow-[2px_2px_0px_#000] mt-3">
+                                <h4 class="font-black text-xs text-black uppercase mb-2">The PTCF Formula for NotebookLM:</h4>
+                                <ul class="text-xs font-bold text-gray-800 space-y-1.5">
+                                    <li><strong>[P]ersona:</strong> "Act as a strict academic editor..."</li>
+                                    <li><strong>[T]ask:</strong> "Synthesize the main arguments regarding AI hallucinations..."</li>
+                                    <li><strong>[C]ontext:</strong> "Using only the uploaded research papers..."</li>
+                                    <li><strong>[F]ormat:</strong> "Output as a 5-point bulleted list with inline citations."</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-stone-50 p-5 rounded-xl border-2 border-black shadow-[3px_3px_0px_#000]">
+                            <h3 class="text-lg font-black text-emerald-800 mb-2">16. Connecting NotebookLM with the Google Ecosystem</h3>
+                            <p class="text-sm text-gray-900 font-medium mb-4">NotebookLM is powerful, but it is just one part of your AI toolbelt. Integrate it with other tools for a complete workflow:</p>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="p-4 border-2 border-black rounded-lg bg-cyan-100 shadow-[2px_2px_0px_#000]">
+                                    <h4 class="font-black text-xs text-black uppercase"><i class="fa-solid fa-sparkles text-blue-600 mr-1"></i> Gemini & Gems</h4>
+                                    <p class="text-xs text-gray-800 font-medium mt-1">Take factual outputs from NotebookLM and paste them into Gemini or a custom Gem to rewrite them creatively, write code, or search the live web for updates.</p>
+                                </div>
+                                <div class="p-4 border-2 border-black rounded-lg bg-orange-100 shadow-[2px_2px_0px_#000]">
+                                    <h4 class="font-black text-xs text-black uppercase"><i class="fa-solid fa-file-pen text-orange-600 mr-1"></i> Google Canvas</h4>
+                                    <p class="text-xs text-gray-800 font-medium mt-1">Export your NotebookLM reports into Canvas to collaboratively edit, expand, and format the text alongside the AI.</p>
+                                </div>
+                                <div class="p-4 border-2 border-black rounded-lg bg-purple-100 shadow-[2px_2px_0px_#000]">
+                                    <h4 class="font-black text-xs text-black uppercase"><i class="fa-solid fa-image text-purple-600 mr-1"></i> Nano Banana (Image Generator)</h4>
+                                    <p class="text-xs text-gray-800 font-medium mt-1">Use the visual descriptions generated by your NotebookLM research to prompt Nano Banana for highly accurate presentation images.</p>
+                                </div>
+                                <div class="p-4 border-2 border-black rounded-lg bg-emerald-100 shadow-[2px_2px_0px_#000]">
+                                    <h4 class="font-black text-xs text-black uppercase"><i class="fa-solid fa-table-list text-emerald-600 mr-1"></i> Sheets & Docs</h4>
+                                    <p class="text-xs text-gray-800 font-medium mt-1">Export generated Data Tables directly to Google Sheets, and briefing notes directly to Google Docs with a single click.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Navigation Link Back -->
+                <div class="text-center pt-4">
+                    <a href="campus.php" 
+                       class="inline-flex items-center justify-center bg-rose-400 hover:bg-rose-300 text-black font-black px-8 py-3 rounded-xl border-3 border-black shadow-[4px_4px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 transition-all text-xs uppercase tracking-wider gap-2">
+                        <i class="fa-solid fa-arrow-left"></i> Return to Campus Dashboard
+                    </a>
+                </div>
+
+            </main>
         </div>
-    </main>
+
+        <!-- Footer -->
+        <footer class="mt-12 pt-6 border-t-4 border-black text-center font-bold text-xs text-black uppercase tracking-wider">
+            &copy; 2026 AI Gemini College | NotebookLM Interactive Guide
+        </footer>
+
+    </div>
 
 </body>
 </html>

@@ -1,7 +1,7 @@
 <?php
 // 1. DATABASE CONNECTION (Using PDO for security) prompt-compile.php
 //$host = 'localhost'; $db = 'book_db'; $user = 'root'; $pass = ''; // Adjust if needed
-require_once 'db-connect.php';
+require_once __DIR__ . '/../db-connect.php';
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

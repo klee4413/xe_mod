@@ -1,6 +1,6 @@
 <?php
 // GAC FOUNDRY: Prompt Temperature Laboratory - Refined v1.1
-require_once 'db-connect.php';
+require_once __DIR__ . '/../../db-connect.php';
 
 $generated_prompt = "";
 $user_task = $_POST['user_task'] ?? ""; // Persist context after POST

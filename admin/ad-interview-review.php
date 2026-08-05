@@ -5,7 +5,7 @@ session_start();
 // if ($_SESSION['role'] !== 'admin') { die("Unauthorized."); }
 
 //$host = 'localhost'; $db = 'ai-hi-work'; $user = 'root'; $pass = ''; 
-require_once 'db-connect.php';
+require_once __DIR__ . '/../../db-connect.php';
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION

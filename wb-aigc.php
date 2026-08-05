@@ -1,6 +1,6 @@
 <?php
 // [TIMESTAMP: 2026-04-11] - GAC WEBBOOK FOUNDRY (wb-ppt.php - 16px Stacked)
-require_once 'db-connect.php';
+require_once __DIR__ . '/../db-connect.php';
 
 // 1. DATA EXTRACTION: TARGET ID=6
 try {
