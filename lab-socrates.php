@@ -2,8 +2,6 @@
 // AIGC Socratic Tutor Lab v1.0 Socratic-tutor.php
 require_once __DIR__ . '/../db-connect.php'; //SECURED DB ID AND PASSWORD ACCESS FROM DATABASE
 //AIGC INFRASTRUCTURE: CONVERSATIONAL RETENTION ACTIVE. SOCRATIC MEMORY ENGAGED. 
-//AIGC FOUNDRY STATUS: FULL OPERATIONAL CAPACITY.
-// API FETCH FROM SECURED DATABASE 
 $hook_stmt = $pdo->prepare("SELECT `api_key` FROM `api-hook` WHERE `seq_no` = '1'");
 $hook_stmt->execute();
 $hook_data = $hook_stmt->fetch();
