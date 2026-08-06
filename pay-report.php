@@ -1,13 +1,20 @@
 <?php
 // 1. SESSION & INFRASTRUCTURE GROUNDING pay-report.php
 session_start();
-require_once 'db_connect.php';
-//require_once 'db_connect_local.php';
+$isLocal = in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost', '127.0.0.1']) 
+        || str_contains($_SERVER['HTTP_HOST'] ?? '', 'localhost:');
 
-// IDENTITY GUARD
-$student_id = $_SESSION['user_id'] ?? 0;
+if ($isLocal) {
+    require_once 'db-connect.php';
+} else {
+    require_once __DIR__ . '/../db-connect.php';
+}
+
+$student_id = $_SESSION['user_id']    ?? 0;
 $first_name = $_SESSION['first_name'] ?? 'Scholar';
-$last_name  = $_SESSION['last_name'] ?? '';
+$last_name  = $_SESSION['last_name']  ?? '';
+$email      = $_SESSION['email']      ?? '';
+$date       = date("Y-m-d");
 
 if ($student_id === 0) {
     header("Location: login.php");
