@@ -3,18 +3,8 @@
 session_start();
 $student_id = $_SESSION['user_id'] ?? 'GAC-UNKNOWN';
 $l_name = $_SESSION['last_name'] ?? 'Scholar';
-$f_name = $_SESSION['first_name'] ?? 'Alpha';
-//require_once 'db_connect.php';
-//require_once 'db_connect_local.php';
-// 1. IDENTITY RETRIEVAL
-$time = date("Y-m-d H:i:s");
-// 2. SESSION PERSISTENCE MANAGER
-//function retrieveSession($pdo) {
- //   $stmt = $pdo->prepare("SELECT * FROM gacSessions WHERE session_id = ? AND expires_at > NOW()");
-//    $stmt->execute([session_id()]);
-//    return $stmt->fetch(PDO::FETCH_ASSOC);
-//}
- //                                            $current_session = retrieveSession($pdo);
+$f_name = $_SESSION['first_name'] ?? 'Alpha'; 
+$time = date("Y-m-d H:i:s");                                 
 ?>
 
 <!DOCTYPE html>
