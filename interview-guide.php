@@ -1,12 +1,11 @@
 <?php
 // =========================================================================
-// GAC COGNITIVE FOUNDRY — PLATFORM INTERFACE : interview-guide.php
+// AIGC COGNITIVE FOUNDRY — PLATFORM INTERFACE : interview-guide.php
 // PURPOSE: ADMISSION INTERVIEW PROTOCOL & POLICY DOCUMENT INTERFACE
 // UPDATE: UPGRADED TO RESILIENT HIGH-CONTRAST NEUBRUTALISM FRAMEWORK
 // =========================================================================
 session_start();
-
-// GSAAC DEMO SESSION HYDRATION LEDGER
+ 
 $student_id = $_SESSION['user_id']    ?? 9990;
 $first_name = $_SESSION['first_name'] ?? 'Scholar';
 $last_name  = $_SESSION['last_name']  ?? '';
