@@ -1,5 +1,5 @@
 <!DOCTYPE html  >
-<html lang="en">
+<html lang="en"><!--index.php-->
 <head>
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
     <meta charset="UTF-8">
