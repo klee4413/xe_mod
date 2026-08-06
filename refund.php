@@ -1,8 +1,20 @@
 <?php
 // [TIMESTAMP: 2026-04-01] - AIGC Refund Request Portal refund.php
 session_start();
-$host = 'localhost'; $db = 'ai-hi-work'; $user = 'root'; $pass = ''; 
-require_once 'db_connect_local.php';
+$isLocal = in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost', '127.0.0.1']) 
+        || str_contains($_SERVER['HTTP_HOST'] ?? '', 'localhost:');
+
+if ($isLocal) {
+    require_once 'db-connect.php';
+} else {
+    require_once __DIR__ . '/../db-connect.php';
+}
+
+$student_id = $_SESSION['user_id']    ?? 0;
+$first_name = $_SESSION['first_name'] ?? 'Scholar';
+$last_name  = $_SESSION['last_name']  ?? '';
+$email      = $_SESSION['email']      ?? '';
+$date       = date("Y-m-d");
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
