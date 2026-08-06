@@ -1,9 +1,7 @@
 <?php
-// [TIMESTAMP: 2026-04-03] - GAC Session Identity Sandbox testsession.php
+// [TIMESTAMP: 2026-04-03] - AIGC Session Identity Sandbox sesstest.php
 session_start();
-
 $msg = "";
-
 // 2. LOGIC GATE: CREATE SESSION
 if (isset($_POST['create'])) {
     // We use ID 1001/1002 to match your established test samples
