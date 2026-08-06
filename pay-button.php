@@ -1,9 +1,11 @@
 <?php
 // [TIMESTAMP: 2026-04-04] - AIGC Payment button pay-button.php
 session_start();
-
-// 1. IDENTITY PROTECTION (Sovereign Gate)
-$student_name = $_SESSION['first_name'] ?? 'Scholar';
+$student_id = $_SESSION['user_id']    ?? 0;
+$first_name = $_SESSION['first_name'] ?? 'Scholar';
+$last_name  = $_SESSION['last_name']  ?? '';
+$email      = $_SESSION['email']      ?? '';
+$date       = date("Y-m-d");
 ?>
 <!DOCTYPE html>
 <html lang="en">
