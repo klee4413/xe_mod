@@ -1,9 +1,15 @@
 <?php
 // [TIMESTAMP: 2026-04-07] - GAC STUDY PERFORMANCE RECORDING (Confirmation View)
 session_start();
-//require_once 'db_connect_local.php';
-require_once 'db_connect.php';
-// Initialize variables for the UI
+$isLocal = in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost', '127.0.0.1']) 
+        || str_contains($_SERVER['HTTP_HOST'] ?? '', 'localhost:');
+
+if ($isLocal) {
+    require_once 'db-connect.php';
+} else {
+    require_once __DIR__ . '/../db-connect.php';
+}
+
 $show_confirmation = false;
 $s_id = $_SESSION['scholar_id'] ?? 'GAC-UNKNOWN';
 $f_name = $_SESSION['first_name'] ?? 'Alpha';
