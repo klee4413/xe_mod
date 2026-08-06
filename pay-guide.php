@@ -1,8 +1,20 @@
 <?php
 // [TIMESTAMP: 2026-04-02] - GAC CLASS GUIDE: Commitment Pattern Interface ------  class-guide.php in webbook table 2
 session_start();
-include 'db_connect.php';
-//$host = 'localhost'; $db = 'ai-hi-work'; $user = 'root'; $pass = ''; 
+$isLocal = in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost', '127.0.0.1']) 
+        || str_contains($_SERVER['HTTP_HOST'] ?? '', 'localhost:');
+
+if ($isLocal) {
+    require_once 'db-connect.php';
+} else {
+    require_once __DIR__ . '/../db-connect.php';
+}
+
+$student_id = $_SESSION['user_id']    ?? 0;
+$first_name = $_SESSION['first_name'] ?? 'Scholar';
+$last_name  = $_SESSION['last_name']  ?? '';
+$email      = $_SESSION['email']      ?? '';
+$date       = date("Y-m-d");
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
