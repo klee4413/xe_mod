@@ -1,9 +1,14 @@
 <?php
-//$host = 'localhost'; $db = 'ai-hi-work'; $user = 'root'; $pass = '';  [TIMESTAMP: 2026-03-17 21:30:00] - recover.php
-//try { $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-//} catch (PDOException $e) {    die("Database Connection Fault: " . $e->getMessage());}
-include 'db_connect.php';
+ 
 session_start();
+$isLocal = in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost', '127.0.0.1']) 
+        || str_contains($_SERVER['HTTP_HOST'] ?? '', 'localhost:');
+
+if ($isLocal) {
+    require_once 'db-connect.php';
+} else {
+    require_once __DIR__ . '/../db-connect.php';
+}
 $error = "";
 $msg = "";
 $user_info = "";
