@@ -1,17 +1,26 @@
 <?php
 // [TIMESTAMP: 2026-04-01] - GAC BURSAR'S OFFICE: Checkout & Ledger Portal
 session_start();
+$isLocal = in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost', '127.0.0.1']) 
+        || str_contains($_SERVER['HTTP_HOST'] ?? '', 'localhost:');
 
-$host = 'localhost'; $db = 'ai-hi-work'; $user = 'root'; $pass = ''; 
-require_once 'db_connect_local.php';
+if ($isLocal) {
+    require_once 'db-connect.php';
+} else {
+    require_once __DIR__ . '/../db-connect.php';
+}
+
+$student_id = $_SESSION['user_id']    ?? 0;
+$first_name = $_SESSION['first_name'] ?? 'Scholar';
+$last_name  = $_SESSION['last_name']  ?? '';
+$email      = $_SESSION['email']      ?? '';
+$date       = date("Y-m-d");
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
 } catch (PDOException $e) { die("Database Connection Fault."); }
-
-$student_id = $_SESSION['user_id'] ?? 9999;
-$last_name  = $_SESSION['last_name'] ?? 'Guest';
+ 
 $success_msg = "";
 
 // 1. CALCULATE OUTSTANDING TUITION
