@@ -1,22 +1,31 @@
 <?php
 // Database connection prompt-code-list.php
-$servername = "localhost";
-$username = "admin";
-//$username = "root";
-$password = "Kgemini7521";
-$dbname = "ai-hi-work";
-//$password = "";
-//require_once __DIR__ . '/../db-connect.php'; 
-date_default_timezone_set('America/Los_Angeles');
+session_start(); // Ensures $_SESSION values are accessible
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$isLocal = in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost', '127.0.0.1']) 
+        || str_contains($_SERVER['HTTP_HOST'] ?? '', 'localhost:');
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if ($isLocal) {
+    require_once 'db-connect.php';
+} else {
+    require_once __DIR__ . '/../db-connect.php';
 }
 
-$sql = "SELECT id, category, description FROM prompt_code";
-$result = $conn->query($sql);
+$student_id = $_SESSION['user_id']    ?? 0;
+$first_name = $_SESSION['first_name'] ?? 'Scholar';
+$last_name  = $_SESSION['last_name']  ?? '';
+$email      = $_SESSION['email']      ?? '';
+$date       = date("Y-m-d");
+
+try {
+    // Execute query via PDO ($pdo object is inherited from db-connect.php)
+    $stmt = $pdo->query("SELECT id, category, description FROM prompt_code");
+    
+    // Fetch all records as an associative array
+    $prompts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Database Logic Fault: " . $e->getMessage());
+}
 ?>
 
 <!DOCTYPE html>
