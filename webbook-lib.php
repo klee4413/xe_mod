@@ -1,7 +1,14 @@
 <?php
 // GAC FOUNDRY: WebBook Library (Asynchronous Identity Mode)
-require_once __DIR__ . '/../db-connect.php'; 
-//require_once 'db-connect.php';
+$isLocal = in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost', '127.0.0.1']) 
+        || str_contains($_SERVER['HTTP_HOST'] ?? '', 'localhost:');
+
+if ($isLocal) {
+    require_once 'db-connect.php';
+} else {
+    require_once __DIR__ . '/../db-connect.php';
+}
+
 if (!isset($pdo)) {
     die("Connection failed: Database object not found.");
 }
