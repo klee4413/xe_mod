@@ -3,7 +3,6 @@
 require_once __DIR__ . '/../db-connect.php';
 // Use backticks around the table name to handle the hyphen
  
-// 1. SOVEREIGN API FETCH
 $hook_stmt = $pdo->prepare("SELECT `api_key` FROM `api-hook` WHERE `seq_no` = '1'");
 $hook_stmt->execute();
 $hook_data = $hook_stmt->fetch();
