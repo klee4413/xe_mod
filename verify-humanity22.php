@@ -1,6 +1,6 @@
 <?php
 // =========================================================================
-// GAC COGNITIVE FOUNDRY — DYNAMIC INTERACTIVE SECURITY GATE : verify-humanity22.php
+// verify-humanity22.php
 // PURPOSE: PREMIUM TURING GATEWAY INTERFACE WITH INTEGRATED GEMINI cURL ENGINE
 // =========================================================================
 session_start();
