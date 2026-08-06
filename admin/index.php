@@ -1,7 +1,19 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../db-connect.php'; //  PDO connection adlogin.php to index.php to admin
+$isLocal = in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost', '127.0.0.1']) 
+        || str_contains($_SERVER['HTTP_HOST'] ?? '', 'localhost:');
 
+if ($isLocal) {
+    require_once 'db-connect.php';
+} else {
+    require_once __DIR__ . '/../db-connect.php';
+}
+
+$student_id = $_SESSION['user_id']    ?? 0;
+$first_name = $_SESSION['first_name'] ?? 'Scholar';
+$last_name  = $_SESSION['last_name']  ?? '';
+$email      = $_SESSION['email']      ?? '';
+$date       = date("Y-m-d");
 // 1. SET THE NEURAL CLOCK TO PST
 date_default_timezone_set('America/Los_Angeles');
 $current_time = date('Y-m-d H:i:s');
