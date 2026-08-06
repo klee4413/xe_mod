@@ -1,15 +1,20 @@
 <?php
 // [TIMESTAMP: 2026-03-06] - GAC EXAM ANALYTICS & DEAN'S REPORT exam_result.php
 session_start();
-require_once 'db_connect.php';
-// 1. IDENTITY GROUNDING
-$date = date("F j, Y");
-$student_id      = $_SESSION['user_id'] ?? null;  
-$selected_course = $_SESSION['active_exam_course'] ?? null; 
-$first_name      = $_SESSION['first_name'] ?? 'Scholar';
-$last_name       = $_SESSION['last_name'] ?? '';
-$start_time      = $_SESSION['start_time'] ?? time();
+$isLocal = in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost', '127.0.0.1']) 
+        || str_contains($_SERVER['HTTP_HOST'] ?? '', 'localhost:');
 
+if ($isLocal) {
+    require_once 'db-connect.php';
+} else {
+    require_once __DIR__ . '/../db-connect.php';
+}
+
+$student_id = $_SESSION['user_id']    ?? 0;
+$first_name = $_SESSION['first_name'] ?? 'Scholar';
+$last_name  = $_SESSION['last_name']  ?? '';
+$email      = $_SESSION['email']      ?? '';
+$date       = date("Y-m-d");
 try {
     // 2. FETCH ALL RECORDED ANSWERS FOR THIS SESSION
     $stmt = $pdo->query("SELECT * FROM gac_exam_answers");
