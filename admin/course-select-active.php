@@ -1,12 +1,20 @@
 <?php
 // [TIMESTAMP: 2026-03-01] - AIGC ACTIVE ENROLLMENT FOUNDRY course-select-active.php
 session_start();
-require_once 'db_connect.php';
-//require_once 'db_connect_local.php';
-    $student_id = $_SESSION['user_id'] ?? null;
-    $first_name = $_SESSION['first_name'] ?? '';
-    $last_name  = $_SESSION['last_name'] ?? '';
-    $email      = $_SESSION['email'] ?? '';	
+$isLocal = in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost', '127.0.0.1']) 
+        || str_contains($_SERVER['HTTP_HOST'] ?? '', 'localhost:');
+
+if ($isLocal) {
+    require_once 'db-connect.php';
+} else {
+    require_once __DIR__ . '/../db-connect.php';
+}
+
+$student_id = $_SESSION['user_id']    ?? 0;
+$first_name = $_SESSION['first_name'] ?? 'Scholar';
+$last_name  = $_SESSION['last_name']  ?? '';
+$email      = $_SESSION['email']      ?? '';
+$date       = date("Y-m-d");
 // [TIMESTAMP: 2026-04-01] - AIGC Enrollment Session Bridge
 // Logic: Catch the selection via AJAX and ground it in the session
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_save'])) {
