@@ -1,9 +1,6 @@
 <?php
 // AIGC FOUNDRY: Multi-Language Laboratory v4.1  lab-lang2code.php
-require_once __DIR__ . '/../db-connect.php'; //DATABASE ID AND PASSWORD EXTRACTED SECURELY through app db-connect.php 
-//which can be used localhost and google cloud server
-// Use backticks around the table name to handle the hyphen
-// API KEY FETCHES SECURELY FROM DB
+require_once __DIR__ . '/../db-connect.php'; 
 $hook_stmt = $pdo->prepare("SELECT `api_key` FROM `api-hook` WHERE `seq_no` = '1'");// Use backticks around the table name to handle the hyphen
 $hook_stmt->execute();
 $hook_data = $hook_stmt->fetch();
