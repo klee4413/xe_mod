@@ -1,6 +1,6 @@
 <?php
 // =========================================================================
-// GAC COGNITIVE FOUNDRY — REGISTRATION GATEWAY : signup.php modified 6/9/2026 Tues
+// AIGC COGNITIVE FOUNDRY — REGISTRATION GATEWAY : signup.php  
 // PURPOSE: SANITIZED, ROBUST SIGNUP CONTROLLER FOR ADMISSIONS PIPELINE
 // =========================================================================
 session_start();
