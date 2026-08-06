@@ -1,8 +1,6 @@
 <?php
-// [TIMESTAMP: 2026-04-04] - AIGC AI Research Hub (NotebookLM Integration)
-session_start();
-
-// 1. IDENTITY PROTECTION (Sovereign Gate)
+// [TIMESTAMP: 2026-04-04] - AIGC AI Research Hub notebook-button.php
+ 
 $student_name = $_SESSION['first_name'] ?? 'Scholar';
 ?>
 <!DOCTYPE html>
