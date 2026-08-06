@@ -1,6 +1,6 @@
 <?php
 // =========================================================================
-// GAC COGNITIVE FOUNDRY — PLATFORM AGENT LAYER : ai-news1.php
+// AIGC COGNITIVE FOUNDRY — PLATFORM AGENT LAYER : ai-news1.php
 // PURPOSE: AUTOMATED GOOGLE AI NEWS AGENT & REPOSITORY UPDATE CONTROLLER
 // CONFIG: HARDENED DYNAMIC ROUTING & LOW-LATENCY INFRASTRUCTURE
 // =========================================================================
