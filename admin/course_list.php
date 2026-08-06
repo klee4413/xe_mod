@@ -1,8 +1,20 @@
 <?php
 // [TIMESTAMP: 2026-03-01] - GAC COURSE CATALOG course_list.php
 session_start();
-require_once __DIR__ . '/../../db-connect.php';
-$student_id = $_SESSION['scholar_id'] ?? '2026-AI-001';
+$isLocal = in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost', '127.0.0.1']) 
+        || str_contains($_SERVER['HTTP_HOST'] ?? '', 'localhost:');
+
+if ($isLocal) {
+    require_once 'db-connect.php';
+} else {
+    require_once __DIR__ . '/../db-connect.php';
+}
+
+$student_id = $_SESSION['user_id']    ?? 0;
+$first_name = $_SESSION['first_name'] ?? 'Scholar';
+$last_name  = $_SESSION['last_name']  ?? '';
+$email      = $_SESSION['email']      ?? '';
+$date       = date("Y-m-d");
 
 // Fetch all 53 classes from the logic gate course_list.php
 try {
