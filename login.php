@@ -1,8 +1,6 @@
 <?php
 // [TIMESTAMP: 2026-03-17 01:35:00] - AGC Scholar Login Logic    login.php
-//$host = 'localhost'; $db = 'ai-hi-work'; $user = 'root'; $pass = ''; 
-//try {$pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-//} catch (PDOException $e) { //die("Database Connection Fault: " . $e->getMessage());}
+ 
 session_start();
 require_once __DIR__ . '/../db-connect.php';
 $error = "";
