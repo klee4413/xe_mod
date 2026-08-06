@@ -1,8 +1,5 @@
-<?php
-//session_start();
-//header('Content-Type: application/json');
-//echo isset($_SESSION['interviewee_json']) ? $_SESSION['interviewee_json'] : json_encode(['error' => 'No session found']);
-// 1. Initialize GAC Session Logic
+<?php 
+// 1. Initialize AIGC Session Logic
 session_start();
 header('Content-Type: application/json');
 // 2. The Logic Gate: Ensure the Interviewee JSON exists
