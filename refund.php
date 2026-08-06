@@ -15,6 +15,7 @@ $first_name = $_SESSION['first_name'] ?? 'Scholar';
 $last_name  = $_SESSION['last_name']  ?? '';
 $email      = $_SESSION['email']      ?? '';
 $date       = date("Y-m-d");
+ 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
@@ -131,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_refund'])) {
     <h2>2. Subscription & Certificate Models</h2>
     <ul>
         <li><b>Monthly Subscriptions</b>: Cancellations stop future billing immediately. Refunds for the current month are eligible within the first <b>7 days</b> of the billing cycle, provided no new certificates were earned.</li>
-        <li><b>AI Foundation Course</b>: Given the <b>$999 Celebration Discount</b>, refunds are eligible within 14 days of enrollment, minus a $50 "Administrative Logic Fee."</li>
+        <li><b>AI Foundation Course</b>: Given the <b>$990 Celebration Discount</b>, refunds are eligible within 14 days of enrollment, minus a $50 "Administrative Logic Fee."</li>
     </ul>
 <br>
     <h2>3. Non-Refundable Items</h2>
