@@ -1,6 +1,6 @@
 <?php
 // [TIMESTAMP: 2026-04-10] - GAC WEBBOOK FOUNDRY (wb-prompt.php - Stacked Reading)
-//require_once __DIR__ . '/../db-connect.php';
+ 
 require_once __DIR__ . '/../db-connect.php';
 
 // 1. DATA EXTRACTION: TARGET ID=3
