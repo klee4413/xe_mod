@@ -1,7 +1,8 @@
 <?php
 // [TIMESTAMP: 2026-03-06] EXAM ANALYTICS & DEAN'S REPORT exam-fin-result.php
 session_start();
-require_once 'db_connect.php';
+require_once __DIR__ . '/../db-connect.php';
+
 // 1. IDENTITY GROUNDING
 $date = date("F j, Y");
 $student_id      = $_SESSION['user_id'] ?? null;  
